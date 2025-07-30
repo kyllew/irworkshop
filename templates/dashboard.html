@@ -81,7 +81,7 @@
 
 <!-- Charts Row -->
 <div class="row mb-4">
-    <div class="col-md-6">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">
@@ -90,12 +90,15 @@
                 </h5>
             </div>
             <div class="card-body">
-                <canvas id="tacticChart" width="400" height="200"></canvas>
+                <canvas id="tacticChart" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-6">
+</div>
+
+<!-- Severity Distribution Row -->
+<div class="row mb-4">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">
@@ -200,6 +203,51 @@
         </div>
     </div>
 </div>
+
+<!-- Tactic Details Modal -->
+<div class="modal fade" id="tacticModal" tabindex="-1" aria-labelledby="tacticModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tacticModalLabel">
+                    <i class="fas fa-bullseye"></i>
+                    <span id="modalTacticName"></span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Total Techniques:</strong> <span id="modalTacticCount"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Description:</strong> <span id="modalTacticDescription"></span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Technique ID</th>
+                                <th>Name</th>
+                                <th>Severity</th>
+                                <th>API Calls</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalTechniquesList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="exportTacticData()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
@@ -209,7 +257,7 @@
         // Tactic distribution chart
         const tacticData = {{ stats.tactic_counts | tojson }};
         const tacticCtx = document.getElementById('tacticChart').getContext('2d');
-        new Chart(tacticCtx, {
+        window.tacticChart = new Chart(tacticCtx, {
             type: 'doughnut',
             data: {
                 labels: Object.keys(tacticData),
@@ -230,7 +278,18 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    }
+                },
+                onClick: function(event, elements) {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const tacticName = Object.keys(tacticData)[index];
+                        showTacticDetails(tacticName);
                     }
                 }
             }
@@ -251,7 +310,9 @@
                         '#fd7e14', // HIGH
                         '#ffc107', // MEDIUM
                         '#28a745'  // LOW
-                    ]
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
                 }]
             },
             options: {
@@ -267,6 +328,14 @@
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
                         }
                     }
                 }
@@ -303,6 +372,7 @@
             resultDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Analyzing...</div>';
             resultDiv.style.display = 'block';
             
+            // First, get exact match
             fetch('/api/analyze/single', {
                 method: 'POST',
                 headers: {
@@ -312,10 +382,14 @@
             })
             .then(response => response.json())
             .then(data => {
+                let resultHtml = '';
+                
+                // Show exact match if found
                 if (data.technique_found) {
                     const technique = data.technique_info;
-                    resultDiv.innerHTML = `
-                        <div class="alert alert-info">
+                    resultHtml += `
+                        <div class="alert alert-success">
+                            <h6><i class="fas fa-exact-match"></i> <strong>Exact Match Found</strong></h6>
                             <h6><strong>${technique.technique_name}</strong> (${technique.technique_id})</h6>
                             <p class="mb-2">${technique.description}</p>
                             <div class="d-flex gap-2">
@@ -324,14 +398,65 @@
                             </div>
                         </div>
                     `;
-                } else {
-                    resultDiv.innerHTML = `
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            No threat intelligence found for <code>${apiCall}</code>
-                        </div>
-                    `;
                 }
+                
+                // Now search for related techniques
+                return fetch(`/api/database/search?q=${encodeURIComponent(apiCall)}`)
+                    .then(response => response.json())
+                    .then(searchData => {
+                        if (searchData.results && searchData.results.length > 0) {
+                            // Filter out the exact match if it exists
+                            const relatedTechniques = searchData.results.filter(result => 
+                                !data.technique_found || result.api_call !== apiCall
+                            );
+                            
+                            if (relatedTechniques.length > 0) {
+                                resultHtml += `
+                                    <div class="alert alert-info">
+                                        <h6><i class="fas fa-search"></i> <strong>Related Attack Techniques</strong></h6>
+                                        <p class="mb-2">Found ${relatedTechniques.length} related techniques in the threat catalog:</p>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th>Technique ID</th>
+                                                        <th>Name</th>
+                                                        <th>Tactic</th>
+                                                        <th>Severity</th>
+                                                        <th>API Call</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${relatedTechniques.slice(0, 10).map(technique => `
+                                                        <tr>
+                                                            <td><code>${technique.technique_id}</code></td>
+                                                            <td><strong>${technique.technique_name}</strong></td>
+                                                            <td><span class="badge bg-secondary">${technique.tactic}</span></td>
+                                                            <td><span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span></td>
+                                                            <td><code>${technique.api_call}</code></td>
+                                                        </tr>
+                                                    `).join('')}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        ${relatedTechniques.length > 10 ? `<p class="text-muted small">Showing first 10 of ${relatedTechniques.length} related techniques.</p>` : ''}
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        if (!data.technique_found && (!searchData.results || searchData.results.length === 0)) {
+                            resultHtml += `
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    No threat intelligence found for <code>${apiCall}</code>
+                                    <br><small class="text-muted">Try searching for related terms or check the database for similar API calls.</small>
+                                </div>
+                            `;
+                        }
+                        
+                        resultDiv.innerHTML = resultHtml;
+                    });
             })
             .catch(error => {
                 resultDiv.innerHTML = `
@@ -352,6 +477,104 @@
             'LOW': 'success'
         };
         return severityMap[severity] || 'secondary';
+    }
+    
+
+    
+    // Show tactic details modal
+    function showTacticDetails(tacticName) {
+        // Set modal title
+        document.getElementById('modalTacticName').textContent = tacticName;
+        document.getElementById('modalTacticCount').textContent = {{ stats.tactic_counts | tojson }}[tacticName] || 0;
+        
+        // Get tactic description
+        const tacticDescriptions = {
+            'Initial Access': 'The adversary is trying to get into your network.',
+            'Execution': 'The adversary is trying to run malicious code.',
+            'Persistence': 'The adversary is trying to maintain their foothold.',
+            'Privilege Escalation': 'The adversary is trying to gain higher-level permissions.',
+            'Defense Evasion': 'The adversary is trying to avoid being detected.',
+            'Credential Access': 'The adversary is trying to steal account names and passwords.',
+            'Discovery': 'The adversary is trying to figure out your environment.',
+            'Lateral Movement': 'The adversary is trying to move through your environment.',
+            'Collection': 'The adversary is trying to gather data of interest to their goal.',
+            'Command and Control': 'The adversary is trying to communicate with compromised systems.',
+            'Exfiltration': 'The adversary is trying to steal data.',
+            'Impact': 'The adversary is trying to manipulate, interrupt, or destroy your systems and data.'
+        };
+        
+        document.getElementById('modalTacticDescription').textContent = 
+            tacticDescriptions[tacticName] || 'MITRE ATT&CK tactic for threat analysis.';
+        
+        // Load techniques for this tactic
+        loadTacticTechniques(tacticName);
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('tacticModal'));
+        modal.show();
+    }
+    
+    // Load techniques for a specific tactic
+    function loadTacticTechniques(tacticName) {
+        const tbody = document.getElementById('modalTechniquesList');
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+        
+        // Fetch techniques from the database
+        fetch(`/api/database/search?q=${encodeURIComponent(tacticName)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.results && data.results.length > 0) {
+                    const techniques = data.results.filter(result => 
+                        result.tactic.toLowerCase() === tacticName.toLowerCase()
+                    );
+                    
+                    tbody.innerHTML = techniques.map(technique => `
+                        <tr>
+                            <td><code>${technique.technique_id}</code></td>
+                            <td><strong>${technique.technique_name}</strong></td>
+                            <td><span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span></td>
+                            <td><code>${technique.api_call}</code></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No techniques found for this tactic.</td></tr>';
+                }
+            })
+            .catch(error => {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading techniques.</td></tr>';
+                console.error('Error loading techniques:', error);
+            });
+    }
+    
+    // Export tactic data
+    function exportTacticData() {
+        const tacticName = document.getElementById('modalTacticName').textContent;
+        const table = document.getElementById('modalTechniquesList');
+        const rows = table.querySelectorAll('tr');
+        
+        let csv = 'Technique ID,Name,Severity,API Call\n';
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length === 4) {
+                const techniqueId = cells[0].textContent.replace(/`/g, '');
+                const name = cells[1].textContent.replace(/\*/g, '');
+                const severity = cells[2].textContent;
+                const apiCall = cells[3].textContent.replace(/`/g, '');
+                
+                csv += `"${techniqueId}","${name}","${severity}","${apiCall}"\n`;
+            }
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${tacticName.replace(/\s+/g, '_')}_techniques.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
     }
 </script>
 {% endblock %}
