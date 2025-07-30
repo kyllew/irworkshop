@@ -52,18 +52,37 @@ def get_analyzer():
     """Get or initialize the threat analyzer"""
     global analyzer, _force_reload
     if analyzer is None or _force_reload:
-        print("Initializing analyzer with complete catalog...")
-        # Initialize with AWS complete catalog loader
-        aws_loader = AWSCompleteThreatCatalogLoader()
-        aws_loader.load_catalog_from_file("threat_catalog.json")
-        
-        # Create analyzer and set the database directly
-        analyzer = AWSAPIThreatAnalyzer(use_remote_catalog=False)
-        analyzer.threat_db = aws_loader.threat_db
-        analyzer.catalog_loader = aws_loader
-        
-        print(f"✓ Loaded {len(analyzer.threat_db)} AWS threat techniques")
-        _force_reload = False
+        try:
+            print("Initializing analyzer with complete catalog...")
+            
+            # Check if threat_catalog.json exists
+            import os
+            catalog_path = "threat_catalog.json"
+            if not os.path.exists(catalog_path):
+                print(f"ERROR: {catalog_path} not found!")
+                print(f"Current directory: {os.getcwd()}")
+                print(f"Files in current directory: {os.listdir('.')}")
+                raise FileNotFoundError(f"Threat catalog file not found: {catalog_path}")
+            
+            print(f"Found threat catalog file: {catalog_path}")
+            
+            # Initialize with AWS complete catalog loader
+            aws_loader = AWSCompleteThreatCatalogLoader()
+            aws_loader.load_catalog_from_file(catalog_path)
+            
+            # Create analyzer and set the database directly
+            analyzer = AWSAPIThreatAnalyzer(use_remote_catalog=False)
+            analyzer.threat_db = aws_loader.threat_db
+            analyzer.catalog_loader = aws_loader
+            
+            print(f"✓ Loaded {len(analyzer.threat_db)} AWS threat techniques")
+            _force_reload = False
+            
+        except Exception as e:
+            print(f"ERROR initializing analyzer: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            raise
     return analyzer
 
 # Create directories for static files and templates
@@ -79,9 +98,15 @@ templates = Jinja2Templates(directory="templates")
 @app.on_event("startup")
 async def startup_event():
     """Initialize the analyzer on startup"""
-    print("Initializing AWS Threat Intelligence Analyzer...")
-    get_analyzer()
-    print("✓ Analyzer ready")
+    try:
+        print("Initializing AWS Threat Intelligence Analyzer...")
+        get_analyzer()
+        print("✓ Analyzer ready")
+    except Exception as e:
+        print(f"ERROR during startup: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        # Don't raise here, let the application start and handle errors gracefully
 
 # Web Interface Routes
 @app.get("/", response_class=HTMLResponse)

@@ -36,6 +36,9 @@ COPY --from=builder /root/.local /home/appuser/.local
 # Copy application code
 COPY . .
 
+# Make startup script executable
+RUN chmod +x start.sh
+
 # Set ownership
 RUN chown -R appuser:appuser /app
 
@@ -54,5 +57,5 @@ ENV PORT=8000
 # Expose port
 EXPOSE 8000
 
-# Run the application
-CMD ["python3", "web_app.py"]
+# Run the application with debug script
+CMD ["./start.sh"]
