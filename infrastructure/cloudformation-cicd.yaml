@@ -128,13 +128,13 @@ Resources:
                   - s3:GetObjectVersion
                   - s3:PutObject
                 Resource: 
-                  - !Sub '${ArtifactsBucket}/*'
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
                   - !Sub 'arn:aws:s3:::${SourceBucket}/*'
               - Effect: Allow
                 Action:
                   - s3:ListBucket
                 Resource: 
-                  - !Ref ArtifactsBucket
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}'
                   - !Sub 'arn:aws:s3:::${SourceBucket}'
               - Effect: Allow
                 Action:
@@ -179,8 +179,8 @@ Resources:
                   - s3:GetBucketVersioning
                   - s3:ListBucket
                 Resource:
-                  - !Sub '${ArtifactsBucket}/*'
-                  - !Ref ArtifactsBucket
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}'
                   - !Sub 'arn:aws:s3:::${SourceBucket}/*'
                   - !Sub 'arn:aws:s3:::${SourceBucket}'
               - Effect: Allow
