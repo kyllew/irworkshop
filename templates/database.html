@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+
+{% block title %}Database - AWS Threat Intelligence Analyzer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-database"></i>
+            Threat Intelligence Database
+        </h1>
+    </div>
+</div>
+
+<!-- Search and Filters -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" id="searchInput" 
+                   placeholder="Search techniques, API calls, descriptions...">
+            <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select" id="tacticFilter">
+            <option value="">All Tactics</option>
+            <option value="Privilege Escalation">Privilege Escalation</option>
+            <option value="Persistence">Persistence</option>
+            <option value="Defense Evasion">Defense Evasion</option>
+            <option value="Discovery">Discovery</option>
+            <option value="Collection">Collection</option>
+            <option value="Exfiltration">Exfiltration</option>
+        </select>
+    </div>
+</div>
+
+<!-- Statistics Row -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h4 class="text-primary">{{ db_entries|length }}</h4>
+                <p class="card-text">Total Techniques</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h4 class="text-danger" id="criticalCount">0</h4>
+                <p class="card-text">Critical Severity</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h4 class="text-warning" id="highCount">0</h4>
+                <p class="card-text">High Severity</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h4 class="text-success" id="visibleCount">{{ db_entries|length }}</h4>
+                <p class="card-text">Visible</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Database Entries -->
+<div class="row" id="databaseEntries">
+    {% for entry in db_entries %}
+    <div class="col-md-6 col-lg-4 mb-4 database-entry" 
+         data-tactic="{{ entry.technique.tactic }}" 
+         data-severity="{{ entry.technique.severity }}"
+         data-search-text="{{ entry.api_call.lower() }} {{ entry.technique.technique_name.lower() }} {{ entry.technique.description.lower() }} {{ entry.technique.tactic.lower() }}">
+        
+        <div class="card technique-card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ entry.technique.technique_id }}</small>
+                <span class="badge bg-{% if entry.technique.severity == 'CRITICAL' %}danger{% elif entry.technique.severity == 'HIGH' %}warning{% elif entry.technique.severity == 'MEDIUM' %}info{% else %}success{% endif %}">
+                    {{ entry.technique.severity }}
+                </span>
+            </div>
+            
+            <div class="card-body">
+                <h6 class="card-title">{{ entry.technique.technique_name }}</h6>
+                
+                <div class="mb-2">
+                    <span class="badge bg-primary tactic-badge">{{ entry.technique.tactic }}</span>
+                    {% for service in entry.technique.aws_services %}
+                    <span class="badge bg-secondary tactic-badge ms-1">{{ service }}</span>
+                    {% endfor %}
+                </div>
+                
+                <p class="card-text small">
+                    {{ entry.technique.description[:150] }}{% if entry.technique.description|length > 150 %}...{% endif %}
+                </p>
+                
+                <div class="mb-2">
+                    <strong>API Call:</strong>
+                    <code class="api-call-code">{{ entry.api_call }}</code>
+                </div>
+                
+                <div class="mb-2">
+                    <strong>Detection Methods:</strong>
+                    <small class="text-muted">{{ entry.technique.detection_methods|length }} methods</small>
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <button class="btn btn-sm btn-outline-primary" 
+                        onclick="showTechniqueDetails('{{ entry.api_call }}')">
+                    <i class="fas fa-eye"></i> View Details
+                </button>
+                
+                <button class="btn btn-sm btn-outline-success" 
+                        onclick="analyzeTechnique('{{ entry.api_call }}')">
+                    <i class="fas fa-search"></i> Analyze
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- No Results Message -->
+<div id="noResults" class="text-center py-5" style="display: none;">
+    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+    <h4 class="text-muted">No techniques found</h4>
+    <p class="text-muted">Try adjusting your search criteria or filters</p>
+</div>
+
+<!-- Technique Details Modal -->
+<div class="modal fade" id="techniqueModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="techniqueModalTitle">Technique Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="techniqueModalBody">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="analyzeFromModal">
+                    <i class="fas fa-search"></i> Analyze This API
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let allEntries = [];
+    let currentApiCall = '';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeDatabase();
+        setupSearch();
+        setupFilters();
+        updateCounts();
+    });
+    
+    function initializeDatabase() {
+        allEntries = Array.from(document.querySelectorAll('.database-entry'));
+    }
+    
+    function setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const clearButton = document.getElementById('clearSearch');
+        
+        searchInput.addEventListener('input', function() {
+            filterEntries();
+        });
+        
+        clearButton.addEventListener('click', function() {
+            searchInput.value = '';
+            document.getElementById('tacticFilter').value = '';
+            filterEntries();
+        });
+    }
+    
+    function setupFilters() {
+        document.getElementById('tacticFilter').addEventListener('change', function() {
+            filterEntries();
+        });
+    }
+    
+    function filterEntries() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const tacticFilter = document.getElementById('tacticFilter').value;
+        
+        let visibleCount = 0;
+        
+        allEntries.forEach(entry => {
+            const searchText = entry.dataset.searchText;
+            const tactic = entry.dataset.tactic;
+            
+            const matchesSearch = !searchTerm || searchText.includes(searchTerm);
+            const matchesTactic = !tacticFilter || tactic === tacticFilter;
+            
+            if (matchesSearch && matchesTactic) {
+                entry.style.display = 'block';
+                visibleCount++;
+            } else {
+                entry.style.display = 'none';
+            }
+        });
+        
+        // Update visible count
+        document.getElementById('visibleCount').textContent = visibleCount;
+        
+        // Show/hide no results message
+        const noResults = document.getElementById('noResults');
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    }
+    
+    function updateCounts() {
+        let criticalCount = 0;
+        let highCount = 0;
+        
+        allEntries.forEach(entry => {
+            const severity = entry.dataset.severity;
+            if (severity === 'CRITICAL') criticalCount++;
+            if (severity === 'HIGH') highCount++;
+        });
+        
+        document.getElementById('criticalCount').textContent = criticalCount;
+        document.getElementById('highCount').textContent = highCount;
+    }
+    
+    function showTechniqueDetails(apiCall) {
+        currentApiCall = apiCall;
+        
+        // Show loading state
+        document.getElementById('techniqueModalTitle').textContent = 'Loading...';
+        document.getElementById('techniqueModalBody').innerHTML = `
+            <div class="text-center">
+                <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                <p>Loading technique details...</p>
+            </div>
+        `;
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('techniqueModal'));
+        modal.show();
+        
+        // Fetch details
+        fetch('/api/analyze/single', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ api_call: apiCall })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.technique_found) {
+                displayTechniqueDetails(data.technique_info);
+            } else {
+                document.getElementById('techniqueModalBody').innerHTML = `
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Technique details not found
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            document.getElementById('techniqueModalBody').innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-times"></i>
+                    Error loading technique details: ${error.message}
+                </div>
+            `;
+        });
+    }
+    
+    function displayTechniqueDetails(technique) {
+        document.getElementById('techniqueModalTitle').textContent = technique.technique_name;
+        
+        const modalBody = document.getElementById('techniqueModalBody');
+        modalBody.innerHTML = `
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Technique ID:</strong> ${technique.technique_id}
+                </div>
+                <div class="col-md-6">
+                    <strong>Severity:</strong> 
+                    <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Tactic:</strong> 
+                    <span class="badge bg-primary">${technique.tactic}</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>AWS Services:</strong>
+                    ${technique.aws_services.map(service => `<span class="badge bg-secondary me-1">${service}</span>`).join('')}
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <strong>Description:</strong>
+                <p class="mt-2">${technique.description}</p>
+            </div>
+            
+            <div class="mb-3">
+                <strong>Related API Calls:</strong>
+                <div class="mt-2">
+                    ${technique.api_calls.map(api => `<code class="api-call-code me-2 mb-2 d-inline-block">${api}</code>`).join('')}
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <strong>Detection Methods:</strong>
+                <ul class="mt-2">
+                    ${technique.detection_methods.map(method => `<li>${method}</li>`).join('')}
+                </ul>
+            </div>
+            
+            <div class="mb-3">
+                <strong>Mitigation:</strong>
+                <p class="mt-2">${technique.mitigation}</p>
+            </div>
+            
+            ${technique.references && technique.references.length > 0 ? `
+                <div class="mb-3">
+                    <strong>References:</strong>
+                    <div class="mt-2">
+                        ${technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-external-link-alt"></i> View Reference</a>`).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            
+            ${technique.playbook_url ? `
+                <div class="mb-3">
+                    <strong>Playbook:</strong>
+                    <div class="mt-2">
+                        <a href="${technique.playbook_url}" target="_blank" class="btn btn-sm btn-outline-info">
+                            <i class="fas fa-book"></i> View Playbook
+                        </a>
+                    </div>
+                </div>
+            ` : ''}
+        `;
+    }
+    
+    function analyzeTechnique(apiCall) {
+        // Navigate to analyze page with pre-filled API call
+        window.location.href = `/analyze?api=${encodeURIComponent(apiCall)}`;
+    }
+    
+    // Handle analyze button in modal
+    document.getElementById('analyzeFromModal').addEventListener('click', function() {
+        if (currentApiCall) {
+            analyzeTechnique(currentApiCall);
+        }
+    });
+    
+    function getSeverityBadgeClass(severity) {
+        const severityMap = {
+            'CRITICAL': 'danger',
+            'HIGH': 'warning',
+            'MEDIUM': 'info',
+            'LOW': 'success'
+        };
+        return severityMap[severity] || 'secondary';
+    }
+    
+    // Handle URL parameters for pre-filling search
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const tacticParam = urlParams.get('tactic');
+    
+    if (searchParam) {
+        document.getElementById('searchInput').value = searchParam;
+    }
+    if (tacticParam) {
+        document.getElementById('tacticFilter').value = tacticParam;
+    }
+    
+    if (searchParam || tacticParam) {
+        filterEntries();
+    }
+</script>
+{% endblock %}

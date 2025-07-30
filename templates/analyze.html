@@ -1,0 +1,515 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis - AWS Threat Intelligence Analyzer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-search"></i>
+            Threat Analysis
+        </h1>
+    </div>
+</div>
+
+<!-- Analysis Tabs -->
+<ul class="nav nav-tabs mb-4" id="analysisTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="single-tab" data-bs-toggle="tab" data-bs-target="#single" type="button" role="tab">
+            <i class="fas fa-search"></i> Single API Call
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="sequence-tab" data-bs-toggle="tab" data-bs-target="#sequence" type="button" role="tab">
+            <i class="fas fa-list"></i> API Sequence
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="cloudtrail-tab" data-bs-toggle="tab" data-bs-target="#cloudtrail" type="button" role="tab">
+            <i class="fas fa-cloud"></i> CloudTrail Logs
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="analysisTabContent">
+    <!-- Single API Call Analysis -->
+    <div class="tab-pane fade show active" id="single" role="tabpanel">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-search"></i>
+                            Single API Call Analysis
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="singleAnalysisForm">
+                            <div class="mb-3">
+                                <label for="singleApiCall" class="form-label">AWS API Call</label>
+                                <input type="text" class="form-control" id="singleApiCall" 
+                                       placeholder="e.g., iam:CreateUser, s3:GetObject, ec2:RunInstances"
+                                       autocomplete="off">
+                                <div class="form-text">
+                                    Enter an AWS API call in the format service:action
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Analyze
+                            </button>
+                        </form>
+                        
+                        <!-- Common API Calls -->
+                        <div class="mt-4">
+                            <h6>Common API Calls:</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-sm btn-outline-secondary api-suggestion" data-api="iam:CreateUser">iam:CreateUser</button>
+                                <button class="btn btn-sm btn-outline-secondary api-suggestion" data-api="iam:AttachUserPolicy">iam:AttachUserPolicy</button>
+                                <button class="btn btn-sm btn-outline-secondary api-suggestion" data-api="iam:CreateAccessKey">iam:CreateAccessKey</button>
+                                <button class="btn btn-sm btn-outline-secondary api-suggestion" data-api="cloudtrail:StopLogging">cloudtrail:StopLogging</button>
+                                <button class="btn btn-sm btn-outline-secondary api-suggestion" data-api="sts:GetCallerIdentity">sts:GetCallerIdentity</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div id="singleAnalysisResult" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- API Sequence Analysis -->
+    <div class="tab-pane fade" id="sequence" role="tabpanel">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-list"></i>
+                            API Sequence Analysis
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="sequenceAnalysisForm">
+                            <div class="mb-3">
+                                <label for="apiSequence" class="form-label">API Call Sequence</label>
+                                <textarea class="form-control" id="apiSequence" rows="6" 
+                                          placeholder="Enter API calls, one per line:&#10;iam:CreateUser&#10;iam:AttachUserPolicy&#10;iam:CreateAccessKey"></textarea>
+                                <div class="form-text">
+                                    Enter each API call on a separate line
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="analysisContext" class="form-label">Context (Optional)</label>
+                                <input type="text" class="form-control" id="analysisContext" 
+                                       placeholder="e.g., Incident #12345, User: john.doe">
+                                <div class="form-text">
+                                    Additional context for the analysis
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Analyze Sequence
+                            </button>
+                            
+                            <button type="button" class="btn btn-secondary ms-2" id="loadExampleSequence">
+                                <i class="fas fa-file-import"></i> Load Example
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div id="sequenceAnalysisResult" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CloudTrail Analysis -->
+    <div class="tab-pane fade" id="cloudtrail" role="tabpanel">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-cloud"></i>
+                    CloudTrail Log Analysis
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Coming Soon:</strong> CloudTrail log analysis will automatically extract API calls from CloudTrail JSON logs and analyze them for threats.
+                </div>
+                
+                <form id="cloudtrailForm">
+                    <div class="mb-3">
+                        <label for="cloudtrailLogs" class="form-label">CloudTrail JSON Logs</label>
+                        <textarea class="form-control" id="cloudtrailLogs" rows="10" 
+                                  placeholder="Paste CloudTrail JSON logs here..." disabled></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" disabled>
+                        <i class="fas fa-cloud"></i> Analyze CloudTrail Logs
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setupSingleAnalysis();
+        setupSequenceAnalysis();
+        setupApiSuggestions();
+        setupExampleLoader();
+    });
+    
+    function setupSingleAnalysis() {
+        document.getElementById('singleAnalysisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const apiCall = document.getElementById('singleApiCall').value.trim();
+            if (!apiCall) {
+                showToast('Please enter an API call', 'warning');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('singleAnalysisResult');
+            resultDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                        <p>Analyzing API call...</p>
+                    </div>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+            
+            fetch('/api/analyze/single', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ api_call: apiCall })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displaySingleAnalysisResult(data);
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-times"></i>
+                                Error analyzing API call: ${error.message}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+    
+    function displaySingleAnalysisResult(data) {
+        const resultDiv = document.getElementById('singleAnalysisResult');
+        
+        if (data.technique_found) {
+            const technique = data.technique_info;
+            resultDiv.innerHTML = `
+                <div class="card technique-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Threat Analysis Result</h6>
+                        <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${technique.technique_name}</h5>
+                        <p class="text-muted mb-2">${technique.technique_id}</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary tactic-badge">${technique.tactic}</span>
+                            ${technique.aws_services.map(service => `<span class="badge bg-secondary tactic-badge ms-1">${service}</span>`).join('')}
+                        </div>
+                        
+                        <p class="card-text">${technique.description}</p>
+                        
+                        <div class="accordion" id="techniqueAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detectionMethods">
+                                        <i class="fas fa-eye me-2"></i> Detection Methods
+                                    </button>
+                                </h2>
+                                <div id="detectionMethods" class="accordion-collapse collapse" data-bs-parent="#techniqueAccordion">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            ${technique.detection_methods.map(method => `<li><i class="fas fa-check-circle text-success me-2"></i>${method}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mitigation">
+                                        <i class="fas fa-shield-alt me-2"></i> Mitigation
+                                    </button>
+                                </h2>
+                                <div id="mitigation" class="accordion-collapse collapse" data-bs-parent="#techniqueAccordion">
+                                    <div class="accordion-body">
+                                        <p>${technique.mitigation}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#relatedApis">
+                                        <i class="fas fa-link me-2"></i> Related API Calls
+                                    </button>
+                                </h2>
+                                <div id="relatedApis" class="accordion-collapse collapse" data-bs-parent="#techniqueAccordion">
+                                    <div class="accordion-body">
+                                        ${technique.api_calls.map(api => `<span class="api-call-code me-2 mb-2 d-inline-block">${api}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${technique.references && technique.references.length > 0 ? `
+                            <div class="mt-3">
+                                <h6>References:</h6>
+                                ${technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-external-link-alt"></i> MITRE ATT&CK</a>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>No Threat Intelligence Found</strong>
+                            <p class="mb-0 mt-2">The API call <code>${data.api_call}</code> is not currently in our threat database. This doesn't necessarily mean it's safe - it might be a legitimate API call or one that hasn't been cataloged yet.</p>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h6>Suggestions:</h6>
+                            <ul>
+                                <li>Check the API call spelling and format</li>
+                                <li>Try analyzing it as part of a sequence</li>
+                                <li>Consult AWS documentation for this API call</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    function setupSequenceAnalysis() {
+        document.getElementById('sequenceAnalysisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const apiSequenceText = document.getElementById('apiSequence').value.trim();
+            const context = document.getElementById('analysisContext').value.trim();
+            
+            if (!apiSequenceText) {
+                showToast('Please enter API calls', 'warning');
+                return;
+            }
+            
+            const apiCalls = apiSequenceText.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+            
+            if (apiCalls.length === 0) {
+                showToast('Please enter valid API calls', 'warning');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('sequenceAnalysisResult');
+            resultDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                        <p>Analyzing API sequence...</p>
+                    </div>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+            
+            fetch('/api/analyze/sequence', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    api_calls: apiCalls,
+                    context: context || null
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displaySequenceAnalysisResult(data);
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-times"></i>
+                                Error analyzing sequence: ${error.message}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    }
+    
+    function displaySequenceAnalysisResult(data) {
+        const resultDiv = document.getElementById('sequenceAnalysisResult');
+        const riskClass = getRiskScoreClass(data.risk_score);
+        
+        let html = `
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Sequence Analysis Result</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="risk-score ${riskClass}">${data.risk_score}</div>
+                        <div class="text-muted">Risk Score (0-100)</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="text-center">
+                                <h5>${data.tactics_identified.length}</h5>
+                                <small class="text-muted">Tactics Identified</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center">
+                                <h5>${data.attack_chains.length}</h5>
+                                <small class="text-muted">Attack Chains</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>Tactics Identified:</h6>
+                        ${data.tactics_identified.map(tactic => `<span class="badge bg-primary me-1">${tactic}</span>`).join('')}
+                    </div>
+        `;
+        
+        if (data.attack_chains.length > 0) {
+            html += `
+                <div class="mb-3">
+                    <h6>Attack Chains Detected:</h6>
+                    ${data.attack_chains.map(chain => `
+                        <div class="alert alert-${chain.severity === 'CRITICAL' ? 'danger' : chain.severity === 'HIGH' ? 'warning' : 'info'} mb-2">
+                            <strong>${chain.chain_name}</strong> (${chain.severity})
+                            <p class="mb-1">${chain.description}</p>
+                            <small>Calls: ${chain.calls_involved.join(', ')}</small>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        html += `
+                    <div class="accordion" id="sequenceAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#individualCalls">
+                                    <i class="fas fa-list me-2"></i> Individual Call Analysis (${data.individual_calls.length})
+                                </button>
+                            </h2>
+                            <div id="individualCalls" class="accordion-collapse collapse show" data-bs-parent="#sequenceAccordion">
+                                <div class="accordion-body">
+                                    ${data.individual_calls.map(call => `
+                                        <div class="card mb-2">
+                                            <div class="card-body py-2">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <code>${call.api_call}</code>
+                                                        <small class="text-muted d-block">${call.technique_name}</small>
+                                                    </div>
+                                                    <div>
+                                                        <span class="badge bg-secondary">${call.tactic}</span>
+                                                        <span class="badge bg-${getSeverityBadgeClass(call.severity)}">${call.severity}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 text-center">
+                        <button class="btn btn-primary" onclick="generateReport()">
+                            <i class="fas fa-file-alt"></i> Generate Full Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        resultDiv.innerHTML = html;
+    }
+    
+    function setupApiSuggestions() {
+        document.querySelectorAll('.api-suggestion').forEach(button => {
+            button.addEventListener('click', function() {
+                document.getElementById('singleApiCall').value = this.dataset.api;
+            });
+        });
+    }
+    
+    function setupExampleLoader() {
+        document.getElementById('loadExampleSequence').addEventListener('click', function() {
+            const exampleSequence = `iam:CreateUser
+iam:AttachUserPolicy
+iam:CreateAccessKey
+sts:GetCallerIdentity`;
+            
+            document.getElementById('apiSequence').value = exampleSequence;
+            document.getElementById('analysisContext').value = 'Example privilege escalation sequence';
+        });
+    }
+    
+    function generateReport() {
+        const apiSequenceText = document.getElementById('apiSequence').value.trim();
+        const apiCalls = apiSequenceText.split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
+        
+        if (apiCalls.length === 0) return;
+        
+        const apiCallsParam = apiCalls.join(',');
+        window.open(`/api/reports/generate?api_calls=${encodeURIComponent(apiCallsParam)}&format=markdown`, '_blank');
+    }
+    
+    function getSeverityBadgeClass(severity) {
+        const severityMap = {
+            'CRITICAL': 'danger',
+            'HIGH': 'warning',
+            'MEDIUM': 'info',
+            'LOW': 'success'
+        };
+        return severityMap[severity] || 'secondary';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - AWS Threat Intelligence Analyzer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-tachometer-alt"></i>
+            Threat Intelligence Dashboard
+        </h1>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.total_techniques }}</h4>
+                        <p class="card-text">Total Techniques</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-database fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.tactic_counts|length }}</h4>
+                        <p class="card-text">MITRE Tactics</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-bullseye fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.severity_counts.get('CRITICAL', 0) + stats.severity_counts.get('HIGH', 0) }}</h4>
+                        <p class="card-text">High Risk Techniques</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title" id="analysis-count">0</h4>
+                        <p class="card-text">Analyses Today</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-pie"></i>
+                    Techniques by Tactic
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="tacticChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar"></i>
+                    Severity Distribution
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="severityChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Analysis Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-bolt"></i>
+                    Quick Analysis
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="quickAnalysisForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="quickApiCall" 
+                                   placeholder="Enter AWS API call (e.g., iam:CreateUser)" 
+                                   autocomplete="off">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-search"></i> Analyze
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="quickAnalysisResult" class="mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity / System Status -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clock"></i>
+                    System Status
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Threat Database</span>
+                    <span class="badge bg-success">Online</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>API Endpoints</span>
+                    <span class="badge bg-success">Healthy</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Last Database Update</span>
+                    <span class="text-muted" id="lastUpdate">Loading...</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Response Time</span>
+                    <span class="text-success" id="responseTime">< 100ms</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-link"></i>
+                    Quick Links
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/analyze" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> Full Analysis
+                    </a>
+                    <a href="/database" class="btn btn-outline-info">
+                        <i class="fas fa-database"></i> Browse Database
+                    </a>
+                    <a href="https://attack.mitre.org/" target="_blank" class="btn btn-outline-secondary">
+                        <i class="fas fa-external-link-alt"></i> MITRE ATT&CK
+                    </a>
+                    <a href="https://aws-samples.github.io/threat-technique-catalog-for-aws/" target="_blank" class="btn btn-outline-secondary">
+                        <i class="fas fa-external-link-alt"></i> AWS Threat Catalog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize charts
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tactic distribution chart
+        const tacticData = {{ stats.tactic_counts | tojson }};
+        const tacticCtx = document.getElementById('tacticChart').getContext('2d');
+        new Chart(tacticCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(tacticData),
+                datasets: [{
+                    data: Object.values(tacticData),
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB', 
+                        '#FFCE56',
+                        '#4BC0C0',
+                        '#9966FF',
+                        '#FF9F40'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+        
+        // Severity distribution chart
+        const severityData = {{ stats.severity_counts | tojson }};
+        const severityCtx = document.getElementById('severityChart').getContext('2d');
+        new Chart(severityCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(severityData),
+                datasets: [{
+                    label: 'Count',
+                    data: Object.values(severityData),
+                    backgroundColor: [
+                        '#dc3545', // CRITICAL
+                        '#fd7e14', // HIGH
+                        '#ffc107', // MEDIUM
+                        '#28a745'  // LOW
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Load system status
+        loadSystemStatus();
+        
+        // Set up quick analysis form
+        setupQuickAnalysis();
+    });
+    
+    function loadSystemStatus() {
+        fetch('/api/database/stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('lastUpdate').textContent = 
+                    new Date(data.last_updated).toLocaleString();
+            })
+            .catch(error => {
+                document.getElementById('lastUpdate').textContent = 'Error loading';
+            });
+    }
+    
+    function setupQuickAnalysis() {
+        document.getElementById('quickAnalysisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const apiCall = document.getElementById('quickApiCall').value.trim();
+            if (!apiCall) return;
+            
+            const resultDiv = document.getElementById('quickAnalysisResult');
+            resultDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Analyzing...</div>';
+            resultDiv.style.display = 'block';
+            
+            fetch('/api/analyze/single', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ api_call: apiCall })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.technique_found) {
+                    const technique = data.technique_info;
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-info">
+                            <h6><strong>${technique.technique_name}</strong> (${technique.technique_id})</h6>
+                            <p class="mb-2">${technique.description}</p>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-secondary">${technique.tactic}</span>
+                                <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            No threat intelligence found for <code>${apiCall}</code>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-times"></i>
+                        Error analyzing API call: ${error.message}
+                    </div>
+                `;
+            });
+        });
+    }
+    
+    function getSeverityBadgeClass(severity) {
+        const severityMap = {
+            'CRITICAL': 'danger',
+            'HIGH': 'warning',
+            'MEDIUM': 'info',
+            'LOW': 'success'
+        };
+        return severityMap[severity] || 'secondary';
+    }
+</script>
+{% endblock %}
