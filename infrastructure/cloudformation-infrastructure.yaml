@@ -261,14 +261,14 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       Name: !Sub 'threat-analyzer-tg'
-      Port: 80
+      Port: 8000
       Protocol: HTTP
       VpcId: !Ref VPC
       TargetType: ip
       HealthCheckIntervalSeconds: 30
-      HealthCheckPath: /
+      HealthCheckPath: /health
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5
+      HealthCheckTimeoutSeconds: 10
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 3
       Matcher:
@@ -327,7 +327,7 @@ Resources:
           Image: !Ref ContainerImage
           Essential: true
           PortMappings:
-            - ContainerPort: 80
+            - ContainerPort: 8000
               Protocol: tcp
           Environment:
             - Name: ENVIRONMENT
@@ -342,14 +342,6 @@ Resources:
               awslogs-group: !Ref CloudWatchLogGroup
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: ecs
-          HealthCheck:
-            Command:
-              - CMD-SHELL
-              - 'curl -f http://localhost:80/ || exit 1'
-            Interval: 30
-            Timeout: 5
-            Retries: 3
-            StartPeriod: 60
       Tags:
         - Key: Name
           Value: !Sub '${AWS::StackName}-task'
@@ -373,7 +365,7 @@ Resources:
             - !Ref PrivateSubnet2
       LoadBalancers:
         - ContainerName: threat-analyzer
-          ContainerPort: 80
+          ContainerPort: 8000
           TargetGroupArn: !Ref ALBTargetGroup
       DeploymentConfiguration:
         MaximumPercent: 200
