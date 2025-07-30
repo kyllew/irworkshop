@@ -336,52 +336,52 @@ Resources:
                 - Name: BuildOutput
 
   # ============================================================================
-  # CloudWatch Event Rule for S3 Changes (Optional)
+  # CloudWatch Event Rule for S3 Changes (Optional) - Commented out for now
   # ============================================================================
-  S3SourceEventRule:
-    Type: AWS::Events::Rule
-    Properties:
-      Name: !Sub '${AWS::StackName}-s3-source-change'
-      Description: 'Trigger pipeline when source code is updated in S3'
-      EventPattern:
-        source:
-          - aws.s3
-        detail-type:
-          - Object Created
-        detail:
-          bucket:
-            name:
-              - !Ref SourceBucket
-          object:
-            key:
-              - !Ref SourceKey
-      State: ENABLED
-      Targets:
-        - Arn: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
-          Id: S3SourceTarget
-          RoleArn: !GetAtt CloudWatchEventRole.Arn
+  # S3SourceEventRule:
+  #   Type: AWS::Events::Rule
+  #   Properties:
+  #     Name: !Sub '${AWS::StackName}-s3-source-change'
+  #     Description: 'Trigger pipeline when source code is updated in S3'
+  #     EventPattern:
+  #       source:
+  #         - aws.s3
+  #       detail-type:
+  #         - Object Created
+  #       detail:
+  #         bucket:
+  #           name:
+  #             - !Ref SourceBucket
+  #         object:
+  #           key:
+  #             - !Ref SourceKey
+  #     State: ENABLED
+  #     Targets:
+  #       - Arn: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
+  #         Id: S3SourceTarget
+  #         RoleArn: !GetAtt CloudWatchEventRole.Arn
 
-  # IAM Role for CloudWatch Events
-  CloudWatchEventRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub '${AWS::StackName}-cloudwatch-event-role'
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: events.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: StartPipelinePolicy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - codepipeline:StartPipelineExecution
-                Resource: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
+  # IAM Role for CloudWatch Events (Commented out for now)
+  # CloudWatchEventRole:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     RoleName: !Sub '${AWS::StackName}-cloudwatch-event-role'
+  #     AssumeRolePolicyDocument:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service: events.amazonaws.com
+  #           Action: sts:AssumeRole
+  #     Policies:
+  #       - PolicyName: StartPipelinePolicy
+  #         PolicyDocument:
+  #           Version: '2012-10-17'
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - codepipeline:StartPipelineExecution
+  #               Resource: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
 
   # ============================================================================
   # CloudWatch Alarms
