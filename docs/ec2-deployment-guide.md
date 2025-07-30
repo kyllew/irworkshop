@@ -64,11 +64,11 @@ aws ssm start-session --target i-xxxxxxxxx
 # Update system
 sudo yum update -y
 
-# Install git
+# Install git (if not already installed by the script)
 sudo yum install -y git
 
 # Clone your repository
-git clone https://github.com/your-username/irworkshop.git
+git clone https://github.com/kyllew/irworkshop.git
 cd irworkshop
 
 # Make deployment script executable

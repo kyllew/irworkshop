@@ -43,6 +43,13 @@ print_info() {
 check_prerequisites() {
     print_info "Checking prerequisites..."
     
+    # Check and install Git
+    if ! command -v git &> /dev/null; then
+        print_info "Git is not installed. Installing..."
+        sudo yum update -y
+        sudo yum install -y git
+    fi
+    
     # Check AWS CLI
     if ! command -v aws &> /dev/null; then
         print_error "AWS CLI is not installed. Installing..."
@@ -67,6 +74,12 @@ check_prerequisites() {
     if ! command -v jq &> /dev/null; then
         print_info "Installing jq..."
         sudo yum install -y jq
+    fi
+    
+    # Check zip (for creating source archives)
+    if ! command -v zip &> /dev/null; then
+        print_info "Installing zip..."
+        sudo yum install -y zip
     fi
     
     print_status "Prerequisites check completed"
