@@ -1,10 +1,12 @@
-# AWS Threat Intelligence Analyzer
+# AWS Threat Catalog
+
+> **⚠️ DISCLAIMER: This is not an official AWS source and is for educational purposes only.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 
-A comprehensive web application for analyzing AWS API calls against the MITRE ATT&CK framework and AWS threat intelligence catalog. Built for security analysts and incident responders.
+An educational web application for analyzing AWS API calls against the MITRE ATT&CK framework. This tool is designed for learning and educational purposes to help understand AWS security threats and is not an official AWS source.
 
 ## 🏗️ Architecture
 

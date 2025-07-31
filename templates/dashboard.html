@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - AWS Threat Intelligence Analyzer{% endblock %}
+{% block title %}Dashboard - AWS Threat Catalog{% endblock %}
 
 {% block content %}
+<!-- Disclaimer Banner -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Educational Tool:</strong> This is not an official AWS source and is for educational purposes only.
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <h1 class="mb-4">
             <i class="fas fa-tachometer-alt"></i>
-            Threat Intelligence Dashboard
+            AWS Threat Catalog Dashboard
         </h1>
     </div>
 </div>
@@ -104,6 +114,7 @@
                 <h5 class="card-title mb-0">
                     <i class="fas fa-chart-bar"></i>
                     Severity Distribution
+                    <small class="text-muted">(Click on bars to see details)</small>
                 </h5>
             </div>
             <div class="card-body">
@@ -127,9 +138,12 @@
                 <form id="quickAnalysisForm">
                     <div class="row">
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="quickApiCall" 
-                                   placeholder="Enter AWS API call (e.g., iam:CreateUser)" 
-                                   autocomplete="off">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="quickApiCall" 
+                                       placeholder="Enter AWS API call (e.g., iam:CreateUser)" 
+                                       autocomplete="off">
+                                <div id="autocompleteDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary w-100">
@@ -199,6 +213,51 @@
                         <i class="fas fa-external-link-alt"></i> AWS Threat Catalog
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Severity Details Modal -->
+<div class="modal fade" id="severityModal" tabindex="-1" aria-labelledby="severityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="severityModalLabel">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="modalSeverityName"></span> Severity Techniques
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Total Techniques:</strong> <span id="modalSeverityCount"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Risk Level:</strong> <span id="modalSeverityDescription"></span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Technique ID</th>
+                                <th>Name</th>
+                                <th>Tactic</th>
+                                <th>API Calls</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalSeverityTechniquesList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="exportSeverityData()">
+                    <i class="fas fa-download"></i> Export
+                </button>
             </div>
         </div>
     </div>
@@ -298,7 +357,7 @@
         // Severity distribution chart
         const severityData = {{ stats.severity_counts | tojson }};
         const severityCtx = document.getElementById('severityChart').getContext('2d');
-        new Chart(severityCtx, {
+        window.severityChart = new Chart(severityCtx, {
             type: 'bar',
             data: {
                 labels: Object.keys(severityData),
@@ -318,9 +377,20 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                return 'Click to see details';
+                            }
+                        }
                     }
                 },
                 scales: {
@@ -338,6 +408,21 @@
                             display: false
                         }
                     }
+                },
+                onClick: function(event, elements) {
+                    console.log('Chart clicked!', event, elements);
+                    if (elements && elements.length > 0) {
+                        const index = elements[0].index;
+                        const severityLevel = Object.keys(severityData)[index];
+                        console.log('Clicked severity level:', severityLevel);
+                        showSeverityDetails(severityLevel);
+                    } else {
+                        console.log('No elements found in click');
+                    }
+                },
+                onHover: function(event, elements) {
+                    const canvas = event.chart.canvas;
+                    canvas.style.cursor = elements.length > 0 ? 'pointer' : 'default';
                 }
             }
         });
@@ -362,6 +447,138 @@
     }
     
     function setupQuickAnalysis() {
+        const apiCallInput = document.getElementById('quickApiCall');
+        const dropdown = document.getElementById('autocompleteDropdown');
+        let currentSuggestions = [];
+        let selectedIndex = -1;
+        let debounceTimer = null;
+        
+        // Setup autocomplete functionality
+        apiCallInput.addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            
+            // Clear previous timer
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            
+            // Debounce the API call
+            debounceTimer = setTimeout(() => {
+                if (query.length >= 2) {
+                    fetchAutocompleteSuggestions(query);
+                } else {
+                    hideDropdown();
+                }
+            }, 300);
+        });
+        
+        // Handle keyboard navigation
+        apiCallInput.addEventListener('keydown', function(e) {
+            if (dropdown.style.display === 'none') return;
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, currentSuggestions.length - 1);
+                    updateSelection();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, -1);
+                    updateSelection();
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && currentSuggestions[selectedIndex]) {
+                        selectSuggestion(currentSuggestions[selectedIndex].api_call);
+                    }
+                    break;
+                case 'Escape':
+                    hideDropdown();
+                    break;
+            }
+        });
+        
+        // Hide dropdown when clicking outside (with delay to allow item clicks)
+        document.addEventListener('click', function(e) {
+            // Don't hide immediately if clicking on dropdown items
+            if (dropdown.contains(e.target)) {
+                return;
+            }
+            
+            if (!apiCallInput.contains(e.target)) {
+                // Small delay to allow click events to process
+                setTimeout(() => {
+                    hideDropdown();
+                }, 100);
+            }
+        });
+        
+        function fetchAutocompleteSuggestions(query) {
+            fetch(`/api/database/autocomplete?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentSuggestions = data.suggestions || [];
+                    displaySuggestions(currentSuggestions);
+                })
+                .catch(error => {
+                    console.error('Error fetching autocomplete suggestions:', error);
+                    hideDropdown();
+                });
+        }
+        
+        function displaySuggestions(suggestions) {
+            if (suggestions.length === 0) {
+                hideDropdown();
+                return;
+            }
+            
+            dropdown.innerHTML = suggestions.map((suggestion, index) => `
+                <div class="autocomplete-item" data-index="${index}" data-api-call="${suggestion.api_call}">
+                    <span class="autocomplete-api-call">${suggestion.api_call}</span>
+                    <span class="autocomplete-service">${suggestion.service}</span>
+                </div>
+            `).join('');
+            
+            // Add click event listeners to each item
+            dropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const apiCall = this.getAttribute('data-api-call');
+                    selectSuggestion(apiCall);
+                });
+            });
+            
+            selectedIndex = -1;
+            dropdown.style.display = 'block';
+        }
+        
+        function updateSelection() {
+            const items = dropdown.querySelectorAll('.autocomplete-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === selectedIndex);
+            });
+        }
+        
+        function selectSuggestion(apiCall) {
+            if (apiCall) {
+                apiCallInput.value = apiCall;
+                hideDropdown();
+                // Small delay to ensure dropdown is hidden before focusing
+                setTimeout(() => {
+                    apiCallInput.focus();
+                }, 50);
+            }
+        }
+        
+        function hideDropdown() {
+            dropdown.style.display = 'none';
+            selectedIndex = -1;
+            currentSuggestions = [];
+        }
+        
+        // Original form submission handler
         document.getElementById('quickAnalysisForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -388,13 +605,72 @@
                 if (data.technique_found) {
                     const technique = data.technique_info;
                     resultHtml += `
-                        <div class="alert alert-success">
-                            <h6><i class="fas fa-exact-match"></i> <strong>Exact Match Found</strong></h6>
-                            <h6><strong>${technique.technique_name}</strong> (${technique.technique_id})</h6>
-                            <p class="mb-2">${technique.description}</p>
-                            <div class="d-flex gap-2">
-                                <span class="badge bg-secondary">${technique.tactic}</span>
-                                <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                        <div class="card border-success mb-3">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-bullseye"></i> <strong>Exact Match Found</strong></h6>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">${technique.technique_name} <small class="text-muted">(${technique.technique_id})</small></h5>
+                                <p class="card-text">${technique.description}</p>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Tactic:</strong> <span class="badge bg-secondary">${technique.tactic}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Severity:</strong> <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <strong>AWS Services:</strong>
+                                        <div class="mt-1">
+                                            ${technique.aws_services.map(service => `<span class="badge bg-info me-1">${service}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <strong>API Calls:</strong>
+                                        <div class="mt-1">
+                                            ${technique.api_calls.map(api => `<code class="me-2">${api}</code>`).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <strong>Detection Methods:</strong>
+                                        <ul class="mt-2">
+                                            ${technique.detection_methods.map(method => `<li>${method}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <strong>Mitigation:</strong>
+                                        <p class="mt-2 alert alert-warning">${technique.mitigation}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>Resources:</strong>
+                                        <div class="mt-2">
+                                            ${technique.playbook_url ? `
+                                                <a href="${technique.playbook_url}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                                                    <i class="fas fa-book"></i> View Playbook
+                                                </a>
+                                            ` : ''}
+                                            <a href="${getAwsApiDocUrl(apiCall)}" target="_blank" class="btn btn-sm btn-outline-info">
+                                                <i class="fab fa-aws"></i> AWS API Documentation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -412,34 +688,46 @@
                             
                             if (relatedTechniques.length > 0) {
                                 resultHtml += `
-                                    <div class="alert alert-info">
-                                        <h6><i class="fas fa-search"></i> <strong>Related Attack Techniques</strong></h6>
-                                        <p class="mb-2">Found ${relatedTechniques.length} related techniques in the threat catalog:</p>
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-hover">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th>Technique ID</th>
-                                                        <th>Name</th>
-                                                        <th>Tactic</th>
-                                                        <th>Severity</th>
-                                                        <th>API Call</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    ${relatedTechniques.slice(0, 10).map(technique => `
-                                                        <tr>
-                                                            <td><code>${technique.technique_id}</code></td>
-                                                            <td><strong>${technique.technique_name}</strong></td>
-                                                            <td><span class="badge bg-secondary">${technique.tactic}</span></td>
-                                                            <td><span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span></td>
-                                                            <td><code>${technique.api_call}</code></td>
-                                                        </tr>
-                                                    `).join('')}
-                                                </tbody>
-                                            </table>
+                                    <div class="card border-info mb-3">
+                                        <div class="card-header bg-info text-white">
+                                            <h6 class="mb-0"><i class="fas fa-search"></i> <strong>Related Attack Techniques</strong></h6>
                                         </div>
-                                        ${relatedTechniques.length > 10 ? `<p class="text-muted small">Showing first 10 of ${relatedTechniques.length} related techniques.</p>` : ''}
+                                        <div class="card-body">
+                                            <p class="mb-3">Found ${relatedTechniques.length} related techniques in the threat catalog:</p>
+                                            <div class="accordion" id="relatedTechniquesAccordion">
+                                                ${relatedTechniques.slice(0, 5).map((technique, index) => `
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="heading${index}">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                                                                <div class="d-flex justify-content-between align-items-center w-100 me-3">
+                                                                    <div>
+                                                                        <strong>${technique.technique_name}</strong> 
+                                                                        <small class="text-muted">(${technique.technique_id})</small>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="badge bg-secondary me-2">${technique.tactic}</span>
+                                                                        <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#relatedTechniquesAccordion">
+                                                            <div class="accordion-body">
+                                                                <p><strong>Description:</strong> ${technique.description}</p>
+                                                                <p><strong>API Call:</strong> <code>${technique.api_call}</code></p>
+                                                                <p><strong>AWS Services:</strong> ${technique.aws_services ? technique.aws_services.join(', ') : 'N/A'}</p>
+                                                                <div class="mt-3">
+                                                                    <button class="btn btn-sm btn-outline-primary" onclick="showTechniqueDetails('${technique.api_call}')">
+                                                                        <i class="fas fa-info-circle"></i> View Full Details
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                            ${relatedTechniques.length > 5 ? `<p class="text-muted small mt-3">Showing first 5 of ${relatedTechniques.length} related techniques. <a href="/database?q=${encodeURIComponent(apiCall)}">View all results</a></p>` : ''}
+                                        </div>
                                     </div>
                                 `;
                             }
@@ -479,8 +767,253 @@
         return severityMap[severity] || 'secondary';
     }
     
+    // Generate AWS API documentation URL
+    function getAwsApiDocUrl(apiCall) {
+        if (!apiCall || !apiCall.includes(':')) return null;
+        
+        const [service, action] = apiCall.split(':');
+        const serviceLower = service.toLowerCase();
+        
+        // AWS documentation URL patterns for different services
+        const serviceUrlMap = {
+            's3': `https://docs.aws.amazon.com/AmazonS3/latest/API/API_${action}.html`,
+            'iam': `https://docs.aws.amazon.com/IAM/latest/APIReference/API_${action}.html`,
+            'ec2': `https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_${action}.html`,
+            'lambda': `https://docs.aws.amazon.com/lambda/latest/api/API_${action}.html`,
+            'cloudtrail': `https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_${action}.html`,
+            'cloudformation': `https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_${action}.html`,
+            'rds': `https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_${action}.html`,
+            'dynamodb': `https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_${action}.html`,
+            'sns': `https://docs.aws.amazon.com/sns/latest/api/API_${action}.html`,
+            'sqs': `https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_${action}.html`,
+            'kms': `https://docs.aws.amazon.com/kms/latest/APIReference/API_${action}.html`,
+            'sts': `https://docs.aws.amazon.com/STS/latest/APIReference/API_${action}.html`,
+            'secretsmanager': `https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_${action}.html`,
+            'ssm': `https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_${action}.html`,
+            'route53': `https://docs.aws.amazon.com/Route53/latest/APIReference/API_${action}.html`,
+            'cloudwatch': `https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_${action}.html`,
+            'logs': `https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_${action}.html`,
+            'apigateway': `https://docs.aws.amazon.com/apigateway/latest/api/API_${action}.html`,
+            'elasticloadbalancing': `https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_${action}.html`,
+            'autoscaling': `https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_${action}.html`,
+            'ecs': `https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_${action}.html`,
+            'ecr': `https://docs.aws.amazon.com/AmazonECR/latest/APIReference/API_${action}.html`
+        };
+        
+        return serviceUrlMap[serviceLower] || `https://docs.aws.amazon.com/search/doc-search.html?searchPath=documentation&searchQuery=${encodeURIComponent(apiCall)}`;
+    }
+    
+    // Show full technique details in a modal
+    function showTechniqueDetails(apiCall) {
+        // Fetch detailed technique information
+        fetch('/api/analyze/single', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ api_call: apiCall })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.technique_found) {
+                const technique = data.technique_info;
+                
+                // Create modal content
+                const modalContent = `
+                    <div class="modal fade" id="techniqueDetailModal" tabindex="-1" aria-labelledby="techniqueDetailModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="techniqueDetailModalLabel">
+                                        <i class="fas fa-shield-alt"></i>
+                                        ${technique.technique_name} (${technique.technique_id})
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <strong>Tactic:</strong> <span class="badge bg-secondary">${technique.tactic}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Severity:</strong> <span class="badge bg-${getSeverityBadgeClass(technique.severity)}">${technique.severity}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Description:</strong>
+                                        <p class="mt-2">${technique.description}</p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>AWS Services:</strong>
+                                        <div class="mt-2">
+                                            ${technique.aws_services.map(service => `<span class="badge bg-info me-1">${service}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>API Calls:</strong>
+                                        <div class="mt-2">
+                                            ${technique.api_calls.map(api => `<code class="me-2">${api}</code>`).join('')}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Detection Methods:</strong>
+                                        <ul class="mt-2">
+                                            ${technique.detection_methods.map(method => `<li>${method}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Mitigation:</strong>
+                                        <div class="alert alert-warning mt-2">${technique.mitigation}</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Resources:</strong>
+                                        <div class="mt-2">
+                                            ${technique.playbook_url ? `
+                                                <a href="${technique.playbook_url}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                                                    <i class="fas fa-book"></i> View Playbook
+                                                </a>
+                                            ` : ''}
+                                            <a href="${getAwsApiDocUrl(apiCall)}" target="_blank" class="btn btn-sm btn-outline-info">
+                                                <i class="fab fa-aws"></i> AWS API Documentation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Remove existing modal if any
+                const existingModal = document.getElementById('techniqueDetailModal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+                
+                // Add modal to body
+                document.body.insertAdjacentHTML('beforeend', modalContent);
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('techniqueDetailModal'));
+                modal.show();
+                
+                // Clean up modal after it's hidden
+                document.getElementById('techniqueDetailModal').addEventListener('hidden.bs.modal', function () {
+                    this.remove();
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching technique details:', error);
+            alert('Error loading technique details. Please try again.');
+        });
+    }
+    
 
     
+    // Show severity details modal
+    function showSeverityDetails(severityLevel) {
+        console.log('showSeverityDetails called with:', severityLevel);
+        
+        // Set modal title
+        document.getElementById('modalSeverityName').textContent = severityLevel;
+        
+        // Get the severity data from the global variable
+        const currentSeverityData = {{ stats.severity_counts | tojson }};
+        document.getElementById('modalSeverityCount').textContent = currentSeverityData[severityLevel] || 0;
+        
+        // Get severity description
+        const severityDescriptions = {
+            'CRITICAL': 'Immediate threat requiring urgent attention',
+            'HIGH': 'Significant risk requiring prompt action',
+            'MEDIUM': 'Moderate risk requiring monitoring',
+            'LOW': 'Minor risk for awareness'
+        };
+        
+        document.getElementById('modalSeverityDescription').textContent = 
+            severityDescriptions[severityLevel] || 'Risk level for threat analysis.';
+        
+        // Load techniques for this severity level
+        loadSeverityTechniques(severityLevel);
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('severityModal'));
+        modal.show();
+    }
+    
+    // Load techniques for a specific severity level
+    function loadSeverityTechniques(severityLevel) {
+        console.log('Loading techniques for severity:', severityLevel);
+        const tbody = document.getElementById('modalSeverityTechniquesList');
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+        
+        // Fetch techniques from the new severity endpoint
+        fetch(`/api/database/severity/${encodeURIComponent(severityLevel)}`)
+            .then(response => {
+                console.log('API response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('API response data:', data);
+                if (data.techniques && data.techniques.length > 0) {
+                    tbody.innerHTML = data.techniques.map(technique => `
+                        <tr>
+                            <td><code>${technique.technique_id}</code></td>
+                            <td><strong>${technique.technique_name}</strong></td>
+                            <td><span class="badge bg-secondary">${technique.tactic}</span></td>
+                            <td><code>${technique.api_call}</code></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No techniques found for this severity level.</td></tr>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading techniques:', error);
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading techniques.</td></tr>';
+            });
+    }
+    
+    // Export severity data
+    function exportSeverityData() {
+        const severityLevel = document.getElementById('modalSeverityName').textContent;
+        const table = document.getElementById('modalSeverityTechniquesList');
+        const rows = table.querySelectorAll('tr');
+        
+        let csv = 'Technique ID,Name,Tactic,API Call\n';
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length === 4) {
+                const techniqueId = cells[0].textContent.replace(/`/g, '');
+                const name = cells[1].textContent.replace(/\*/g, '');
+                const tactic = cells[2].textContent;
+                const apiCall = cells[3].textContent.replace(/`/g, '');
+                
+                csv += `"${techniqueId}","${name}","${tactic}","${apiCall}"\n`;
+            }
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${severityLevel.toLowerCase()}_severity_techniques.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
     // Show tactic details modal
     function showTacticDetails(tacticName) {
         // Set modal title

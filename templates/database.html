@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Database - AWS Threat Intelligence Analyzer{% endblock %}
+{% block title %}Database - AWS Threat Catalog{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -342,14 +342,18 @@
                 <p class="mt-2">${technique.mitigation}</p>
             </div>
             
-            ${technique.references && technique.references.length > 0 ? `
-                <div class="mb-3">
-                    <strong>References:</strong>
-                    <div class="mt-2">
-                        ${technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-external-link-alt"></i> View Reference</a>`).join('')}
-                    </div>
+            <div class="mb-3">
+                <strong>Resources:</strong>
+                <div class="mt-2">
+                    ${technique.references && technique.references.length > 0 ? 
+                        technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-external-link-alt"></i> MITRE ATT&CK</a>`).join('') 
+                        : ''
+                    }
+                    <a href="${getAwsApiDocUrl(technique.api_call)}" target="_blank" class="btn btn-sm btn-outline-info">
+                        <i class="fab fa-aws"></i> AWS API Documentation
+                    </a>
                 </div>
-            ` : ''}
+            </div>
             
             ${technique.playbook_url ? `
                 <div class="mb-3">
@@ -384,6 +388,42 @@
             'LOW': 'success'
         };
         return severityMap[severity] || 'secondary';
+    }
+    
+    // Generate AWS API documentation URL
+    function getAwsApiDocUrl(apiCall) {
+        if (!apiCall || !apiCall.includes(':')) return null;
+        
+        const [service, action] = apiCall.split(':');
+        const serviceLower = service.toLowerCase();
+        
+        // AWS documentation URL patterns for different services
+        const serviceUrlMap = {
+            's3': `https://docs.aws.amazon.com/AmazonS3/latest/API/API_${action}.html`,
+            'iam': `https://docs.aws.amazon.com/IAM/latest/APIReference/API_${action}.html`,
+            'ec2': `https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_${action}.html`,
+            'lambda': `https://docs.aws.amazon.com/lambda/latest/api/API_${action}.html`,
+            'cloudtrail': `https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_${action}.html`,
+            'cloudformation': `https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_${action}.html`,
+            'rds': `https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_${action}.html`,
+            'dynamodb': `https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_${action}.html`,
+            'sns': `https://docs.aws.amazon.com/sns/latest/api/API_${action}.html`,
+            'sqs': `https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_${action}.html`,
+            'kms': `https://docs.aws.amazon.com/kms/latest/APIReference/API_${action}.html`,
+            'sts': `https://docs.aws.amazon.com/STS/latest/APIReference/API_${action}.html`,
+            'secretsmanager': `https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_${action}.html`,
+            'ssm': `https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_${action}.html`,
+            'route53': `https://docs.aws.amazon.com/Route53/latest/APIReference/API_${action}.html`,
+            'cloudwatch': `https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_${action}.html`,
+            'logs': `https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_${action}.html`,
+            'apigateway': `https://docs.aws.amazon.com/apigateway/latest/api/API_${action}.html`,
+            'elasticloadbalancing': `https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_${action}.html`,
+            'autoscaling': `https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_${action}.html`,
+            'ecs': `https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_${action}.html`,
+            'ecr': `https://docs.aws.amazon.com/AmazonECR/latest/APIReference/API_${action}.html`
+        };
+        
+        return serviceUrlMap[serviceLower] || `https://docs.aws.amazon.com/search/doc-search.html?searchPath=documentation&searchQuery=${encodeURIComponent(apiCall)}`;
     }
     
     // Handle URL parameters for pre-filling search

@@ -128,13 +128,13 @@ Resources:
                   - s3:GetObjectVersion
                   - s3:PutObject
                 Resource: 
-                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
+                  - !Sub '${ArtifactsBucket}/*'
                   - !Sub 'arn:aws:s3:::${SourceBucket}/*'
               - Effect: Allow
                 Action:
                   - s3:ListBucket
                 Resource: 
-                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}'
+                  - !Ref ArtifactsBucket
                   - !Sub 'arn:aws:s3:::${SourceBucket}'
               - Effect: Allow
                 Action:
@@ -179,8 +179,8 @@ Resources:
                   - s3:GetBucketVersioning
                   - s3:ListBucket
                 Resource:
-                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
-                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}'
+                  - !Sub '${ArtifactsBucket}/*'
+                  - !Ref ArtifactsBucket
                   - !Sub 'arn:aws:s3:::${SourceBucket}/*'
                   - !Sub 'arn:aws:s3:::${SourceBucket}'
               - Effect: Allow
@@ -190,7 +190,12 @@ Resources:
                 Resource: !GetAtt CodeBuildProject.Arn
               - Effect: Allow
                 Action:
-                  - ecs:*
+                  - ecs:DescribeServices
+                  - ecs:DescribeTaskDefinition
+                  - ecs:DescribeTasks
+                  - ecs:ListTasks
+                  - ecs:RegisterTaskDefinition
+                  - ecs:UpdateService
                 Resource: '*'
               - Effect: Allow
                 Action:
@@ -251,10 +256,9 @@ Resources:
                 - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
                 - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:$IMAGE_TAG
                 - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:latest
-                - echo Skipping tests for now...
-                # Temporarily disabled all tests for deployment
-                # - docker run --rm $IMAGE_REPO_NAME:$IMAGE_TAG python3 test_threat_analyzer.py
-                # - docker run --rm $IMAGE_REPO_NAME:$IMAGE_TAG python3 test_web_app.py
+                - echo Running tests...
+                - docker run --rm $IMAGE_REPO_NAME:$IMAGE_TAG python3 test_threat_analyzer.py
+                - docker run --rm $IMAGE_REPO_NAME:$IMAGE_TAG python3 test_web_app.py
             post_build:
               commands:
                 - echo Build completed on `date`
@@ -263,7 +267,8 @@ Resources:
                 - docker push $REPOSITORY_URI:latest
                 - echo Writing image definitions file...
                 - printf '[{"name":"threat-analyzer","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-                - echo Build complete - ECS deployment will be handled by CodePipeline Deploy stage
+                - echo Updating ECS service...
+                - aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --force-new-deployment
           artifacts:
             files:
               - imagedefinitions.json
@@ -320,59 +325,63 @@ Resources:
                 Provider: ECS
                 Version: '1'
               Configuration:
-                ClusterName: 'threat-analyzer-cluster'
-                ServiceName: 'threat-analyzer-service'
+                ClusterName: !Sub
+                  - '${StackName}-cluster'
+                  - StackName: !Ref InfrastructureStackName
+                ServiceName: !Sub
+                  - '${StackName}-service'
+                  - StackName: !Ref InfrastructureStackName
                 FileName: imagedefinitions.json
               InputArtifacts:
                 - Name: BuildOutput
 
   # ============================================================================
-  # CloudWatch Event Rule for S3 Changes (Optional) - Commented out for now
+  # CloudWatch Event Rule for S3 Changes (Optional)
   # ============================================================================
-  # S3SourceEventRule:
-  #   Type: AWS::Events::Rule
-  #   Properties:
-  #     Name: !Sub '${AWS::StackName}-s3-source-change'
-  #     Description: 'Trigger pipeline when source code is updated in S3'
-  #     EventPattern:
-  #       source:
-  #         - aws.s3
-  #       detail-type:
-  #         - Object Created
-  #       detail:
-  #         bucket:
-  #           name:
-  #             - !Ref SourceBucket
-  #         object:
-  #           key:
-  #             - !Ref SourceKey
-  #     State: ENABLED
-  #     Targets:
-  #       - Arn: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
-  #         Id: S3SourceTarget
-  #         RoleArn: !GetAtt CloudWatchEventRole.Arn
+  S3SourceEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${AWS::StackName}-s3-source-change'
+      Description: 'Trigger pipeline when source code is updated in S3'
+      EventPattern:
+        source:
+          - aws.s3
+        detail-type:
+          - Object Created
+        detail:
+          bucket:
+            name:
+              - !Ref SourceBucket
+          object:
+            key:
+              - !Ref SourceKey
+      State: ENABLED
+      Targets:
+        - Arn: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${CodePipeline}'
+          Id: S3SourceTarget
+          RoleArn: !GetAtt CloudWatchEventRole.Arn
 
-  # IAM Role for CloudWatch Events (Commented out for now)
-  # CloudWatchEventRole:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     RoleName: !Sub '${AWS::StackName}-cloudwatch-event-role'
-  #     AssumeRolePolicyDocument:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal:
-  #             Service: events.amazonaws.com
-  #           Action: sts:AssumeRole
-  #     Policies:
-  #       - PolicyName: StartPipelinePolicy
-  #         PolicyDocument:
-  #           Version: '2012-10-17'
-  #           Statement:
-  #             - Effect: Allow
-  #               Action:
-  #                 - codepipeline:StartPipelineExecution
-  #               Resource: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${AWS::StackName}-pipeline'
+  # IAM Role for CloudWatch Events
+  CloudWatchEventRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-cloudwatch-event-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: events.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: StartPipelinePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - codepipeline:StartPipelineExecution
+                Resource: !Sub 'arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:pipeline/${CodePipeline}'
 
   # ============================================================================
   # CloudWatch Alarms

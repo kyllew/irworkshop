@@ -37,8 +37,8 @@ class SequenceAnalysisResponse(BaseModel):
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="AWS Threat Intelligence Analyzer",
-    description="Analyze AWS API calls against MITRE ATT&CK framework for incident response",
+    title="AWS Threat Catalog",
+    description="Educational tool to analyze AWS API calls against MITRE ATT&CK framework - Not official AWS source",
     version="1.0.0"
 )
 
@@ -99,7 +99,7 @@ templates = Jinja2Templates(directory="templates")
 async def startup_event():
     """Initialize the analyzer on startup"""
     try:
-        print("Initializing AWS Threat Intelligence Analyzer...")
+        print("Initializing AWS Threat Catalog...")
         get_analyzer()
         print("✓ Analyzer ready")
     except Exception as e:
@@ -290,6 +290,56 @@ async def search_database(q: str = ""):
             })
     
     return {"results": results[:20]}  # Limit to 20 results
+
+@app.get("/api/database/autocomplete")
+async def get_autocomplete_suggestions(q: str = ""):
+    """Get autocomplete suggestions for API calls"""
+    analyzer = get_analyzer()
+    
+    if not q or len(q) < 2:
+        return {"suggestions": []}
+    
+    query = q.lower()
+    suggestions = []
+    
+    # Get all unique API calls from the database
+    all_api_calls = set()
+    for api_call, technique in analyzer.threat_db.items():
+        all_api_calls.add(api_call)
+        # Also add individual API calls from the technique's api_calls list
+        for call in technique.api_calls:
+            all_api_calls.add(call)
+    
+    # Filter API calls that match the query
+    for api_call in sorted(all_api_calls):
+        if query in api_call.lower():
+            suggestions.append({
+                "api_call": api_call,
+                "service": api_call.split(':')[0] if ':' in api_call else "unknown"
+            })
+    
+    # Limit to 10 suggestions for performance
+    return {"suggestions": suggestions[:10]}
+
+@app.get("/api/database/severity/{severity_level}")
+async def get_techniques_by_severity(severity_level: str):
+    """Get all techniques for a specific severity level"""
+    analyzer = get_analyzer()
+    
+    techniques = []
+    for api_call, technique in analyzer.threat_db.items():
+        if technique.severity.lower() == severity_level.lower():
+            techniques.append({
+                "technique_id": technique.technique_id,
+                "technique_name": technique.technique_name,
+                "tactic": technique.tactic,
+                "severity": technique.severity,
+                "api_call": api_call,
+                "description": technique.description[:100] + "..." if len(technique.description) > 100 else technique.description,
+                "aws_services": technique.aws_services
+            })
+    
+    return {"techniques": techniques, "severity": severity_level, "count": len(techniques)}
 
 @app.get("/api/reports/generate")
 async def generate_report(api_calls: str, format: str = "json"):

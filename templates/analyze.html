@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Analysis - AWS Threat Intelligence Analyzer{% endblock %}
+{% block title %}Analysis - AWS Threat Catalog{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -47,9 +47,12 @@
                         <form id="singleAnalysisForm">
                             <div class="mb-3">
                                 <label for="singleApiCall" class="form-label">AWS API Call</label>
-                                <input type="text" class="form-control" id="singleApiCall" 
-                                       placeholder="e.g., iam:CreateUser, s3:GetObject, ec2:RunInstances"
-                                       autocomplete="off">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" id="singleApiCall" 
+                                           placeholder="e.g., iam:CreateUser, s3:GetObject, ec2:RunInstances"
+                                           autocomplete="off">
+                                    <div id="singleApiCallDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                                </div>
                                 <div class="form-text">
                                     Enter an AWS API call in the format service:action
                                 </div>
@@ -168,7 +171,141 @@
         setupSequenceAnalysis();
         setupApiSuggestions();
         setupExampleLoader();
+        setupAutocomplete();
     });
+    
+    function setupAutocomplete() {
+        const apiCallInput = document.getElementById('singleApiCall');
+        const dropdown = document.getElementById('singleApiCallDropdown');
+        let currentSuggestions = [];
+        let selectedIndex = -1;
+        let debounceTimer = null;
+        
+        // Setup autocomplete functionality
+        apiCallInput.addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            
+            // Clear previous timer
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            
+            // Debounce the API call
+            debounceTimer = setTimeout(() => {
+                if (query.length >= 2) {
+                    fetchAutocompleteSuggestions(query);
+                } else {
+                    hideDropdown();
+                }
+            }, 300);
+        });
+        
+        // Handle keyboard navigation
+        apiCallInput.addEventListener('keydown', function(e) {
+            if (dropdown.style.display === 'none') return;
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, currentSuggestions.length - 1);
+                    updateSelection();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, -1);
+                    updateSelection();
+                    break;
+                case 'Enter':
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && currentSuggestions[selectedIndex]) {
+                        selectSuggestion(currentSuggestions[selectedIndex].api_call);
+                    }
+                    break;
+                case 'Escape':
+                    hideDropdown();
+                    break;
+            }
+        });
+        
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            // Don't hide immediately if clicking on dropdown items
+            if (dropdown.contains(e.target)) {
+                return;
+            }
+            
+            if (!apiCallInput.contains(e.target)) {
+                // Small delay to allow click events to process
+                setTimeout(() => {
+                    hideDropdown();
+                }, 100);
+            }
+        });
+        
+        function fetchAutocompleteSuggestions(query) {
+            fetch(`/api/database/autocomplete?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentSuggestions = data.suggestions || [];
+                    displaySuggestions(currentSuggestions);
+                })
+                .catch(error => {
+                    console.error('Error fetching autocomplete suggestions:', error);
+                    hideDropdown();
+                });
+        }
+        
+        function displaySuggestions(suggestions) {
+            if (suggestions.length === 0) {
+                hideDropdown();
+                return;
+            }
+            
+            dropdown.innerHTML = suggestions.map((suggestion, index) => `
+                <div class="autocomplete-item" data-index="${index}" data-api-call="${suggestion.api_call}">
+                    <span class="autocomplete-api-call">${suggestion.api_call}</span>
+                    <span class="autocomplete-service">${suggestion.service}</span>
+                </div>
+            `).join('');
+            
+            // Add click event listeners to each item
+            dropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const apiCall = this.getAttribute('data-api-call');
+                    selectSuggestion(apiCall);
+                });
+            });
+            
+            selectedIndex = -1;
+            dropdown.style.display = 'block';
+        }
+        
+        function updateSelection() {
+            const items = dropdown.querySelectorAll('.autocomplete-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === selectedIndex);
+            });
+        }
+        
+        function selectSuggestion(apiCall) {
+            if (apiCall) {
+                apiCallInput.value = apiCall;
+                hideDropdown();
+                // Small delay to ensure dropdown is hidden before focusing
+                setTimeout(() => {
+                    apiCallInput.focus();
+                }, 50);
+            }
+        }
+        
+        function hideDropdown() {
+            dropdown.style.display = 'none';
+            selectedIndex = -1;
+            currentSuggestions = [];
+        }
+    }
     
     function setupSingleAnalysis() {
         document.getElementById('singleAnalysisForm').addEventListener('submit', function(e) {
@@ -200,7 +337,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                displaySingleAnalysisResult(data);
+                displaySingleAnalysisResult(data, apiCall);
             })
             .catch(error => {
                 resultDiv.innerHTML = `
@@ -217,7 +354,7 @@
         });
     }
     
-    function displaySingleAnalysisResult(data) {
+    function displaySingleAnalysisResult(data, apiCall) {
         const resultDiv = document.getElementById('singleAnalysisResult');
         
         if (data.technique_found) {
@@ -282,12 +419,18 @@
                             </div>
                         </div>
                         
-                        ${technique.references && technique.references.length > 0 ? `
-                            <div class="mt-3">
-                                <h6>References:</h6>
-                                ${technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-external-link-alt"></i> MITRE ATT&CK</a>`).join('')}
+                        <div class="mt-3">
+                            <h6>Resources:</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                ${technique.references && technique.references.length > 0 ? 
+                                    technique.references.map(ref => `<a href="${ref}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fas fa-external-link-alt"></i> MITRE ATT&CK</a>`).join('') 
+                                    : ''
+                                }
+                                <a href="${getAwsApiDocUrl(apiCall)}" target="_blank" class="btn btn-sm btn-outline-info">
+                                    <i class="fab fa-aws"></i> AWS API Documentation
+                                </a>
                             </div>
-                        ` : ''}
+                        </div>
                     </div>
                 </div>
             `;
@@ -510,6 +653,42 @@ sts:GetCallerIdentity`;
             'LOW': 'success'
         };
         return severityMap[severity] || 'secondary';
+    }
+    
+    // Generate AWS API documentation URL
+    function getAwsApiDocUrl(apiCall) {
+        if (!apiCall || !apiCall.includes(':')) return null;
+        
+        const [service, action] = apiCall.split(':');
+        const serviceLower = service.toLowerCase();
+        
+        // AWS documentation URL patterns for different services
+        const serviceUrlMap = {
+            's3': `https://docs.aws.amazon.com/AmazonS3/latest/API/API_${action}.html`,
+            'iam': `https://docs.aws.amazon.com/IAM/latest/APIReference/API_${action}.html`,
+            'ec2': `https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_${action}.html`,
+            'lambda': `https://docs.aws.amazon.com/lambda/latest/api/API_${action}.html`,
+            'cloudtrail': `https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_${action}.html`,
+            'cloudformation': `https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_${action}.html`,
+            'rds': `https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_${action}.html`,
+            'dynamodb': `https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_${action}.html`,
+            'sns': `https://docs.aws.amazon.com/sns/latest/api/API_${action}.html`,
+            'sqs': `https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_${action}.html`,
+            'kms': `https://docs.aws.amazon.com/kms/latest/APIReference/API_${action}.html`,
+            'sts': `https://docs.aws.amazon.com/STS/latest/APIReference/API_${action}.html`,
+            'secretsmanager': `https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_${action}.html`,
+            'ssm': `https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_${action}.html`,
+            'route53': `https://docs.aws.amazon.com/Route53/latest/APIReference/API_${action}.html`,
+            'cloudwatch': `https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_${action}.html`,
+            'logs': `https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_${action}.html`,
+            'apigateway': `https://docs.aws.amazon.com/apigateway/latest/api/API_${action}.html`,
+            'elasticloadbalancing': `https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_${action}.html`,
+            'autoscaling': `https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_${action}.html`,
+            'ecs': `https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_${action}.html`,
+            'ecr': `https://docs.aws.amazon.com/AmazonECR/latest/APIReference/API_${action}.html`
+        };
+        
+        return serviceUrlMap[serviceLower] || `https://docs.aws.amazon.com/search/doc-search.html?searchPath=documentation&searchQuery=${encodeURIComponent(apiCall)}`;
     }
 </script>
 {% endblock %}
