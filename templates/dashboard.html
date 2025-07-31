@@ -25,12 +25,13 @@
 <!-- Statistics Cards -->
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card bg-primary text-white">
+        <div class="card bg-primary text-white clickable-card" onclick="window.location.href='/database'">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
                         <h4 class="card-title">{{ stats.total_techniques }}</h4>
                         <p class="card-text">Total Techniques</p>
+
                     </div>
                     <div class="align-self-center">
                         <i class="fas fa-database fa-2x"></i>
@@ -89,18 +90,23 @@
     </div>
 </div>
 
-<!-- Charts Row -->
+<!-- MITRE ATT&CK Matrix View -->
 <div class="row mb-4">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">
-                    <i class="fas fa-chart-pie"></i>
-                    Techniques by Tactic
+                    <i class="fas fa-th"></i>
+                    MITRE ATT&CK Matrix - AWS Techniques
+                    <small class="text-muted">(Click on techniques for details)</small>
                 </h5>
             </div>
             <div class="card-body">
-                <canvas id="tacticChart" width="400" height="400"></canvas>
+                <div id="attackMatrix" class="attack-matrix">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin"></i> Loading matrix...
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -114,7 +120,7 @@
                 <h5 class="card-title mb-0">
                     <i class="fas fa-chart-bar"></i>
                     Severity Distribution
-                    <small class="text-muted">(Click on bars to see details)</small>
+
                 </h5>
             </div>
             <div class="card-body">
@@ -313,46 +319,8 @@
 <script>
     // Initialize charts
     document.addEventListener('DOMContentLoaded', function() {
-        // Tactic distribution chart
-        const tacticData = {{ stats.tactic_counts | tojson }};
-        const tacticCtx = document.getElementById('tacticChart').getContext('2d');
-        window.tacticChart = new Chart(tacticCtx, {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(tacticData),
-                datasets: [{
-                    data: Object.values(tacticData),
-                    backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB', 
-                        '#FFCE56',
-                        '#4BC0C0',
-                        '#9966FF',
-                        '#FF9F40'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            usePointStyle: true
-                        }
-                    }
-                },
-                onClick: function(event, elements) {
-                    if (elements.length > 0) {
-                        const index = elements[0].index;
-                        const tacticName = Object.keys(tacticData)[index];
-                        showTacticDetails(tacticName);
-                    }
-                }
-            }
-        });
+        // Load MITRE ATT&CK Matrix
+        loadAttackMatrix();
         
         // Severity distribution chart
         const severityData = {{ stats.severity_counts | tojson }};
@@ -444,6 +412,186 @@
             .catch(error => {
                 document.getElementById('lastUpdate').textContent = 'Error loading';
             });
+    }
+    
+    function loadAttackMatrix() {
+        const matrixContainer = document.getElementById('attackMatrix');
+        
+        // Fetch all techniques grouped by tactic
+        fetch('/api/database/all')
+            .then(response => response.json())
+            .then(data => {
+                if (data.results && data.results.length > 0) {
+                    const techniquesByTactic = groupTechniquesByTactic(data.results);
+                    displayMatrix(techniquesByTactic);
+                } else {
+                    matrixContainer.innerHTML = '<div class="text-center text-muted">No techniques found</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading matrix:', error);
+                matrixContainer.innerHTML = '<div class="text-center text-danger">Error loading matrix</div>';
+            });
+    }
+    
+    function groupTechniquesByTactic(techniques) {
+        const grouped = {};
+        
+        techniques.forEach(technique => {
+            const tactic = technique.tactic;
+            if (!grouped[tactic]) {
+                grouped[tactic] = [];
+            }
+            grouped[tactic].push(technique);
+        });
+        
+        // Sort techniques within each tactic by technique ID
+        Object.keys(grouped).forEach(tactic => {
+            grouped[tactic].sort((a, b) => a.technique_id.localeCompare(b.technique_id));
+        });
+        
+        // Store globally for access by other functions
+        window.techniquesByTactic = grouped;
+        
+        return grouped;
+    }
+    
+    function displayMatrix(techniquesByTactic) {
+        const matrixContainer = document.getElementById('attackMatrix');
+        
+        // MITRE ATT&CK tactic order (standard order)
+        const tacticOrder = [
+            'Initial Access',
+            'Execution', 
+            'Persistence',
+            'Privilege Escalation',
+            'Defense Evasion',
+            'Credential Access',
+            'Discovery',
+            'Lateral Movement',
+            'Collection',
+            'Command and Control',
+            'Exfiltration',
+            'Impact'
+        ];
+        
+        // Filter and order tactics that have techniques
+        const availableTactics = tacticOrder.filter(tactic => techniquesByTactic[tactic] && techniquesByTactic[tactic].length > 0);
+        
+        const matrixHtml = `
+            <div id="tacticOverview" class="tactic-overview">
+                <div class="row">
+                    ${availableTactics.map(tactic => {
+                        const techniques = techniquesByTactic[tactic];
+                        const severityCounts = getSeverityCounts(techniques);
+                        const maxSeverity = getMaxSeverity(techniques);
+                        
+                        return `
+                            <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                                <div class="tactic-card" onclick="showTacticModal('${tactic}')">
+                                    <div class="tactic-card-header tactic-${tactic.toLowerCase().replace(/\s+/g, '-')}">
+                                        <h6 class="mb-1">${tactic}</h6>
+                                        <small>${techniques.length} technique${techniques.length !== 1 ? 's' : ''}</small>
+                                    </div>
+                                    <div class="tactic-card-body">
+                                        <div class="severity-breakdown">
+                                            ${severityCounts.CRITICAL ? `<span class="severity-dot severity-critical" title="Critical: ${severityCounts.CRITICAL}">${severityCounts.CRITICAL}</span>` : ''}
+                                            ${severityCounts.HIGH ? `<span class="severity-dot severity-high" title="High: ${severityCounts.HIGH}">${severityCounts.HIGH}</span>` : ''}
+                                            ${severityCounts.MEDIUM ? `<span class="severity-dot severity-medium" title="Medium: ${severityCounts.MEDIUM}">${severityCounts.MEDIUM}</span>` : ''}
+                                            ${severityCounts.LOW ? `<span class="severity-dot severity-low" title="Low: ${severityCounts.LOW}">${severityCounts.LOW}</span>` : ''}
+                                        </div>
+                                        <div class="mt-2">
+                                            <small class="text-muted">Click to explore techniques</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+            
+            <div id="tacticDetails" class="tactic-details" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 id="tacticDetailsTitle"></h5>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="showTacticOverview()">
+                        <i class="fas fa-arrow-left"></i> Back to Overview
+                    </button>
+                </div>
+                <div id="tacticTechniques" class="row"></div>
+            </div>
+        `;
+        
+        matrixContainer.innerHTML = matrixHtml;
+        
+        // Store data for later use
+        window.techniquesByTactic = techniquesByTactic;
+    }
+    
+    function getMaxSeverity(techniques) {
+        const severityOrder = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+        let maxSeverity = 'LOW';
+        
+        techniques.forEach(technique => {
+            if (severityOrder.indexOf(technique.severity) > severityOrder.indexOf(maxSeverity)) {
+                maxSeverity = technique.severity;
+            }
+        });
+        
+        return maxSeverity;
+    }
+    
+    function getSeverityCounts(techniques) {
+        const counts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+        techniques.forEach(technique => {
+            counts[technique.severity]++;
+        });
+        return counts;
+    }
+    
+    function showTacticDetails(tacticName) {
+        const techniques = window.techniquesByTactic[tacticName];
+        
+        document.getElementById('tacticOverview').style.display = 'none';
+        document.getElementById('tacticDetails').style.display = 'block';
+        document.getElementById('tacticDetailsTitle').textContent = `${tacticName} Techniques`;
+        
+        const techniquesHtml = techniques.map(technique => `
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="technique-detail-card" onclick="showTechniqueDetails('${technique.api_call}')">
+                    <div class="technique-detail-header">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <span class="technique-id">${technique.technique_id}</span>
+                                <h6 class="technique-name mt-1">${technique.technique_name}</h6>
+                            </div>
+                            <span class="technique-severity severity-${technique.severity.toLowerCase()}">${technique.severity}</span>
+                        </div>
+                    </div>
+                    <div class="technique-detail-body">
+                        <p class="technique-description">${technique.description}</p>
+                        <div class="technique-api-calls mb-2">
+                            <small class="text-muted">API Calls (${technique.api_calls ? technique.api_calls.length : 1}):</small><br>
+                            ${technique.api_calls ? 
+                                technique.api_calls.slice(0, 3).map(api => `<code class="me-1">${api}</code>`).join('') +
+                                (technique.api_calls.length > 3 ? `<small class="text-muted">+${technique.api_calls.length - 3} more</small>` : '')
+                                : `<code>${technique.api_call}</code>`
+                            }
+                        </div>
+                        <div class="technique-services">
+                            ${technique.aws_services.map(service => `<span class="service-badge">${service}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        document.getElementById('tacticTechniques').innerHTML = techniquesHtml;
+    }
+    
+    function showTacticOverview() {
+        document.getElementById('tacticDetails').style.display = 'none';
+        document.getElementById('tacticOverview').style.display = 'block';
     }
     
     function setupQuickAnalysis() {
@@ -1018,6 +1166,94 @@
     function showTacticDetails(tacticName) {
         // Set modal title
         document.getElementById('modalTacticName').textContent = tacticName;
+        
+        // Fetch detailed tactic information from the API
+        fetch(`/api/tactics/${encodeURIComponent(tacticName)}`)
+            .then(response => response.json())
+            .then(tacticInfo => {
+                // Update modal content with official descriptions
+                document.getElementById('modalTacticDescription').innerHTML = `
+                    <div class="mb-3">
+                        <h6>Overview</h6>
+                        <p>${tacticInfo.description}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>AWS Context</h6>
+                        <p>${tacticInfo.aws_context}</p>
+                    </div>
+                    <div class="mt-3">
+                        <a href="https://aws-samples.github.io/threat-technique-catalog-for-aws/Tactics/" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-external-link-alt"></i> Threat Catalog
+                        </a>
+                    </div>
+                `;
+                
+                // Populate the techniques table
+                const techniquesList = document.getElementById('modalTechniquesList');
+                if (tacticInfo.actual_techniques && tacticInfo.actual_techniques.length > 0) {
+                    techniquesList.innerHTML = tacticInfo.actual_techniques.map(technique => `
+                        <tr>
+                            <td><code>${technique.technique_id}</code></td>
+                            <td>${technique.technique_name}</td>
+                            <td><span class="badge bg-${technique.severity.toLowerCase() === 'critical' ? 'danger' : technique.severity.toLowerCase() === 'high' ? 'warning' : technique.severity.toLowerCase() === 'medium' ? 'info' : 'secondary'}">${technique.severity}</span></td>
+                            <td><code>${technique.api_call}</code></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    techniquesList.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No techniques found for this tactic</td>
+                        </tr>
+                    `;
+                }
+                
+                // Update technique count
+                document.getElementById('modalTacticCount').textContent = tacticInfo.techniques_count;
+            })
+            .catch(error => {
+                console.error('Error fetching tactic details:', error);
+                document.getElementById('modalTacticDescription').innerHTML = `
+                    <p class="text-muted">Unable to load tactic details. Please try again.</p>
+                `;
+                
+                // Clear the techniques table on error
+                document.getElementById('modalTechniquesList').innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">Unable to load techniques. Please try again.</td>
+                    </tr>
+                `;
+            });
+    }
+    
+    // Show tactic modal (for matrix cards and other clickable elements)
+    function showTacticModal(tacticName) {
+        showTacticDetails(tacticName);
+        
+        // Show the modal
+        const tacticModal = new bootstrap.Modal(document.getElementById('tacticModal'));
+        tacticModal.show();
+    }
+    
+    // Export tactic data
+    function exportTacticData() {
+        const tacticName = document.getElementById('modalTacticName').textContent;
+        
+        // Fetch tactic data and export as JSON
+        fetch(`/api/tactics/${encodeURIComponent(tacticName)}`)
+            .then(response => response.json())
+            .then(tacticInfo => {
+                const dataStr = JSON.stringify(tacticInfo, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `${tacticName.replace(/\s+/g, '_').toLowerCase()}_tactic_data.json`;
+                link.click();
+            })
+            .catch(error => {
+                console.error('Error exporting tactic data:', error);
+                alert('Failed to export tactic data. Please try again.');
+            });
         document.getElementById('modalTacticCount').textContent = {{ stats.tactic_counts | tojson }}[tacticName] || 0;
         
         // Get tactic description

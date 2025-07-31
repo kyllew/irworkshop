@@ -1,0 +1,757 @@
+{% extends "base.html" %}
+
+{% block title %}GuardDuty Findings - AWS Threat Catalog{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-6">
+            <i class="fas fa-shield-alt text-primary"></i>
+            AWS GuardDuty Findings Analysis
+        </h1>
+        <p class="lead text-muted">
+            Analyze GuardDuty finding types and correlate them with MITRE ATT&CK techniques for comprehensive threat intelligence.
+        </p>
+    </div>
+</div>
+
+<!-- Action Cards -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-cogs"></i>
+                    Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 border rounded bg-light">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-download fa-2x text-primary"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">Load Findings</h6>
+                                <p class="text-muted mb-2 small">Scrape latest GuardDuty finding types from AWS documentation</p>
+                                <button class="btn btn-primary btn-sm" onclick="scrapeGuardDutyFindings()">
+                                    <i class="fas fa-sync"></i> Scrape Findings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 border rounded bg-light">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-chart-bar fa-2x text-success"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">Analysis</h6>
+                                <p class="text-muted mb-2 small">Get comprehensive analysis of GuardDuty findings</p>
+                                <button class="btn btn-success btn-sm" onclick="loadAnalysis()">
+                                    <i class="fas fa-chart-pie"></i> Analyze
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center p-3 border rounded bg-light">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-link fa-2x text-info"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">MITRE Correlations</h6>
+                                <p class="text-muted mb-2 small">Find correlations with MITRE ATT&CK techniques</p>
+                                <button class="btn btn-info btn-sm" onclick="loadCorrelations()">
+                                    <i class="fas fa-project-diagram"></i> Correlate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-search"></i>
+                    Search GuardDuty Findings
+                </h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" 
+                           placeholder="Search by finding type, category, or description..."
+                           onkeypress="if(event.key==='Enter') searchFindings()">
+                    <button class="btn btn-outline-primary" onclick="searchFindings()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Indicator -->
+<div id="loadingIndicator" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <i class="fas fa-spinner fa-spin"></i>
+            Loading GuardDuty data...
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div id="statisticsCards" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar"></i>
+                    GuardDuty Statistics Overview
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center p-3 border-end">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-shield-alt fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h3 class="mb-0 text-primary" id="totalFindings">0</h3>
+                                    <small class="text-muted">Total Findings</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center p-3 border-end">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-tags fa-2x text-success me-3"></i>
+                                <div>
+                                    <h3 class="mb-0 text-success" id="totalCategories">0</h3>
+                                    <small class="text-muted">Categories</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center p-3 border-end">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-project-diagram fa-2x text-info me-3"></i>
+                                <div>
+                                    <h3 class="mb-0 text-info" id="mitreCorrelations">0</h3>
+                                    <small class="text-muted">MITRE Correlations</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center p-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-exclamation-triangle fa-2x text-warning me-3"></i>
+                                <div>
+                                    <h3 class="mb-0 text-warning" id="highSeverityCount">0</h3>
+                                    <small class="text-muted">High Severity</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Statistics Row -->
+                <hr class="my-3">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-clock fa-lg text-secondary me-2"></i>
+                            <div>
+                                <strong id="lastUpdated">Never</strong>
+                                <br><small class="text-muted">Last Updated</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-server fa-lg text-secondary me-2"></i>
+                            <div>
+                                <strong id="awsServicesCount">0</strong>
+                                <br><small class="text-muted">AWS Services</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fas fa-crosshairs fa-lg text-secondary me-2"></i>
+                            <div>
+                                <strong id="mitreTagsCount">0</strong>
+                                <br><small class="text-muted">MITRE Tactics</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Analysis Charts -->
+<div id="analysisCharts" class="row mb-4" style="display: none;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Finding Categories</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="categoriesChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Severity Distribution</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="severityChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MITRE Correlations -->
+<div id="correlationsSection" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-project-diagram"></i>
+                    MITRE ATT&CK Correlations
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="correlationsContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Findings Table -->
+<div id="findingsSection" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list"></i>
+                    GuardDuty Findings
+                    <span id="findingsCount" class="badge bg-secondary ms-2">0</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Finding Type</th>
+                                <th>Category</th>
+                                <th>Severity</th>
+                                <th>MITRE Tactics</th>
+                                <th>AWS Services</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="findingsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Finding Details Modal -->
+<div class="modal fade" id="findingDetailsModal" tabindex="-1" aria-labelledby="findingDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="findingDetailsModalLabel">
+                    <i class="fas fa-shield-alt"></i>
+                    Finding Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Finding Type:</strong> <span id="modalFindingType"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Category:</strong> <span id="modalCategory"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Severity:</strong> <span id="modalSeverity"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Threat Purpose:</strong> <span id="modalThreatPurpose"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong>Description:</strong>
+                    <p id="modalDescription" class="mt-2"></p>
+                </div>
+                <div class="mb-3">
+                    <strong>Remediation:</strong>
+                    <p id="modalRemediation" class="mt-2"></p>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>MITRE Tactics:</strong>
+                        <div id="modalMitreTactics" class="mt-2"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>AWS Services:</strong>
+                        <div id="modalAwsServices" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="exportFindingData()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let currentFindings = [];
+    let currentAnalysis = null;
+    let currentCorrelations = [];
+    let currentFinding = null;
+
+    // Scrape GuardDuty findings
+    async function scrapeGuardDutyFindings() {
+        showLoading(true);
+        
+        try {
+            const response = await fetch('/api/guardduty/scrape-findings');
+            const data = await response.json();
+            
+            if (response.ok) {
+                if (data.status === 'success') {
+                    currentFindings = data.findings;
+                    updateStatistics(data);
+                    displayFindings(data.findings);
+                    showSuccess(`Successfully scraped ${data.total_findings} GuardDuty findings`);
+                } else {
+                    showError(data.message || 'No findings could be scraped');
+                }
+            } else {
+                showError(`Error: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Load analysis
+    async function loadAnalysis() {
+        showLoading(true);
+        
+        try {
+            const response = await fetch('/api/guardduty/analysis');
+            const data = await response.json();
+            
+            if (response.ok) {
+                if (data.error) {
+                    showError(data.error);
+                } else {
+                    currentAnalysis = data;
+                    displayAnalysisCharts(data);
+                    updateStatisticsFromAnalysis(data);
+                    showSuccess('Analysis completed successfully');
+                }
+            } else {
+                showError(`Error: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Load correlations
+    async function loadCorrelations() {
+        showLoading(true);
+        
+        try {
+            const response = await fetch('/api/guardduty/correlations');
+            const data = await response.json();
+            
+            if (response.ok) {
+                if (data.error) {
+                    showError(data.error);
+                } else {
+                    currentCorrelations = data.correlations;
+                    displayCorrelations(data.correlations);
+                    document.getElementById('mitreCorrelations').textContent = data.total_correlations;
+                    showSuccess(`Found ${data.total_correlations} MITRE correlations`);
+                }
+            } else {
+                showError(`Error: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Search findings
+    async function searchFindings() {
+        const query = document.getElementById('searchInput').value.trim();
+        
+        if (!query) {
+            // Load all findings if no query
+            loadAllFindings();
+            return;
+        }
+        
+        showLoading(true);
+        
+        try {
+            const response = await fetch(`/api/guardduty/search?q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                displayFindings(data.results);
+                document.getElementById('findingsCount').textContent = data.results.length;
+                showSuccess(`Found ${data.results.length} matching findings`);
+            } else {
+                showError(`Error: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Load all findings
+    async function loadAllFindings() {
+        showLoading(true);
+        
+        try {
+            const response = await fetch('/api/guardduty/findings');
+            const data = await response.json();
+            
+            if (response.ok) {
+                currentFindings = data.findings;
+                displayFindings(data.findings);
+                updateStatistics(data);
+            } else {
+                showError(`Error: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Display functions
+    function updateStatistics(data) {
+        document.getElementById('totalFindings').textContent = data.total_findings || data.findings.length;
+        
+        // Count categories, services, and MITRE tactics
+        const categories = new Set();
+        const awsServices = new Set();
+        const mitreTactics = new Set();
+        let highSeverityCount = 0;
+        
+        data.findings.forEach(finding => {
+            categories.add(finding.category);
+            if (finding.severity === 'High') {
+                highSeverityCount++;
+            }
+            
+            // Count AWS services
+            if (finding.aws_services) {
+                finding.aws_services.forEach(service => awsServices.add(service));
+            }
+            
+            // Count MITRE tactics
+            if (finding.mitre_tactics) {
+                finding.mitre_tactics.forEach(tactic => mitreTactics.add(tactic));
+            }
+        });
+        
+        document.getElementById('totalCategories').textContent = categories.size;
+        document.getElementById('highSeverityCount').textContent = highSeverityCount;
+        document.getElementById('awsServicesCount').textContent = awsServices.size;
+        document.getElementById('mitreTagsCount').textContent = mitreTactics.size;
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+        
+        document.getElementById('statisticsCards').style.display = 'block';
+    }
+
+    function updateStatisticsFromAnalysis(analysis) {
+        document.getElementById('totalFindings').textContent = analysis.total_findings;
+        document.getElementById('totalCategories').textContent = Object.keys(analysis.categories).length;
+        document.getElementById('highSeverityCount').textContent = analysis.severities.High || 0;
+        document.getElementById('awsServicesCount').textContent = Object.keys(analysis.aws_services || {}).length;
+        document.getElementById('mitreTagsCount').textContent = Object.keys(analysis.mitre_tactics || {}).length;
+        document.getElementById('lastUpdated').textContent = new Date(analysis.analysis_timestamp).toLocaleString();
+        
+        document.getElementById('statisticsCards').style.display = 'block';
+    }
+
+    function displayFindings(findings) {
+        const tbody = document.getElementById('findingsTableBody');
+        
+        if (findings.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No findings found</td></tr>';
+            document.getElementById('findingsSection').style.display = 'block';
+            return;
+        }
+
+        const findingsHtml = findings.map(finding => `
+            <tr>
+                <td><code>${finding.finding_type}</code></td>
+                <td><span class="badge bg-${getCategoryColor(finding.category)}">${finding.category}</span></td>
+                <td><span class="badge bg-${getSeverityColor(finding.severity)}">${finding.severity}</span></td>
+                <td>
+                    ${(finding.mitre_tactics || []).map(tactic => 
+                        `<span class="badge bg-info me-1">${tactic}</span>`
+                    ).join('')}
+                </td>
+                <td>
+                    ${(finding.aws_services || []).map(service => 
+                        `<span class="badge bg-secondary me-1">${service}</span>`
+                    ).join('')}
+                </td>
+                <td>
+                    <button class="btn btn-outline-primary btn-sm" onclick="showFindingDetails(${JSON.stringify(finding).replace(/"/g, '&quot;')})">
+                        <i class="fas fa-eye"></i> Details
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+
+        tbody.innerHTML = findingsHtml;
+        document.getElementById('findingsCount').textContent = findings.length;
+        document.getElementById('findingsSection').style.display = 'block';
+    }
+
+    function displayAnalysisCharts(analysis) {
+        // Categories chart
+        const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+        new Chart(categoriesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(analysis.categories),
+                datasets: [{
+                    data: Object.values(analysis.categories),
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Finding Categories Distribution'
+                    }
+                }
+            }
+        });
+
+        // Severity chart
+        const severityCtx = document.getElementById('severityChart').getContext('2d');
+        new Chart(severityCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(analysis.severities),
+                datasets: [{
+                    label: 'Count',
+                    data: Object.values(analysis.severities),
+                    backgroundColor: ['#dc3545', '#ffc107', '#28a745']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Severity Distribution'
+                    }
+                }
+            }
+        });
+
+        document.getElementById('analysisCharts').style.display = 'block';
+    }
+
+    function displayCorrelations(correlations) {
+        const container = document.getElementById('correlationsContainer');
+        
+        if (correlations.length === 0) {
+            container.innerHTML = '<p class="text-muted">No correlations found between GuardDuty findings and MITRE techniques.</p>';
+            document.getElementById('correlationsSection').style.display = 'block';
+            return;
+        }
+
+        const correlationsHtml = correlations.slice(0, 10).map(correlation => `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="card-title">
+                                <i class="fas fa-shield-alt text-primary"></i>
+                                ${correlation.guardduty_finding}
+                            </h6>
+                            <p class="text-muted mb-2">
+                                <span class="badge bg-${getCategoryColor(correlation.guardduty_category)}">${correlation.guardduty_category}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="card-title">
+                                <i class="fas fa-crosshairs text-success"></i>
+                                MITRE Tactic: ${correlation.mitre_tactic}
+                            </h6>
+                            <p class="text-muted mb-2">
+                                <strong>Correlation Strength:</strong> ${correlation.correlation_strength} techniques
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <strong>Related MITRE Techniques:</strong>
+                        <div class="mt-1">
+                            ${correlation.matching_techniques.slice(0, 3).map(technique => `
+                                <span class="badge bg-success me-1 mb-1" title="${technique.technique_name}">
+                                    ${technique.technique_id}
+                                </span>
+                            `).join('')}
+                            ${correlation.matching_techniques.length > 3 ? 
+                                `<span class="text-muted">+${correlation.matching_techniques.length - 3} more</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        container.innerHTML = correlationsHtml;
+        document.getElementById('correlationsSection').style.display = 'block';
+    }
+
+    function showFindingDetails(finding) {
+        currentFinding = finding;
+        
+        document.getElementById('modalFindingType').textContent = finding.finding_type;
+        document.getElementById('modalCategory').innerHTML = `<span class="badge bg-${getCategoryColor(finding.category)}">${finding.category}</span>`;
+        document.getElementById('modalSeverity').innerHTML = `<span class="badge bg-${getSeverityColor(finding.severity)}">${finding.severity}</span>`;
+        document.getElementById('modalThreatPurpose').textContent = finding.threat_purpose || 'Not specified';
+        document.getElementById('modalDescription').textContent = finding.description;
+        document.getElementById('modalRemediation').textContent = finding.remediation || 'No specific remediation provided';
+        
+        // MITRE tactics
+        const tacticsHtml = (finding.mitre_tactics || []).map(tactic => 
+            `<span class="badge bg-info me-1 mb-1">${tactic}</span>`
+        ).join('') || '<span class="text-muted">None mapped</span>';
+        document.getElementById('modalMitreTactics').innerHTML = tacticsHtml;
+        
+        // AWS services
+        const servicesHtml = (finding.aws_services || []).map(service => 
+            `<span class="badge bg-secondary me-1 mb-1">${service}</span>`
+        ).join('') || '<span class="text-muted">Not specified</span>';
+        document.getElementById('modalAwsServices').innerHTML = servicesHtml;
+        
+        const modal = new bootstrap.Modal(document.getElementById('findingDetailsModal'));
+        modal.show();
+    }
+
+    function exportFindingData() {
+        if (!currentFinding) return;
+        
+        const dataStr = JSON.stringify(currentFinding, null, 2);
+        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `guardduty_finding_${currentFinding.finding_type.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+        link.click();
+    }
+
+    // Utility functions
+    function getCategoryColor(category) {
+        const colors = {
+            'Backdoor': 'danger',
+            'Behavior': 'warning',
+            'CryptoCurrency': 'info',
+            'DefenseEvasion': 'secondary',
+            'Discovery': 'primary',
+            'Impact': 'danger',
+            'InitialAccess': 'warning',
+            'Malware': 'danger',
+            'Persistence': 'info',
+            'Policy': 'secondary',
+            'PrivilegeEscalation': 'warning',
+            'Recon': 'primary',
+            'ResourceConsumption': 'info',
+            'Stealth': 'secondary',
+            'Trojan': 'danger',
+            'UnauthorizedAccess': 'warning'
+        };
+        return colors[category] || 'secondary';
+    }
+
+    function getSeverityColor(severity) {
+        const colors = {
+            'High': 'danger',
+            'Medium': 'warning',
+            'Low': 'success'
+        };
+        return colors[severity] || 'secondary';
+    }
+
+    function showLoading(show) {
+        document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+    }
+
+    function showSuccess(message) {
+        // You could implement a toast notification here
+        console.log('Success:', message);
+    }
+
+    function showError(message) {
+        // You could implement a toast notification here
+        console.error('Error:', message);
+        alert('Error: ' + message);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-load findings on page load
+        loadAllFindings();
+    });
+</script>
+{% endblock %}

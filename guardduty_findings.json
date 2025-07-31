@@ -1,0 +1,4309 @@
+{
+  "scraped_timestamp": "2025-07-31T16:21:48.570030",
+  "total_findings": 261,
+  "findings": [
+    {
+      "finding_type": "Backdoor:EC2/C&CActivity.B!DNS",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/C&CActivity.B!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:Lambda/C&CActivity.B",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:Lambda/C&CActivity.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:Runtime/C&CActivity.B",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:Runtime/C&CActivity.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:Runtime/C&CActivity.B!DNS",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:Runtime/C&CActivity.B!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/C&CActivity.B",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/C&CActivity.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Dns",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/DenialOfService.Dns",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Tcp",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/DenialOfService.Tcp",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Udp",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/DenialOfService.Udp",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.UdpOnTcpPorts",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/DenialOfService.UdpOnTcpPorts",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.UnusualProtocol",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/DenialOfService.UnusualProtocol",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/Spambot",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Backdoor:EC2/Spambot",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Behavior:EC2/NetworkPortUnusual",
+      "category": "Behavior",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Behavior:EC2/NetworkPortUnusual",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Behavior:EC2/TrafficVolumeUnusual",
+      "category": "Behavior",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Behavior:EC2/TrafficVolumeUnusual",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "CryptoCurrency:EC2/BitcoinTool.B!DNS",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "GuardDuty finding: CryptoCurrency:EC2/BitcoinTool.B!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "CryptoCurrency:Lambda/BitcoinTool.B",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "GuardDuty finding: CryptoCurrency:Lambda/BitcoinTool.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "CryptoCurrency:Runtime/BitcoinTool.B",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "GuardDuty finding: CryptoCurrency:Runtime/BitcoinTool.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "CryptoCurrency:Runtime/BitcoinTool.B!DNS",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "GuardDuty finding: CryptoCurrency:Runtime/BitcoinTool.B!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "CryptoCurrency:EC2/BitcoinTool.B",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "GuardDuty finding: CryptoCurrency:EC2/BitcoinTool.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:IAMUser/AnomalousBehavior",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/MaliciousIPCaller",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Kubernetes/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Kubernetes/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Kubernetes/SuccessfulAnonymousAccess",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/TorIPCaller",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Kubernetes/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/FilelessExecution",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/FilelessExecution",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/ProcessInjection.Proc",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/ProcessInjection.Proc",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/ProcessInjection.Ptrace",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/ProcessInjection.Ptrace",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/ProcessInjection.VirtualMemoryWrite",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/ProcessInjection.VirtualMemoryWrite",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/PtraceAntiDebugging",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/PtraceAntiDebugging",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:Runtime/SuspiciousCommand",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:Runtime/SuspiciousCommand",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDNSResolver",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:EC2/UnusualDNSResolver",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDoHActivity",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:EC2/UnusualDoHActivity",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDoTActivity",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty finding: DefenseEvasion:EC2/UnusualDoTActivity",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:S3/AnomalousBehavior",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:S3/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:S3/MaliciousIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:S3/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:S3/MaliciousIPCaller.Custom",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:S3/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:S3/TorIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:S3/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:IAMUser/AnomalousBehavior",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/AnomalousBehavior.PermissionChecked",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Kubernetes/AnomalousBehavior.PermissionChecked",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/MaliciousIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Kubernetes/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Kubernetes/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Kubernetes/SuccessfulAnonymousAccess",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/TorIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Kubernetes/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:RDS/MaliciousIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:RDS/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "RDS"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:RDS/TorIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:RDS/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "RDS"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Discovery:Runtime/SuspiciousCommand",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Discovery:Runtime/SuspiciousCommand",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Delete",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:S3/AnomalousBehavior.Delete",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Permission",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:S3/AnomalousBehavior.Permission",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Write",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:S3/AnomalousBehavior.Write",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:S3/MaliciousIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:S3/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:IAMUser/AnomalousBehavior",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/AbusedDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/AbusedDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/BitcoinDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/BitcoinDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/MaliciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/MaliciousDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/SuspiciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/SuspiciousDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Kubernetes/MaliciousIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Kubernetes/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Kubernetes/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Kubernetes/SuccessfulAnonymousAccess",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Kubernetes/TorIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Kubernetes/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Runtime/AbusedDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Runtime/AbusedDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Runtime/BitcoinDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Runtime/BitcoinDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Runtime/CryptoMinerExecuted",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Runtime/CryptoMinerExecuted",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Runtime/MaliciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Runtime/MaliciousDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:Runtime/SuspiciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:Runtime/SuspiciousDomainRequest.Reputation",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/PortSweep",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/PortSweep",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Impact:EC2/WinRMBruteForce",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Impact:EC2/WinRMBruteForce",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "InitialAccess:IAMUser/AnomalousBehavior",
+      "category": "InitialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: InitialAccess:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:IAMUser/AnomalousBehavior",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/ContainerWithSensitiveMount",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/ContainerWithSensitiveMount",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/MaliciousIPCaller",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/SuccessfulAnonymousAccess",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/TorIPCaller",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/AnomalousBehavior.WorkloadDeployed!ContainerWithSensitiveMount",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Kubernetes/AnomalousBehavior.WorkloadDeployed!ContainerWithSensitiveMount",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Persistence:Runtime/SuspiciousCommand",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Persistence:Runtime/SuspiciousCommand",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:S3/AccountBlockPublicAccessDisabled",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:S3/AccountBlockPublicAccessDisabled",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:S3/BucketAnonymousAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:S3/BucketAnonymousAccessGranted",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:S3/BucketBlockPublicAccessDisabled",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:S3/BucketBlockPublicAccessDisabled",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:S3/BucketPublicAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:S3/BucketPublicAccessGranted",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:IAMUser/RootCredentialUsage",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:IAMUser/RootCredentialUsage",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:IAMUser/ShortTermRootCredentialUsage",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:IAMUser/ShortTermRootCredentialUsage",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:Kubernetes/AdminAccessToDefaultServiceAccount",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:Kubernetes/AdminAccessToDefaultServiceAccount",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:Kubernetes/AnonymousAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:Kubernetes/AnonymousAccessGranted",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:Kubernetes/KubeflowDashboardExposed",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:Kubernetes/KubeflowDashboardExposed",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Policy:Kubernetes/ExposedDashboard",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Policy:Kubernetes/ExposedDashboard",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:IAMUser/AnomalousBehavior",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:IAMUser/AnomalousBehavior",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleBindingCreated",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleBindingCreated",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleCreated",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleCreated",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.WorkloadDeployed!PrivilegedContainer",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Kubernetes/AnomalousBehavior.WorkloadDeployed!PrivilegedContainer",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/PrivilegedContainer",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Kubernetes/PrivilegedContainer",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/CGroupsReleaseAgentModified",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/CGroupsReleaseAgentModified",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/ContainerMountsHostDirectory",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/ContainerMountsHostDirectory",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/DockerSocketAccessed",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/DockerSocketAccessed",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/ElevationToRoot",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/ElevationToRoot",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/RuncContainerEscape",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/RuncContainerEscape",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/SuspiciousCommand",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/SuspiciousCommand",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Runtime/UserfaultfdUsage",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty finding: PrivilegeEscalation:Runtime/UserfaultfdUsage",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:IAMUser/MaliciousIPCaller",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:IAMUser/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:IAMUser/MaliciousIPCaller.Custom",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:IAMUser/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:IAMUser/TorIPCaller",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:IAMUser/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:EC2/PortProbeEMRUnprotectedPort",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:EC2/PortProbeEMRUnprotectedPort",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:EC2/PortProbeUnprotectedPort",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:EC2/PortProbeUnprotectedPort",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Recon:EC2/Portscan",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Recon:EC2/Portscan",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Stealth:IAMUser/PasswordPolicyChange",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Stealth:IAMUser/PasswordPolicyChange",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Stealth:IAMUser/CloudTrailLoggingDisabled",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Stealth:IAMUser/CloudTrailLoggingDisabled",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Stealth:S3/ServerAccessLoggingDisabled",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Stealth:S3/ServerAccessLoggingDisabled",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/BlackholeTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/BlackholeTraffic!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DGADomainRequest.B",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DGADomainRequest.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DGADomainRequest.C!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DGADomainRequest.C!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DNSDataExfiltration",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DNSDataExfiltration",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DriveBySourceTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DriveBySourceTraffic!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DropPoint!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DropPoint!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/PhishingDomainRequest!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/PhishingDomainRequest!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Lambda/BlackholeTraffic",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Lambda/BlackholeTraffic",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Lambda/DropPoint",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Lambda/DropPoint",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/BlackholeTraffic",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/BlackholeTraffic",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/BlackholeTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/BlackholeTraffic!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/DropPoint",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/DropPoint",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/DGADomainRequest.C!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/DGADomainRequest.C!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/DriveBySourceTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/DriveBySourceTraffic!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/DropPoint!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/DropPoint!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:Runtime/PhishingDomainRequest!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:Runtime/PhishingDomainRequest!DNS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/BlackholeTraffic",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/BlackholeTraffic",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Trojan:EC2/DropPoint",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty finding: Trojan:EC2/DropPoint",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:S3/TorIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:S3/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:S3/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:S3/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.InsideAWS",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.InsideAWS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/ConsoleLoginSuccess.B",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/ConsoleLoginSuccess.B",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/MaliciousIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/MaliciousIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/TorIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/TorIPCaller",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/MetadataDNSRebind",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/MetadataDNSRebind",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Lambda/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Lambda/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Lambda/TorClient",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Lambda/TorClient",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Lambda/TorRelay",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Lambda/TorRelay",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Lambda"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Runtime/MetadataDNSRebind",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Runtime/MetadataDNSRebind",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Runtime/TorClient",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Runtime/TorClient",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:Runtime/TorRelay",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:Runtime/TorRelay",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "Runtime"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/MaliciousIPCaller.Custom",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/RDPBruteForce",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/RDPBruteForce",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/SSHBruteForce",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/SSHBruteForce",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/TorClient",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/TorClient",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/TorRelay",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty finding: UnauthorizedAccess:EC2/TorRelay",
+      "remediation": "Investigate the finding and take appropriate action",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2"
+      ],
+      "threat_purpose": null,
+      "resource_role": null
+    },
+    {
+      "finding_type": "Backdoor:EC2/C&CActivity.B",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "B...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/C&CActivity.B!DNS",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "B!DNS...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Dns",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "Dns...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Tcp",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "Tcp...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.Udp",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "Udp...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.UdpOnTcpPorts",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "UdpOnTcpPorts...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/DenialOfService.UnusualProtocol",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "UnusualProtocol...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Backdoor:EC2/Spambot",
+      "category": "Backdoor",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Backdoor Access",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Behavior:EC2/NetworkPortUnusual",
+      "category": "Behavior",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Behavior:EC2/TrafficVolumeUnusual",
+      "category": "Behavior",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "CryptoCurrency:EC2/BitcoinTool.B",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "B...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Cryptocurrency Mining",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "CryptoCurrency:EC2/BitcoinTool.B!DNS",
+      "category": "CryptoCurrency",
+      "severity": "Medium",
+      "description": "B!DNS...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact",
+        "Resource Hijacking"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": "Cryptocurrency Mining",
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDNSResolver",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDoHActivity",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "DefenseEvasion:EC2/UnusualDoTActivity",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/AbusedDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Reputation...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/BitcoinDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Reputation...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/MaliciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Reputation...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/PortSweep",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/SuspiciousDomainRequest.Reputation",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Reputation...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Impact:EC2/WinRMBruteForce",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Recon:EC2/PortProbeEMRUnprotectedPort",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Recon:EC2/PortProbeUnprotectedPort",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Recon:EC2/Portscan",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/BlackholeTraffic",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/BlackholeTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DGADomainRequest.B",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "B...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DGADomainRequest.C!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "C!DNS...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DNSDataExfiltration",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DriveBySourceTraffic!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DropPoint",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/DropPoint!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "Trojan:EC2/PhishingDomainRequest!DNS",
+      "category": "Trojan",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Execution",
+        "Command and Control"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/MetadataDNSRebind",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/RDPBruteForce",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/SSHBruteForce",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/TorClient",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:EC2/TorRelay",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "EC2",
+        "VPC"
+      ],
+      "threat_purpose": null,
+      "resource_role": "EC2"
+    },
+    {
+      "finding_type": "CredentialAccess:IAMUser/AnomalousBehavior",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "DefenseEvasion:IAMUser/AnomalousBehavior",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Discovery:IAMUser/AnomalousBehavior",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Exfiltration:IAMUser/AnomalousBehavior",
+      "category": "Exfiltration",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Impact:IAMUser/AnomalousBehavior",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "InitialAccess:IAMUser/AnomalousBehavior",
+      "category": "InitialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "PenTest:IAMUser/KaliLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "PenTest:IAMUser/ParrotLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "PenTest:IAMUser/PentooLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Persistence:IAMUser/AnomalousBehavior",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Policy:IAMUser/RootCredentialUsage",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Policy:IAMUser/ShortTermRootCredentialUsage",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "PrivilegeEscalation:IAMUser/AnomalousBehavior",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Recon:IAMUser/MaliciousIPCaller",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Recon:IAMUser/MaliciousIPCaller.Custom",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Recon:IAMUser/TorIPCaller",
+      "category": "Recon",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Reconnaissance",
+        "Discovery"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Stealth:IAMUser/CloudTrailLoggingDisabled",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser",
+        "CloudTrail"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "Stealth:IAMUser/PasswordPolicyChange",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/ConsoleLoginSuccess.B",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "B...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.InsideAWS",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "InsideAWS...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "OutsideAWS...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/MaliciousIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:IAMUser/TorIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "IAMUser"
+      ],
+      "threat_purpose": null,
+      "resource_role": "IAMUser"
+    },
+    {
+      "finding_type": "CredentialAccess:Kubernetes/MaliciousIPCaller",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "CredentialAccess:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "CredentialAccess:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "CredentialAccess:Kubernetes/TorIPCaller",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/MaliciousIPCaller",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "DefenseEvasion:Kubernetes/TorIPCaller",
+      "category": "DefenseEvasion",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/MaliciousIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/TorIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Execution:Kubernetes/ExecInKubeSystemPod",
+      "category": "Execution",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Impact:Kubernetes/MaliciousIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Impact:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Impact:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Impact:Kubernetes/TorIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/ContainerWithSensitiveMount",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/MaliciousIPCaller",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/MaliciousIPCaller.Custom",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/SuccessfulAnonymousAccess",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/TorIPCaller",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Policy:Kubernetes/AdminAccessToDefaultServiceAccount",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Policy:Kubernetes/AnonymousAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Policy:Kubernetes/ExposedDashboard",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Policy:Kubernetes/KubeflowDashboardExposed",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/PrivilegedContainer",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "CredentialAccess:Kubernetes/AnomalousBehavior.SecretsAccessed",
+      "category": "CredentialAccess",
+      "severity": "Medium",
+      "description": "SecretsAccessed...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleBindingCreated",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "RoleBindingCreated...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Execution:Kubernetes/AnomalousBehavior.ExecInPod",
+      "category": "Execution",
+      "severity": "Medium",
+      "description": "ExecInPod...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.WorkloadDeployed!PrivilegedContainer",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "WorkloadDeployed!PrivilegedContainer...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Persistence:Kubernetes/AnomalousBehavior.WorkloadDeployed!ContainerWithSensitiveMount",
+      "category": "Persistence",
+      "severity": "Medium",
+      "description": "WorkloadDeployed!ContainerWithSensitiveMount...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Persistence"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Execution:Kubernetes/AnomalousBehavior.WorkloadDeployed",
+      "category": "Execution",
+      "severity": "Medium",
+      "description": "WorkloadDeployed...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "PrivilegeEscalation:Kubernetes/AnomalousBehavior.RoleCreated",
+      "category": "PrivilegeEscalation",
+      "severity": "Medium",
+      "description": "RoleCreated...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:Kubernetes/AnomalousBehavior.PermissionChecked",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "PermissionChecked...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "Kubernetes"
+      ],
+      "threat_purpose": null,
+      "resource_role": "Kubernetes"
+    },
+    {
+      "finding_type": "Discovery:S3/AnomalousBehavior",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Discovery:S3/MaliciousIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Discovery:S3/MaliciousIPCaller.Custom",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Discovery:S3/TorIPCaller",
+      "category": "Discovery",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Discovery"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Exfiltration:S3/AnomalousBehavior",
+      "category": "Exfiltration",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Exfiltration:S3/MaliciousIPCaller",
+      "category": "Exfiltration",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Delete",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Delete...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Permission",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Permission...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Impact:S3/AnomalousBehavior.Write",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "Write...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Impact:S3/MaliciousIPCaller",
+      "category": "Impact",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Impact"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "PenTest:S3/KaliLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "PenTest:S3/ParrotLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "PenTest:S3/PentooLinux",
+      "category": "PenTest",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Policy:S3/AccountBlockPublicAccessDisabled",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Policy:S3/BucketAnonymousAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Policy:S3/BucketBlockPublicAccessDisabled",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Policy:S3/BucketPublicAccessGranted",
+      "category": "Policy",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "Stealth:S3/ServerAccessLoggingDisabled",
+      "category": "Stealth",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Defense Evasion"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:S3/MaliciousIPCaller.Custom",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "Custom...",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    },
+    {
+      "finding_type": "UnauthorizedAccess:S3/TorIPCaller",
+      "category": "UnauthorizedAccess",
+      "severity": "Medium",
+      "description": "GuardDuty security finding requiring investigation",
+      "remediation": "Review the finding details and investigate the reported activity",
+      "sample_finding": null,
+      "mitre_tactics": [
+        "Initial Access",
+        "Credential Access"
+      ],
+      "aws_services": [
+        "S3"
+      ],
+      "threat_purpose": null,
+      "resource_role": "S3"
+    }
+  ]
+}

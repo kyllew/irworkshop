@@ -1,0 +1,727 @@
+{% extends "base.html" %}
+
+{% block title %}Incident Response Playbooks - AWS Threat Catalog{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-6">
+            <i class="fas fa-book text-primary"></i>
+            AWS Incident Response Playbooks
+        </h1>
+        <p class="lead text-muted">
+            Structured incident response playbooks integrated with MITRE ATT&CK techniques and GuardDuty findings for comprehensive threat response.
+        </p>
+    </div>
+</div>
+
+<!-- Playbook Overview -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-shield-alt"></i>
+                    Available Playbooks
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="fas fa-user-shield text-primary"></i>
+                                    Compromised IAM Credentials
+                                </h6>
+                                <p class="card-text">Response playbook for suspected or confirmed compromise of AWS IAM credentials</p>
+                                <div class="mb-2">
+                                    <span class="badge bg-danger">High Severity</span>
+                                    <span class="badge bg-info">Credential Compromise</span>
+                                </div>
+                                <button class="btn btn-primary" onclick="loadPlaybook('compromised-iam')">
+                                    <i class="fas fa-play"></i> Load Playbook
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-warning">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="fas fa-cloud text-warning"></i>
+                                    S3 Public Access
+                                </h6>
+                                <p class="card-text">Response playbook for suspected or confirmed public access to S3 buckets</p>
+                                <div class="mb-2">
+                                    <span class="badge bg-danger">High Severity</span>
+                                    <span class="badge bg-info">Data Exposure</span>
+                                </div>
+                                <button class="btn btn-warning" onclick="loadPlaybook('s3-public-access')">
+                                    <i class="fas fa-play"></i> Load Playbook
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Playbooks Row -->
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="fas fa-network-wired text-danger"></i>
+                                    Unauthorized Network Changes
+                                </h6>
+                                <p class="card-text">Response playbook for suspected or confirmed unauthorized changes to network configurations</p>
+                                <div class="mb-2">
+                                    <span class="badge bg-danger">High Severity</span>
+                                    <span class="badge bg-info">Network Security</span>
+                                </div>
+                                <button class="btn btn-danger" onclick="loadPlaybook('unauthorized-network-changes')">
+                                    <i class="fas fa-play"></i> Load Playbook
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-secondary">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="fas fa-plus-circle text-secondary"></i>
+                                    More Playbooks Coming Soon
+                                </h6>
+                                <p class="card-text">Additional incident response playbooks will be added based on the AWS Customer Playbook Framework</p>
+                                <div class="mb-2">
+                                    <span class="badge bg-secondary">Future Release</span>
+                                </div>
+                                <button class="btn btn-secondary" disabled>
+                                    <i class="fas fa-clock"></i> Coming Soon
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Indicator -->
+<div id="loadingIndicator" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <i class="fas fa-spinner fa-spin"></i>
+            Loading playbook data...
+        </div>
+    </div>
+</div>
+
+<!-- Playbook Details -->
+<div id="playbookDetails" class="row mb-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-book-open"></i>
+                    <span id="playbookTitle">Playbook Details</span>
+                </h5>
+                <div>
+                    <button class="btn btn-outline-info btn-sm me-2" onclick="showCorrelations()">
+                        <i class="fas fa-project-diagram"></i> View Correlations
+                    </button>
+                    <button class="btn btn-outline-success btn-sm" onclick="generateAutomationScript()">
+                        <i class="fas fa-code"></i> Generate Script
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <p id="playbookDescription" class="text-muted"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column">
+                            <div class="mb-2">
+                                <strong>Severity:</strong> <span id="playbookSeverity" class="badge"></span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Type:</strong> <span id="playbookType"></span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>AWS Services:</strong>
+                                <div id="playbookServices"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Playbook Sections -->
+                <div id="playbookSections"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Correlations Modal -->
+<div class="modal fade" id="correlationsModal" tabindex="-1" aria-labelledby="correlationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="correlationsModalLabel">
+                    <i class="fas fa-project-diagram"></i>
+                    Threat Intelligence Correlations
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="correlationTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="mitre-tab" data-bs-toggle="tab" data-bs-target="#mitre-correlations" type="button" role="tab">
+                            <i class="fas fa-crosshairs"></i> MITRE ATT&CK
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="guardduty-tab" data-bs-toggle="tab" data-bs-target="#guardduty-correlations" type="button" role="tab">
+                            <i class="fas fa-shield-alt"></i> GuardDuty
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="correlationTabContent">
+                    <div class="tab-pane fade show active" id="mitre-correlations" role="tabpanel">
+                        <div id="mitreCorrelationsContent" class="mt-3"></div>
+                    </div>
+                    <div class="tab-pane fade" id="guardduty-correlations" role="tabpanel">
+                        <div id="guarddutyCorrelationsContent" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Automation Script Modal -->
+<div class="modal fade" id="automationModal" tabindex="-1" aria-labelledby="automationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="automationModalLabel">
+                    <i class="fas fa-code"></i>
+                    Automated Response Script
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    This script automates the containment steps that can be safely automated. Always review and test before using in production.
+                </div>
+                <pre id="automationScript" class="bg-dark text-light p-3" style="max-height: 400px; overflow-y: auto;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="downloadScript()">
+                    <i class="fas fa-download"></i> Download Script
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technique Details Modal -->
+<div class="modal fade" id="techniqueDetailsModal" tabindex="-1" aria-labelledby="techniqueDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="techniqueDetailsModalLabel">
+                    <i class="fas fa-crosshairs"></i>
+                    <span id="modalTechniqueId"></span> - <span id="modalTechniqueName"></span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Tactic:</strong> <span id="modalTactic" class="badge bg-primary"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Severity:</strong> <span id="modalSeverity" class="badge"></span>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Description:</strong>
+                    <p id="modalDescription" class="mt-2"></p>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>AWS Services:</strong>
+                    <div id="modalAwsServices" class="mt-2"></div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Related API Calls:</strong>
+                    <div id="modalApiCalls" class="mt-2"></div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Detection Methods:</strong>
+                    <ul id="modalDetectionMethods" class="mt-2"></ul>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Mitigation:</strong>
+                    <p id="modalMitigation" class="mt-2"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="viewInDatabase()">
+                    <i class="fas fa-database"></i> View in Database
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+    .clickable-technique {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .clickable-technique:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+</style>
+<script>
+    let currentPlaybook = null;
+    let currentScript = null;
+    let currentTechnique = null;
+
+    // Load playbook
+    async function loadPlaybook(playbookId) {
+        showLoading(true);
+        
+        try {
+            const response = await fetch(`/api/playbooks/${playbookId}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                currentPlaybook = data;
+                displayPlaybook(data);
+                showSuccess(`Loaded playbook: ${data.title}`);
+            } else {
+                showError(`Error loading playbook: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Display playbook
+    function displayPlaybook(playbook) {
+        document.getElementById('playbookTitle').textContent = playbook.title;
+        document.getElementById('playbookDescription').textContent = playbook.description;
+        document.getElementById('playbookType').textContent = playbook.incident_type;
+        
+        // Set severity badge
+        const severityBadge = document.getElementById('playbookSeverity');
+        severityBadge.textContent = playbook.severity;
+        severityBadge.className = `badge bg-${playbook.severity.toLowerCase() === 'high' ? 'danger' : 'warning'}`;
+        
+        // Display AWS services
+        const servicesContainer = document.getElementById('playbookServices');
+        servicesContainer.innerHTML = playbook.aws_services.map(service => 
+            `<span class="badge bg-secondary me-1 mb-1">${service}</span>`
+        ).join('');
+        
+        // Display sections
+        const sectionsContainer = document.getElementById('playbookSections');
+        sectionsContainer.innerHTML = playbook.sections.map((section, sectionIndex) => `
+            <div class="accordion mb-3" id="accordion${sectionIndex}">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading${sectionIndex}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${sectionIndex}" aria-expanded="false">
+                            <strong>${section.section_name}</strong>
+                            <span class="ms-2 text-muted">(${section.steps.length} steps)</span>
+                        </button>
+                    </h2>
+                    <div id="collapse${sectionIndex}" class="accordion-collapse collapse" data-bs-parent="#accordion${sectionIndex}">
+                        <div class="accordion-body">
+                            <p class="text-muted mb-3">${section.description}</p>
+                            ${section.steps.map(step => `
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title mb-0">
+                                                <span class="badge bg-primary me-2">${step.step_number}</span>
+                                                ${step.title}
+                                            </h6>
+                                            ${step.automation_possible ? '<span class="badge bg-success">Automatable</span>' : ''}
+                                        </div>
+                                        <p class="card-text">${step.description}</p>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Actions:</strong>
+                                                <ul class="mt-1">
+                                                    ${step.actions.map(action => `<li>${action}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                ${step.aws_apis.length > 0 ? `
+                                                    <strong>AWS APIs:</strong><br>
+                                                    ${step.aws_apis.map(api => `<code class="me-1 mb-1 d-inline-block">${api}</code>`).join('')}
+                                                ` : ''}
+                                                
+                                                ${step.mitre_techniques.length > 0 ? `
+                                                    <br><strong>MITRE Techniques:</strong><br>
+                                                    ${step.mitre_techniques.map(technique => `<span class="badge bg-info me-1 mb-1 clickable-technique" onclick="showTechniqueDetails('${technique}')" title="Click to view technique details">${technique}</span>`).join('')}
+                                                ` : ''}
+                                                
+                                                ${step.guardduty_findings.length > 0 ? `
+                                                    <br><strong>GuardDuty Findings:</strong><br>
+                                                    ${step.guardduty_findings.map(finding => `<span class="badge bg-warning me-1 mb-1">${finding}</span>`).join('')}
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        document.getElementById('playbookDetails').style.display = 'block';
+    }
+
+    // Show correlations
+    async function showCorrelations() {
+        if (!currentPlaybook) return;
+        
+        // Load MITRE correlations
+        try {
+            const mitreResponse = await fetch(`/api/playbooks/correlations/mitre?playbook_id=${currentPlaybook.playbook_id}`);
+            const mitreData = await mitreResponse.json();
+            
+            if (mitreResponse.ok) {
+                displayMitreCorrelations(mitreData.correlations);
+            }
+        } catch (error) {
+            console.error('Error loading MITRE correlations:', error);
+        }
+        
+        // Load GuardDuty correlations
+        try {
+            const guarddutyResponse = await fetch(`/api/playbooks/correlations/guardduty?playbook_id=${currentPlaybook.playbook_id}`);
+            const guarddutyData = await guarddutyResponse.json();
+            
+            if (guarddutyResponse.ok) {
+                displayGuardDutyCorrelations(guarddutyData.correlations);
+            }
+        } catch (error) {
+            console.error('Error loading GuardDuty correlations:', error);
+        }
+        
+        const modal = new bootstrap.Modal(document.getElementById('correlationsModal'));
+        modal.show();
+    }
+
+    // Display MITRE correlations
+    function displayMitreCorrelations(correlations) {
+        const container = document.getElementById('mitreCorrelationsContent');
+        
+        if (correlations.length === 0) {
+            container.innerHTML = '<p class="text-muted">No MITRE correlations found.</p>';
+            return;
+        }
+
+        container.innerHTML = correlations.map(correlation => `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">${correlation.playbook_step}</h6>
+                    <p class="text-muted mb-2">Section: ${correlation.section}</p>
+                    <div class="mb-2">
+                        <strong>MITRE Technique:</strong> 
+                        <span class="badge bg-primary">${correlation.mitre_technique_id}</span>
+                    </div>
+                    <div>
+                        <strong>Related Techniques in Database:</strong>
+                        ${correlation.matching_techniques.map(technique => `
+                            <div class="mt-1">
+                                <span class="badge bg-success me-2">${technique.technique_name}</span>
+                                <code>${technique.api_call}</code>
+                                <span class="badge bg-${technique.severity.toLowerCase() === 'high' ? 'danger' : 'warning'} ms-2">${technique.severity}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Display GuardDuty correlations
+    function displayGuardDutyCorrelations(correlations) {
+        const container = document.getElementById('guarddutyCorrelationsContent');
+        
+        if (correlations.length === 0) {
+            container.innerHTML = '<p class="text-muted">No GuardDuty correlations found.</p>';
+            return;
+        }
+
+        container.innerHTML = correlations.map(correlation => `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">${correlation.playbook_step}</h6>
+                    <p class="text-muted mb-2">Section: ${correlation.section}</p>
+                    <div class="mb-2">
+                        <strong>GuardDuty Finding:</strong> 
+                        <code>${correlation.guardduty_finding}</code>
+                    </div>
+                    <div>
+                        <strong>Related Findings:</strong>
+                        ${correlation.matching_findings.map(finding => `
+                            <div class="mt-1">
+                                <span class="badge bg-warning me-2">${finding.category}</span>
+                                <span class="badge bg-${finding.severity.toLowerCase() === 'high' ? 'danger' : 'info'}">${finding.severity}</span>
+                                <p class="mt-1 small">${finding.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Generate automation script
+    async function generateAutomationScript() {
+        if (!currentPlaybook) return;
+        
+        showLoading(true);
+        
+        try {
+            const response = await fetch(`/api/playbooks/automation-script?playbook_id=${currentPlaybook.playbook_id}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                currentScript = data;
+                document.getElementById('automationScript').textContent = data.script;
+                
+                const modal = new bootstrap.Modal(document.getElementById('automationModal'));
+                modal.show();
+                
+                showSuccess('Automation script generated successfully');
+            } else {
+                showError(`Error generating script: ${data.detail}`);
+            }
+        } catch (error) {
+            showError(`Network error: ${error.message}`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Download script
+    function downloadScript() {
+        if (!currentScript) return;
+        
+        const blob = new Blob([currentScript.script], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = currentScript.filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // Show technique details
+    async function showTechniqueDetails(techniqueId) {
+        try {
+            // Get detailed technique information
+            const response = await fetch(`/api/database/technique/${encodeURIComponent(techniqueId)}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                currentTechnique = data.technique;
+                displayTechniqueDetails(data.technique);
+            } else {
+                // If technique not found, show a basic modal with available information
+                showBasicTechniqueInfo(techniqueId);
+            }
+        } catch (error) {
+            showError(`Error loading technique details: ${error.message}`);
+        }
+    }
+
+    // Display technique details in modal
+    function displayTechniqueDetails(technique) {
+        document.getElementById('modalTechniqueId').textContent = technique.technique_id;
+        document.getElementById('modalTechniqueName').textContent = technique.technique_name;
+        
+        // Set tactic badge
+        const tacticBadge = document.getElementById('modalTactic');
+        tacticBadge.textContent = technique.tactic;
+        
+        // Set severity badge
+        const severityBadge = document.getElementById('modalSeverity');
+        severityBadge.textContent = technique.severity;
+        severityBadge.className = `badge bg-${getSeverityColor(technique.severity)}`;
+        
+        // Set description
+        document.getElementById('modalDescription').textContent = technique.description;
+        
+        // Set AWS services
+        const servicesContainer = document.getElementById('modalAwsServices');
+        if (technique.aws_services && technique.aws_services.length > 0) {
+            servicesContainer.innerHTML = technique.aws_services.map(service => 
+                `<span class="badge bg-secondary me-1 mb-1">${service}</span>`
+            ).join('');
+        } else {
+            servicesContainer.innerHTML = '<span class="text-muted">Not specified</span>';
+        }
+        
+        // Set API calls
+        const apiCallsContainer = document.getElementById('modalApiCalls');
+        if (technique.api_calls && technique.api_calls.length > 0) {
+            apiCallsContainer.innerHTML = technique.api_calls.map(api => 
+                `<code class="me-1 mb-1 d-inline-block">${api}</code>`
+            ).join('');
+        } else {
+            apiCallsContainer.innerHTML = '<span class="text-muted">No API calls found</span>';
+        }
+        
+        // Set detection methods
+        const detectionContainer = document.getElementById('modalDetectionMethods');
+        if (technique.detection_methods && technique.detection_methods.length > 0) {
+            detectionContainer.innerHTML = technique.detection_methods.map(method => 
+                `<li>${method}</li>`
+            ).join('');
+        } else {
+            detectionContainer.innerHTML = `
+                <li>Monitor CloudTrail logs for ${technique.api_calls ? technique.api_calls.slice(0, 2).join(', ') : 'related'} API calls</li>
+                <li>Set up GuardDuty alerts for suspicious ${technique.tactic.toLowerCase()} activities</li>
+                <li>Implement AWS Config rules to detect policy changes</li>
+            `;
+        }
+        
+        // Set mitigation
+        const mitigationElement = document.getElementById('modalMitigation');
+        if (technique.mitigation) {
+            mitigationElement.textContent = technique.mitigation;
+        } else {
+            mitigationElement.textContent = `Implement least privilege access, monitor API usage, and set up appropriate alerting for ${technique.technique_name} activities.`;
+        }
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('techniqueDetailsModal'));
+        modal.show();
+    }
+
+
+
+    // View technique in database
+    function viewInDatabase() {
+        if (currentTechnique) {
+            // Close the modal and navigate to database with search
+            const modal = bootstrap.Modal.getInstance(document.getElementById('techniqueDetailsModal'));
+            modal.hide();
+            
+            // Navigate to database page with search parameter
+            window.location.href = `/database?search=${encodeURIComponent(currentTechnique.technique_id)}`;
+        }
+    }
+
+    // Show basic technique info when not found in database
+    function showBasicTechniqueInfo(techniqueId) {
+        // Basic technique information for common MITRE techniques
+        const basicTechniqueInfo = {
+            'T1078.004': {
+                name: 'Valid Accounts: Cloud Accounts',
+                tactic: 'Initial Access',
+                severity: 'HIGH',
+                description: 'Adversaries may obtain and abuse credentials of existing cloud accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion.',
+                aws_services: ['IAM', 'STS'],
+                api_calls: ['sts:AssumeRole', 'sts:GetSessionToken', 'iam:GetUser', 'sts:GetCallerIdentity']
+            },
+            'T1098.001': {
+                name: 'Account Manipulation: Additional Cloud Credentials',
+                tactic: 'Persistence',
+                severity: 'HIGH',
+                description: 'Adversaries may add adversary-controlled credentials to a cloud account to maintain persistent access to victim systems.',
+                aws_services: ['IAM'],
+                api_calls: ['iam:CreateAccessKey', 'iam:AttachUserPolicy', 'iam:PutUserPolicy', 'iam:CreateLoginProfile']
+            }
+        };
+        
+        const basicInfo = basicTechniqueInfo[techniqueId];
+        if (basicInfo) {
+            // Create a technique object with basic info
+            const technique = {
+                technique_id: techniqueId,
+                technique_name: basicInfo.name,
+                tactic: basicInfo.tactic,
+                severity: basicInfo.severity,
+                description: basicInfo.description,
+                aws_services: basicInfo.aws_services,
+                api_calls: basicInfo.api_calls,
+                detection_methods: [
+                    `Monitor CloudTrail logs for ${basicInfo.api_calls.slice(0, 2).join(', ')} API calls`,
+                    `Set up GuardDuty alerts for suspicious ${basicInfo.tactic.toLowerCase()} activities`,
+                    'Implement AWS Config rules to detect policy changes'
+                ],
+                mitigation: `Implement least privilege access, monitor API usage, and set up appropriate alerting for ${basicInfo.name} activities.`
+            };
+            
+            currentTechnique = technique;
+            displayTechniqueDetails(technique);
+        } else {
+            showError(`Technique ${techniqueId} not found in database and no basic information available`);
+        }
+    }
+
+    // Get severity color
+    function getSeverityColor(severity) {
+        const colors = {
+            'CRITICAL': 'danger',
+            'HIGH': 'danger',
+            'MEDIUM': 'warning',
+            'LOW': 'success'
+        };
+        return colors[severity] || 'secondary';
+    }
+
+    // Utility functions
+    function showLoading(show) {
+        document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+    }
+
+    function showSuccess(message) {
+        console.log('Success:', message);
+        // You could implement toast notifications here
+    }
+
+    function showError(message) {
+        console.error('Error:', message);
+        alert('Error: ' + message);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-load the compromised IAM playbook
+        loadPlaybook('compromised-iam');
+    });
+</script>
+{% endblock %}

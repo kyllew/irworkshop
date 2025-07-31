@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from threat_catalog_loader import ThreatCatalogLoader, ThreatTechnique
 from aws_threat_catalog_loader import AWSCompleteThreatCatalogLoader
+from aws_tactics_data import get_all_tactics, get_tactic_info, update_tactic_counts
 
 class AWSAPIThreatAnalyzer:
     """

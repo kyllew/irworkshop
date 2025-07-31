@@ -1,0 +1,3813 @@
+{
+  "sts:assumerole": {
+    "technique_id": "T1021.007",
+    "technique_name": "Remote Services: Cloud Services",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries may log into accessible cloud services within a compromised environment using Valid Accounts.",
+    "aws_services": [
+      "STS"
+    ],
+    "api_calls": [
+      "sts:AssumeRole",
+      "sts:AssumeRoleWithSAML"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1021.007 related API calls",
+      "Alert on unusual lateral movement activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1021.007",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1021.007/"
+    ],
+    "playbook_url": null
+  },
+  "sts:getsessiontoken": {
+    "technique_id": "T1110.001",
+    "technique_name": "Brute Force: Password Guessing",
+    "tactic": "Credential Access",
+    "description": "Adversaries may use password guessing to obtain valid account credentials.",
+    "aws_services": [
+      "STS",
+      "Cognito"
+    ],
+    "api_calls": [
+      "sts:GetSessionToken",
+      "cognito-idp:InitiateAuth"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1110.001 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1110.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1110.001/"
+    ],
+    "playbook_url": null
+  },
+  "iam:getuser": {
+    "technique_id": "T1033",
+    "technique_name": "System Owner/User Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to identify the primary user, currently logged in user, or set of users that commonly uses a system.",
+    "aws_services": [
+      "STS",
+      "IAM"
+    ],
+    "api_calls": [
+      "sts:GetCallerIdentity",
+      "iam:GetUser",
+      "iam:ListAttachedUserPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1033 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1033",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1033/"
+    ],
+    "playbook_url": null
+  },
+  "sts:getcalleridentity": {
+    "technique_id": "T1033",
+    "technique_name": "System Owner/User Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to identify the primary user, currently logged in user, or set of users that commonly uses a system.",
+    "aws_services": [
+      "STS",
+      "IAM"
+    ],
+    "api_calls": [
+      "sts:GetCallerIdentity",
+      "iam:GetUser",
+      "iam:ListAttachedUserPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1033 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1033",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1033/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describeinstances": {
+    "technique_id": "T1602.001",
+    "technique_name": "Data from Configuration Repository: SNMP (MIB Dump)",
+    "tactic": "Collection",
+    "description": "Adversaries may target the Management Information Base (MIB) to collect and/or mine valuable information.",
+    "aws_services": [
+      "EC2",
+      "CloudFormation"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "cloudformation:GetTemplate"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1602.001 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, CloudFormation service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1602.001",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1602.001/"
+    ],
+    "playbook_url": null
+  },
+  "elasticloadbalancing:describeloadbalancers": {
+    "technique_id": "T1190",
+    "technique_name": "Exploit Public-Facing Application",
+    "tactic": "Initial Access",
+    "description": "Adversaries may attempt to take advantage of a weakness in an Internet-facing computer or program using software, data, or commands in order to cause unintended or unanticipated behavior.",
+    "aws_services": [
+      "EC2",
+      "ELB"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "elasticloadbalancing:DescribeLoadBalancers"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1190 related API calls",
+      "Alert on unusual initial access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, ELB service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1190",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1190/"
+    ],
+    "playbook_url": null
+  },
+  "ses:sendemail": {
+    "technique_id": "T1534",
+    "technique_name": "Internal Spearphishing",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries may use internal spearphishing to gain access to additional information or exploit other users within the same organization.",
+    "aws_services": [
+      "SES",
+      "WorkMail"
+    ],
+    "api_calls": [
+      "ses:SendEmail",
+      "workmail:SendEmail"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1534 related API calls",
+      "Alert on unusual lateral movement activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SES, WorkMail service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1534",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1534/"
+    ],
+    "playbook_url": null
+  },
+  "ses:sendrawemail": {
+    "technique_id": "T1566.002",
+    "technique_name": "Phishing: Spearphishing Link",
+    "tactic": "Initial Access",
+    "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems.",
+    "aws_services": [
+      "SES"
+    ],
+    "api_calls": [
+      "ses:SendEmail",
+      "ses:SendRawEmail"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1566.002 related API calls",
+      "Alert on unusual initial access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SES service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1566.002",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1566.002/"
+    ],
+    "playbook_url": null
+  },
+  "lambda:invokefunction": {
+    "technique_id": "T1499.004",
+    "technique_name": "Endpoint Denial of Service: Application or System Exploitation",
+    "tactic": "Impact",
+    "description": "Adversaries may exploit software vulnerabilities that can cause an application or system to crash and deny availability to users.",
+    "aws_services": [
+      "Lambda",
+      "API Gateway"
+    ],
+    "api_calls": [
+      "lambda:InvokeFunction",
+      "apigateway:CreateDeployment"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1499.004 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, API Gateway service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1499.004",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1499.004/"
+    ],
+    "playbook_url": null
+  },
+  "lambda:createfunction": {
+    "technique_id": "T1496",
+    "technique_name": "Resource Hijacking",
+    "tactic": "Impact",
+    "description": "Adversaries may leverage the resources of co-opted systems in order to solve resource intensive problems.",
+    "aws_services": [
+      "EC2",
+      "Lambda",
+      "Batch",
+      "SageMaker"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "lambda:CreateFunction",
+      "batch:SubmitJob",
+      "sagemaker:CreateTrainingJob"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1496 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, Lambda, Batch, SageMaker service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1496",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1496/"
+    ],
+    "playbook_url": null
+  },
+  "lambda:updatefunctioncode": {
+    "technique_id": "T1565.003",
+    "technique_name": "Data Manipulation: Runtime Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may modify systems in order to manipulate the data as it is accessed and displayed to an end user.",
+    "aws_services": [
+      "Lambda",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "lambda:UpdateFunctionCode",
+      "cloudfront:UpdateDistribution"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.003 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.003",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.003/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:runtask": {
+    "technique_id": "T1609",
+    "technique_name": "Container Administration Command",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse container administration commands to execute commands within a container environment.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:RunTask",
+      "ecs:ExecuteCommand",
+      "eks:DescribeCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1609 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1609",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1609/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:executecommand": {
+    "technique_id": "T1609",
+    "technique_name": "Container Administration Command",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse container administration commands to execute commands within a container environment.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:RunTask",
+      "ecs:ExecuteCommand",
+      "eks:DescribeCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1609 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1609",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1609/"
+    ],
+    "playbook_url": null
+  },
+  "eks:describecluster": {
+    "technique_id": "T1609",
+    "technique_name": "Container Administration Command",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse container administration commands to execute commands within a container environment.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:RunTask",
+      "ecs:ExecuteCommand",
+      "eks:DescribeCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1609 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1609",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1609/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:createservice": {
+    "technique_id": "T1610",
+    "technique_name": "Deploy Container",
+    "tactic": "Execution",
+    "description": "Adversaries may deploy a container into an environment to facilitate execution or evade defenses.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:CreateService",
+      "ecs:RegisterTaskDefinition",
+      "eks:CreateCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1610 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1610",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1610/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:registertaskdefinition": {
+    "technique_id": "T1610",
+    "technique_name": "Deploy Container",
+    "tactic": "Execution",
+    "description": "Adversaries may deploy a container into an environment to facilitate execution or evade defenses.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:CreateService",
+      "ecs:RegisterTaskDefinition",
+      "eks:CreateCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1610 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1610",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1610/"
+    ],
+    "playbook_url": null
+  },
+  "eks:createcluster": {
+    "technique_id": "T1610",
+    "technique_name": "Deploy Container",
+    "tactic": "Execution",
+    "description": "Adversaries may deploy a container into an environment to facilitate execution or evade defenses.",
+    "aws_services": [
+      "ECS",
+      "EKS"
+    ],
+    "api_calls": [
+      "ecs:CreateService",
+      "ecs:RegisterTaskDefinition",
+      "eks:CreateCluster"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1610 related API calls",
+      "Alert on unusual execution activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS, EKS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1610",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1610/"
+    ],
+    "playbook_url": null
+  },
+  "iam:createaccesskey": {
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "tactic": "Persistence",
+    "description": "Adversaries may add adversary-controlled credentials to a cloud account to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:CreateAccessKey",
+      "iam:AttachUserPolicy",
+      "iam:PutUserPolicy",
+      "iam:CreateLoginProfile"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.001 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.001/"
+    ],
+    "playbook_url": null
+  },
+  "iam:attachuserpolicy": {
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "tactic": "Persistence",
+    "description": "Adversaries may add adversary-controlled credentials to a cloud account to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:CreateAccessKey",
+      "iam:AttachUserPolicy",
+      "iam:PutUserPolicy",
+      "iam:CreateLoginProfile"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.001 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.001/"
+    ],
+    "playbook_url": null
+  },
+  "iam:putuserpolicy": {
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "tactic": "Persistence",
+    "description": "Adversaries may add adversary-controlled credentials to a cloud account to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:CreateAccessKey",
+      "iam:AttachUserPolicy",
+      "iam:PutUserPolicy",
+      "iam:CreateLoginProfile"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.001 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.001/"
+    ],
+    "playbook_url": null
+  },
+  "iam:createloginprofile": {
+    "technique_id": "T1098.001",
+    "technique_name": "Account Manipulation: Additional Cloud Credentials",
+    "tactic": "Persistence",
+    "description": "Adversaries may add adversary-controlled credentials to a cloud account to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:CreateAccessKey",
+      "iam:AttachUserPolicy",
+      "iam:PutUserPolicy",
+      "iam:CreateLoginProfile"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.001 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.001/"
+    ],
+    "playbook_url": null
+  },
+  "iam:createrole": {
+    "technique_id": "T1136.003",
+    "technique_name": "Create Account: Cloud Account",
+    "tactic": "Persistence",
+    "description": "Adversaries may create a cloud account to maintain access to victim systems.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:CreateUser",
+      "iam:CreateRole",
+      "organizations:CreateAccount"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1136.003 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1136.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1136.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:attachrolepolicy": {
+    "technique_id": "T1098.003",
+    "technique_name": "Account Manipulation: Additional Cloud Roles",
+    "tactic": "Persistence",
+    "description": "Adversaries may add additional roles to cloud accounts to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM",
+      "STS"
+    ],
+    "api_calls": [
+      "iam:CreateRole",
+      "iam:AttachRolePolicy",
+      "iam:PutRolePolicy",
+      "sts:AssumeRole"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.003 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, STS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.003",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:putrolepolicy": {
+    "technique_id": "T1098.003",
+    "technique_name": "Account Manipulation: Additional Cloud Roles",
+    "tactic": "Persistence",
+    "description": "Adversaries may add additional roles to cloud accounts to maintain persistent access to victim systems.",
+    "aws_services": [
+      "IAM",
+      "STS"
+    ],
+    "api_calls": [
+      "iam:CreateRole",
+      "iam:AttachRolePolicy",
+      "iam:PutRolePolicy",
+      "sts:AssumeRole"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1098.003 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, STS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1098.003",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1098.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:createuser": {
+    "technique_id": "T1136.003",
+    "technique_name": "Create Account: Cloud Account",
+    "tactic": "Persistence",
+    "description": "Adversaries may create a cloud account to maintain access to victim systems.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:CreateUser",
+      "iam:CreateRole",
+      "organizations:CreateAccount"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1136.003 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1136.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1136.003/"
+    ],
+    "playbook_url": null
+  },
+  "organizations:createaccount": {
+    "technique_id": "T1136.003",
+    "technique_name": "Create Account: Cloud Account",
+    "tactic": "Persistence",
+    "description": "Adversaries may create a cloud account to maintain access to victim systems.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:CreateUser",
+      "iam:CreateRole",
+      "organizations:CreateAccount"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1136.003 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1136.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1136.003/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:createimage": {
+    "technique_id": "T1578.001",
+    "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may create new instances in unused geographic service regions.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "ec2:CreateImage",
+      "ec2:ImportImage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.001/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:registerimage": {
+    "technique_id": "T1525",
+    "technique_name": "Implant Internal Image",
+    "tactic": "Persistence",
+    "description": "Adversaries may implant cloud or container images with malicious code to establish persistence after gaining access to an environment.",
+    "aws_services": [
+      "EC2",
+      "ECR"
+    ],
+    "api_calls": [
+      "ec2:CreateImage",
+      "ec2:RegisterImage",
+      "ecr:PutImage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1525 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, ECR service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1525",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1525/"
+    ],
+    "playbook_url": null
+  },
+  "ecr:putimage": {
+    "technique_id": "T1525",
+    "technique_name": "Implant Internal Image",
+    "tactic": "Persistence",
+    "description": "Adversaries may implant cloud or container images with malicious code to establish persistence after gaining access to an environment.",
+    "aws_services": [
+      "EC2",
+      "ECR"
+    ],
+    "api_calls": [
+      "ec2:CreateImage",
+      "ec2:RegisterImage",
+      "ecr:PutImage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1525 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, ECR service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1525",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1525/"
+    ],
+    "playbook_url": null
+  },
+  "ssm:sendcommand": {
+    "technique_id": "T1543.006",
+    "technique_name": "Create or Modify System Process: Systemd Service",
+    "tactic": "Persistence",
+    "description": "Adversaries may create or modify systemd services to repeatedly execute malicious payloads as part of persistence.",
+    "aws_services": [
+      "SSM"
+    ],
+    "api_calls": [
+      "ssm:SendCommand",
+      "ssm:CreateDocument"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1543.006 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1543.006",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1543.006/"
+    ],
+    "playbook_url": null
+  },
+  "ssm:createdocument": {
+    "technique_id": "T1543.006",
+    "technique_name": "Create or Modify System Process: Systemd Service",
+    "tactic": "Persistence",
+    "description": "Adversaries may create or modify systemd services to repeatedly execute malicious payloads as part of persistence.",
+    "aws_services": [
+      "SSM"
+    ],
+    "api_calls": [
+      "ssm:SendCommand",
+      "ssm:CreateDocument"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1543.006 related API calls",
+      "Alert on unusual persistence activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1543.006",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1543.006/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:modifyinstanceattribute": {
+    "technique_id": "T1068",
+    "technique_name": "Exploitation for Privilege Escalation",
+    "tactic": "Privilege Escalation",
+    "description": "Adversaries may exploit software vulnerabilities in an attempt to elevate privileges.",
+    "aws_services": [
+      "EC2",
+      "IAM"
+    ],
+    "api_calls": [
+      "ec2:ModifyInstanceAttribute",
+      "iam:PassRole"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1068 related API calls",
+      "Alert on unusual privilege escalation activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1068",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1068/"
+    ],
+    "playbook_url": null
+  },
+  "iam:passrole": {
+    "technique_id": "T1211",
+    "technique_name": "Exploitation for Defense Evasion",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may exploit a system or application vulnerability to bypass security features.",
+    "aws_services": [
+      "EC2",
+      "IAM"
+    ],
+    "api_calls": [
+      "ec2:ModifyInstanceMetadataOptions",
+      "iam:PassRole"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1211 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1211",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1211/"
+    ],
+    "playbook_url": null
+  },
+  "organizations:leaveorganization": {
+    "technique_id": "T1484.002",
+    "technique_name": "Domain Policy Modification: Trust Modification",
+    "tactic": "Privilege Escalation",
+    "description": "Adversaries may modify domain trust settings to evade defenses and/or escalate privileges.",
+    "aws_services": [
+      "Organizations"
+    ],
+    "api_calls": [
+      "organizations:LeaveOrganization",
+      "organizations:RemoveAccountFromOrganization"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1484.002 related API calls",
+      "Alert on unusual privilege escalation activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1484.002",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1484.002/"
+    ],
+    "playbook_url": null
+  },
+  "organizations:removeaccountfromorganization": {
+    "technique_id": "T1484.002",
+    "technique_name": "Domain Policy Modification: Trust Modification",
+    "tactic": "Privilege Escalation",
+    "description": "Adversaries may modify domain trust settings to evade defenses and/or escalate privileges.",
+    "aws_services": [
+      "Organizations"
+    ],
+    "api_calls": [
+      "organizations:LeaveOrganization",
+      "organizations:RemoveAccountFromOrganization"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1484.002 related API calls",
+      "Alert on unusual privilege escalation activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1484.002",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1484.002/"
+    ],
+    "playbook_url": null
+  },
+  "cloudtrail:putevents": {
+    "technique_id": "T1070.003",
+    "technique_name": "Indicator Removal on Host: Clear Command History",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may clear command history to hide commands they have run.",
+    "aws_services": [
+      "CloudTrail",
+      "CloudWatch"
+    ],
+    "api_calls": [
+      "cloudtrail:PutEvents",
+      "logs:DeleteLogGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1070.003 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudTrail, CloudWatch service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1070.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1070.003/"
+    ],
+    "playbook_url": null
+  },
+  "logs:deleteloggroup": {
+    "technique_id": "T1562.008",
+    "technique_name": "Impair Defenses: Disable Cloud Logs",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may disable cloud logging capabilities and integrations to limit what data is collected on their activities.",
+    "aws_services": [
+      "CloudTrail",
+      "CloudWatch"
+    ],
+    "api_calls": [
+      "cloudtrail:StopLogging",
+      "cloudtrail:DeleteTrail",
+      "logs:DeleteLogGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.008 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudTrail, CloudWatch service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.008",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.008/"
+    ],
+    "playbook_url": null
+  },
+  "ssm:putparameter": {
+    "technique_id": "T1112",
+    "technique_name": "Modify Registry",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may interact with the Windows Registry to hide configuration information within Registry keys.",
+    "aws_services": [
+      "SSM"
+    ],
+    "api_calls": [
+      "ssm:PutParameter",
+      "ssm:GetParameter"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1112 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1112",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1112/"
+    ],
+    "playbook_url": null
+  },
+  "ssm:getparameter": {
+    "technique_id": "T1555.006",
+    "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+    "tactic": "Credential Access",
+    "description": "Adversaries may acquire credentials from cloud-native secret management solutions.",
+    "aws_services": [
+      "Secrets Manager",
+      "SSM"
+    ],
+    "api_calls": [
+      "secretsmanager:GetSecretValue",
+      "ssm:GetParameter",
+      "ssm:GetParameters"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1555.006 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Secrets Manager, SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1555.006",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1555.006/"
+    ],
+    "playbook_url": null
+  },
+  "stepfunctions:startexecution": {
+    "technique_id": "T1202",
+    "technique_name": "Indirect Command Execution",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may abuse utilities that allow for command execution to bypass security restrictions.",
+    "aws_services": [
+      "Lambda",
+      "Step Functions"
+    ],
+    "api_calls": [
+      "lambda:InvokeFunction",
+      "stepfunctions:StartExecution"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1202 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, Step Functions service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1202",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1202/"
+    ],
+    "playbook_url": null
+  },
+  "directoryservice:createdirectory": {
+    "technique_id": "T1207",
+    "technique_name": "Rogue Domain Controller",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may register a rogue Domain Controller to enable manipulation of Active Directory data.",
+    "aws_services": [
+      "Directory Service"
+    ],
+    "api_calls": [
+      "directoryservice:CreateDirectory",
+      "directoryservice:ConnectDirectory"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1207 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Directory Service service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1207",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1207/"
+    ],
+    "playbook_url": null
+  },
+  "directoryservice:connectdirectory": {
+    "technique_id": "T1207",
+    "technique_name": "Rogue Domain Controller",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may register a rogue Domain Controller to enable manipulation of Active Directory data.",
+    "aws_services": [
+      "Directory Service"
+    ],
+    "api_calls": [
+      "directoryservice:CreateDirectory",
+      "directoryservice:ConnectDirectory"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1207 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Directory Service service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1207",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1207/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:modifyinstancemetadataoptions": {
+    "technique_id": "T1211",
+    "technique_name": "Exploitation for Defense Evasion",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may exploit a system or application vulnerability to bypass security features.",
+    "aws_services": [
+      "EC2",
+      "IAM"
+    ],
+    "api_calls": [
+      "ec2:ModifyInstanceMetadataOptions",
+      "iam:PassRole"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1211 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1211",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1211/"
+    ],
+    "playbook_url": null
+  },
+  "sts:assumerolewithwebidentity": {
+    "technique_id": "T1550.001",
+    "technique_name": "Use Alternate Authentication Material: Application Access Token",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may use stolen application access tokens to bypass the typical authentication process.",
+    "aws_services": [
+      "STS",
+      "Cognito"
+    ],
+    "api_calls": [
+      "sts:AssumeRoleWithWebIdentity",
+      "cognito-identity:GetCredentialsForIdentity"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1550.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1550.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1550.001/"
+    ],
+    "playbook_url": null
+  },
+  "cognito-identity:getcredentialsforidentity": {
+    "technique_id": "T1550.001",
+    "technique_name": "Use Alternate Authentication Material: Application Access Token",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may use stolen application access tokens to bypass the typical authentication process.",
+    "aws_services": [
+      "STS",
+      "Cognito"
+    ],
+    "api_calls": [
+      "sts:AssumeRoleWithWebIdentity",
+      "cognito-identity:GetCredentialsForIdentity"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1550.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1550.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1550.001/"
+    ],
+    "playbook_url": null
+  },
+  "guardduty:stopmonitoringmembers": {
+    "technique_id": "T1562.001",
+    "technique_name": "Impair Defenses: Disable or Modify Tools",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may modify and/or disable security tools to avoid possible detection.",
+    "aws_services": [
+      "GuardDuty",
+      "Security Hub"
+    ],
+    "api_calls": [
+      "guardduty:StopMonitoringMembers",
+      "securityhub:DisableSecurityHub"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track GuardDuty, Security Hub service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.001",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.001/"
+    ],
+    "playbook_url": null
+  },
+  "securityhub:disablesecurityhub": {
+    "technique_id": "T1562.001",
+    "technique_name": "Impair Defenses: Disable or Modify Tools",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may modify and/or disable security tools to avoid possible detection.",
+    "aws_services": [
+      "GuardDuty",
+      "Security Hub"
+    ],
+    "api_calls": [
+      "guardduty:StopMonitoringMembers",
+      "securityhub:DisableSecurityHub"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track GuardDuty, Security Hub service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.001",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.001/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:authorizesecuritygroupingress": {
+    "technique_id": "T1562.007",
+    "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may disable or modify a firewall within a cloud environment to bypass controls limiting network traffic.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:DeleteSecurityGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.007 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.007",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.007/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:revokesecuritygroupegress": {
+    "technique_id": "T1562.007",
+    "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may disable or modify a firewall within a cloud environment to bypass controls limiting network traffic.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:DeleteSecurityGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.007 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.007",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.007/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:deletesecuritygroup": {
+    "technique_id": "T1562.007",
+    "technique_name": "Impair Defenses: Disable or Modify Cloud Firewall",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may disable or modify a firewall within a cloud environment to bypass controls limiting network traffic.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:DeleteSecurityGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.007 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.007",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.007/"
+    ],
+    "playbook_url": null
+  },
+  "cloudtrail:stoplogging": {
+    "technique_id": "T1562.008",
+    "technique_name": "Impair Defenses: Disable Cloud Logs",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may disable cloud logging capabilities and integrations to limit what data is collected on their activities.",
+    "aws_services": [
+      "CloudTrail",
+      "CloudWatch"
+    ],
+    "api_calls": [
+      "cloudtrail:StopLogging",
+      "cloudtrail:DeleteTrail",
+      "logs:DeleteLogGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.008 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudTrail, CloudWatch service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.008",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.008/"
+    ],
+    "playbook_url": null
+  },
+  "cloudtrail:deletetrail": {
+    "technique_id": "T1562.008",
+    "technique_name": "Impair Defenses: Disable Cloud Logs",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may disable cloud logging capabilities and integrations to limit what data is collected on their activities.",
+    "aws_services": [
+      "CloudTrail",
+      "CloudWatch"
+    ],
+    "api_calls": [
+      "cloudtrail:StopLogging",
+      "cloudtrail:DeleteTrail",
+      "logs:DeleteLogGroup"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1562.008 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudTrail, CloudWatch service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1562.008",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1562.008/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:runinstances": {
+    "technique_id": "T1498.001",
+    "technique_name": "Network Denial of Service: Direct Network Flood",
+    "tactic": "Impact",
+    "description": "Adversaries may attempt to cause a denial of service (DoS) by directly sending a high-volume of network traffic to a target.",
+    "aws_services": [
+      "EC2",
+      "Lambda"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "lambda:InvokeFunction"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1498.001 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, Lambda service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1498.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1498.001/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:importimage": {
+    "technique_id": "T1578.001",
+    "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may create new instances in unused geographic service regions.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "ec2:CreateImage",
+      "ec2:ImportImage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.001 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.001/"
+    ],
+    "playbook_url": null
+  },
+  "lightsail:createinstances": {
+    "technique_id": "T1578.002",
+    "technique_name": "Modify Cloud Compute Infrastructure: Create Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may create new instances in unused geographic service regions.",
+    "aws_services": [
+      "EC2",
+      "Lightsail"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "lightsail:CreateInstances"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.002 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, Lightsail service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.002",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.002/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:terminateinstances": {
+    "technique_id": "T1578.003",
+    "technique_name": "Modify Cloud Compute Infrastructure: Delete Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may delete a cloud instance after they have performed malicious activities.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:TerminateInstances",
+      "ec2:StopInstances"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.003 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.003/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:stopinstances": {
+    "technique_id": "T1578.003",
+    "technique_name": "Modify Cloud Compute Infrastructure: Delete Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may delete a cloud instance after they have performed malicious activities.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:TerminateInstances",
+      "ec2:StopInstances"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.003 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.003/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:rebootinstances": {
+    "technique_id": "T1578.004",
+    "technique_name": "Modify Cloud Compute Infrastructure: Revert Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may revert changes made to a cloud instance after they have performed malicious activities.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:RebootInstances",
+      "ec2:CreateSnapshot"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.004 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.004",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.004/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:createsnapshot": {
+    "technique_id": "T1578.004",
+    "technique_name": "Modify Cloud Compute Infrastructure: Revert Cloud Instance",
+    "tactic": "Defense Evasion",
+    "description": "An adversary may revert changes made to a cloud instance after they have performed malicious activities.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:RebootInstances",
+      "ec2:CreateSnapshot"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1578.004 related API calls",
+      "Alert on unusual defense evasion activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1578.004",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1578.004/"
+    ],
+    "playbook_url": null
+  },
+  "cognito-idp:initiateauth": {
+    "technique_id": "T1110.001",
+    "technique_name": "Brute Force: Password Guessing",
+    "tactic": "Credential Access",
+    "description": "Adversaries may use password guessing to obtain valid account credentials.",
+    "aws_services": [
+      "STS",
+      "Cognito"
+    ],
+    "api_calls": [
+      "sts:GetSessionToken",
+      "cognito-idp:InitiateAuth"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1110.001 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1110.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1110.001/"
+    ],
+    "playbook_url": null
+  },
+  "s3:getobject": {
+    "technique_id": "T1102.003",
+    "technique_name": "Web Service: One-Way Communication",
+    "tactic": "Command and Control",
+    "description": "Adversaries may use an existing, legitimate external Web service channel as a means for sending commands to and receiving output from a compromised system.",
+    "aws_services": [
+      "S3"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "s3:GetObject"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1102.003 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1102.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1102.003/"
+    ],
+    "playbook_url": null
+  },
+  "secretsmanager:getsecretvalue": {
+    "technique_id": "T1555.006",
+    "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+    "tactic": "Credential Access",
+    "description": "Adversaries may acquire credentials from cloud-native secret management solutions.",
+    "aws_services": [
+      "Secrets Manager",
+      "SSM"
+    ],
+    "api_calls": [
+      "secretsmanager:GetSecretValue",
+      "ssm:GetParameter",
+      "ssm:GetParameters"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1555.006 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Secrets Manager, SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1555.006",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1555.006/"
+    ],
+    "playbook_url": null
+  },
+  "kms:decrypt": {
+    "technique_id": "T1552.004",
+    "technique_name": "Unsecured Credentials: Private Keys",
+    "tactic": "Credential Access",
+    "description": "Adversaries may search for private key certificate files on compromised systems for insecurely stored credentials.",
+    "aws_services": [
+      "KMS",
+      "ACM"
+    ],
+    "api_calls": [
+      "kms:Decrypt",
+      "kms:GenerateDataKey",
+      "acm:ExportCertificate"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1552.004 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS, ACM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1552.004",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1552.004/"
+    ],
+    "playbook_url": null
+  },
+  "kms:generatedatakey": {
+    "technique_id": "T1552.004",
+    "technique_name": "Unsecured Credentials: Private Keys",
+    "tactic": "Credential Access",
+    "description": "Adversaries may search for private key certificate files on compromised systems for insecurely stored credentials.",
+    "aws_services": [
+      "KMS",
+      "ACM"
+    ],
+    "api_calls": [
+      "kms:Decrypt",
+      "kms:GenerateDataKey",
+      "acm:ExportCertificate"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1552.004 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS, ACM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1552.004",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1552.004/"
+    ],
+    "playbook_url": null
+  },
+  "acm:exportcertificate": {
+    "technique_id": "T1552.004",
+    "technique_name": "Unsecured Credentials: Private Keys",
+    "tactic": "Credential Access",
+    "description": "Adversaries may search for private key certificate files on compromised systems for insecurely stored credentials.",
+    "aws_services": [
+      "KMS",
+      "ACM"
+    ],
+    "api_calls": [
+      "kms:Decrypt",
+      "kms:GenerateDataKey",
+      "acm:ExportCertificate"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1552.004 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS, ACM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1552.004",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1552.004/"
+    ],
+    "playbook_url": null
+  },
+  "ssm:getparameters": {
+    "technique_id": "T1555.006",
+    "technique_name": "Credentials from Password Stores: Cloud Secrets Management Stores",
+    "tactic": "Credential Access",
+    "description": "Adversaries may acquire credentials from cloud-native secret management solutions.",
+    "aws_services": [
+      "Secrets Manager",
+      "SSM"
+    ],
+    "api_calls": [
+      "secretsmanager:GetSecretValue",
+      "ssm:GetParameter",
+      "ssm:GetParameters"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1555.006 related API calls",
+      "Alert on unusual credential access activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Secrets Manager, SSM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1555.006",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1555.006/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describenetworkinterfaces": {
+    "technique_id": "T1602.002",
+    "technique_name": "Data from Configuration Repository: Network Device Configuration Dump",
+    "tactic": "Collection",
+    "description": "Adversaries may access network configuration files to collect sensitive data about the device and the network.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeRouteTables"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1602.002 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1602.002",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1602.002/"
+    ],
+    "playbook_url": null
+  },
+  "iam:listattacheduserpolicies": {
+    "technique_id": "T1033",
+    "technique_name": "System Owner/User Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to identify the primary user, currently logged in user, or set of users that commonly uses a system.",
+    "aws_services": [
+      "STS",
+      "IAM"
+    ],
+    "api_calls": [
+      "sts:GetCallerIdentity",
+      "iam:GetUser",
+      "iam:ListAttachedUserPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1033 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS, IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1033",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1033/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:createnetworkinsightspath": {
+    "technique_id": "T1040",
+    "technique_name": "Network Sniffing",
+    "tactic": "Discovery",
+    "description": "Adversaries may sniff network traffic to capture information about an environment.",
+    "aws_services": [
+      "EC2",
+      "VPC"
+    ],
+    "api_calls": [
+      "ec2:CreateNetworkInsightsPath",
+      "vpc:DescribeFlowLogs"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1040 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, VPC service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1040",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1040/"
+    ],
+    "playbook_url": null
+  },
+  "vpc:describeflowlogs": {
+    "technique_id": "T1040",
+    "technique_name": "Network Sniffing",
+    "tactic": "Discovery",
+    "description": "Adversaries may sniff network traffic to capture information about an environment.",
+    "aws_services": [
+      "EC2",
+      "VPC"
+    ],
+    "api_calls": [
+      "ec2:CreateNetworkInsightsPath",
+      "vpc:DescribeFlowLogs"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1040 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, VPC service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1040",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1040/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describesecuritygroups": {
+    "technique_id": "T1580",
+    "technique_name": "Cloud Infrastructure Discovery",
+    "tactic": "Discovery",
+    "description": "An adversary may attempt to discover infrastructure and resources that are available within an infrastructure-as-a-service (IaaS) environment.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1580 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1580",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1580/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describenetworkacls": {
+    "technique_id": "T1046",
+    "technique_name": "Network Service Scanning",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get a listing of services running on remote hosts and local network infrastructure devices.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeNetworkAcls"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1046 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1046",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1046/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:listtasks": {
+    "technique_id": "T1057",
+    "technique_name": "Process Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get information about running processes on a system.",
+    "aws_services": [
+      "ECS"
+    ],
+    "api_calls": [
+      "ecs:ListTasks",
+      "ecs:DescribeTasks"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1057 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1057",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1057/"
+    ],
+    "playbook_url": null
+  },
+  "ecs:describetasks": {
+    "technique_id": "T1057",
+    "technique_name": "Process Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get information about running processes on a system.",
+    "aws_services": [
+      "ECS"
+    ],
+    "api_calls": [
+      "ecs:ListTasks",
+      "ecs:DescribeTasks"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1057 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track ECS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1057",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1057/"
+    ],
+    "playbook_url": null
+  },
+  "iam:listgroups": {
+    "technique_id": "T1069.003",
+    "technique_name": "Permission Groups Discovery: Cloud Groups",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to find cloud groups and permission settings.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:ListGroups",
+      "iam:GetGroup",
+      "iam:ListGroupPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1069.003 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1069.003",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1069.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:getgroup": {
+    "technique_id": "T1069.003",
+    "technique_name": "Permission Groups Discovery: Cloud Groups",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to find cloud groups and permission settings.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:ListGroups",
+      "iam:GetGroup",
+      "iam:ListGroupPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1069.003 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1069.003",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1069.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:listgrouppolicies": {
+    "technique_id": "T1069.003",
+    "technique_name": "Permission Groups Discovery: Cloud Groups",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to find cloud groups and permission settings.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:ListGroups",
+      "iam:GetGroup",
+      "iam:ListGroupPolicies"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1069.003 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1069.003",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1069.003/"
+    ],
+    "playbook_url": null
+  },
+  "iam:listusers": {
+    "technique_id": "T1087.004",
+    "technique_name": "Account Discovery: Cloud Account",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get a listing of cloud accounts.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:ListUsers",
+      "iam:ListRoles",
+      "iam:GetAccountSummary",
+      "organizations:ListAccounts"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1087.004 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1087.004",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1087.004/"
+    ],
+    "playbook_url": null
+  },
+  "iam:listroles": {
+    "technique_id": "T1087.004",
+    "technique_name": "Account Discovery: Cloud Account",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get a listing of cloud accounts.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:ListUsers",
+      "iam:ListRoles",
+      "iam:GetAccountSummary",
+      "organizations:ListAccounts"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1087.004 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1087.004",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1087.004/"
+    ],
+    "playbook_url": null
+  },
+  "iam:getaccountsummary": {
+    "technique_id": "T1087.004",
+    "technique_name": "Account Discovery: Cloud Account",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to get a listing of cloud accounts.",
+    "aws_services": [
+      "IAM",
+      "Organizations"
+    ],
+    "api_calls": [
+      "iam:ListUsers",
+      "iam:ListRoles",
+      "iam:GetAccountSummary",
+      "organizations:ListAccounts"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1087.004 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1087.004",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1087.004/"
+    ],
+    "playbook_url": null
+  },
+  "organizations:listaccounts": {
+    "technique_id": "T1482",
+    "technique_name": "Domain Trust Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to gather information on domain trust relationships.",
+    "aws_services": [
+      "Organizations"
+    ],
+    "api_calls": [
+      "organizations:DescribeOrganization",
+      "organizations:ListAccounts"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1482 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1482",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1482/"
+    ],
+    "playbook_url": null
+  },
+  "s3:listbuckets": {
+    "technique_id": "T1039",
+    "technique_name": "Data from Network Shared Drive",
+    "tactic": "Collection",
+    "description": "Adversaries may search network shares on computers they have compromised to find files of interest.",
+    "aws_services": [
+      "S3",
+      "EFS"
+    ],
+    "api_calls": [
+      "s3:ListBuckets",
+      "s3:GetObject",
+      "efs:DescribeFileSystems"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1039 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, EFS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1039",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1039/"
+    ],
+    "playbook_url": null
+  },
+  "efs:describefilesystems": {
+    "technique_id": "T1039",
+    "technique_name": "Data from Network Shared Drive",
+    "tactic": "Collection",
+    "description": "Adversaries may search network shares on computers they have compromised to find files of interest.",
+    "aws_services": [
+      "S3",
+      "EFS"
+    ],
+    "api_calls": [
+      "s3:ListBuckets",
+      "s3:GetObject",
+      "efs:DescribeFileSystems"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1039 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, EFS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1039",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1039/"
+    ],
+    "playbook_url": null
+  },
+  "iam:getaccountpasswordpolicy": {
+    "technique_id": "T1201",
+    "technique_name": "Password Policy Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to access detailed information about the password policy used within an enterprise network.",
+    "aws_services": [
+      "IAM",
+      "Cognito"
+    ],
+    "api_calls": [
+      "iam:GetAccountPasswordPolicy",
+      "cognito-idp:DescribeUserPoolDomain"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1201 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1201",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1201/"
+    ],
+    "playbook_url": null
+  },
+  "cognito-idp:describeuserpooldomain": {
+    "technique_id": "T1201",
+    "technique_name": "Password Policy Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to access detailed information about the password policy used within an enterprise network.",
+    "aws_services": [
+      "IAM",
+      "Cognito"
+    ],
+    "api_calls": [
+      "iam:GetAccountPasswordPolicy",
+      "cognito-idp:DescribeUserPoolDomain"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1201 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM, Cognito service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1201",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1201/"
+    ],
+    "playbook_url": null
+  },
+  "workspaces:describeworkspaces": {
+    "technique_id": "T1217",
+    "technique_name": "Browser Bookmark Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may enumerate browser bookmarks to learn more about compromised hosts.",
+    "aws_services": [
+      "WorkSpaces",
+      "AppStream"
+    ],
+    "api_calls": [
+      "workspaces:DescribeWorkspaces",
+      "appstream:DescribeFleets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1217 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track WorkSpaces, AppStream service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1217",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1217/"
+    ],
+    "playbook_url": null
+  },
+  "appstream:describefleets": {
+    "technique_id": "T1217",
+    "technique_name": "Browser Bookmark Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may enumerate browser bookmarks to learn more about compromised hosts.",
+    "aws_services": [
+      "WorkSpaces",
+      "AppStream"
+    ],
+    "api_calls": [
+      "workspaces:DescribeWorkspaces",
+      "appstream:DescribeFleets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1217 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track WorkSpaces, AppStream service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1217",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1217/"
+    ],
+    "playbook_url": null
+  },
+  "organizations:describeorganization": {
+    "technique_id": "T1482",
+    "technique_name": "Domain Trust Discovery",
+    "tactic": "Discovery",
+    "description": "Adversaries may attempt to gather information on domain trust relationships.",
+    "aws_services": [
+      "Organizations"
+    ],
+    "api_calls": [
+      "organizations:DescribeOrganization",
+      "organizations:ListAccounts"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1482 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Organizations service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1482",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1482/"
+    ],
+    "playbook_url": null
+  },
+  "rds:describedbinstances": {
+    "technique_id": "T1526",
+    "technique_name": "Cloud Service Discovery",
+    "tactic": "Discovery",
+    "description": "An adversary may attempt to enumerate the cloud services running on a system after gaining access.",
+    "aws_services": [
+      "EC2",
+      "S3",
+      "RDS",
+      "Lambda"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "s3:ListBuckets",
+      "rds:DescribeDBInstances",
+      "lambda:ListFunctions"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1526 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, S3, RDS, Lambda service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1526",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1526/"
+    ],
+    "playbook_url": null
+  },
+  "lambda:listfunctions": {
+    "technique_id": "T1526",
+    "technique_name": "Cloud Service Discovery",
+    "tactic": "Discovery",
+    "description": "An adversary may attempt to enumerate the cloud services running on a system after gaining access.",
+    "aws_services": [
+      "EC2",
+      "S3",
+      "RDS",
+      "Lambda"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "s3:ListBuckets",
+      "rds:DescribeDBInstances",
+      "lambda:ListFunctions"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1526 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, S3, RDS, Lambda service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1526",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1526/"
+    ],
+    "playbook_url": null
+  },
+  "cloudwatch:getmetricstatistics": {
+    "technique_id": "T1538",
+    "technique_name": "Cloud Service Dashboard",
+    "tactic": "Discovery",
+    "description": "An adversary may use a cloud service dashboard GUI with stolen credentials to gain useful information.",
+    "aws_services": [
+      "CloudWatch",
+      "CloudFormation"
+    ],
+    "api_calls": [
+      "cloudwatch:GetMetricStatistics",
+      "cloudformation:ListStacks"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1538 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudWatch, CloudFormation service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1538",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1538/"
+    ],
+    "playbook_url": null
+  },
+  "cloudformation:liststacks": {
+    "technique_id": "T1538",
+    "technique_name": "Cloud Service Dashboard",
+    "tactic": "Discovery",
+    "description": "An adversary may use a cloud service dashboard GUI with stolen credentials to gain useful information.",
+    "aws_services": [
+      "CloudWatch",
+      "CloudFormation"
+    ],
+    "api_calls": [
+      "cloudwatch:GetMetricStatistics",
+      "cloudformation:ListStacks"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1538 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track CloudWatch, CloudFormation service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1538",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1538/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describevpcs": {
+    "technique_id": "T1580",
+    "technique_name": "Cloud Infrastructure Discovery",
+    "tactic": "Discovery",
+    "description": "An adversary may attempt to discover infrastructure and resources that are available within an infrastructure-as-a-service (IaaS) environment.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1580 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1580",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1580/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describesubnets": {
+    "technique_id": "T1580",
+    "technique_name": "Cloud Infrastructure Discovery",
+    "tactic": "Discovery",
+    "description": "An adversary may attempt to discover infrastructure and resources that are available within an infrastructure-as-a-service (IaaS) environment.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1580 related API calls",
+      "Alert on unusual discovery activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1580",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1580/"
+    ],
+    "playbook_url": null
+  },
+  "sts:assumerolewithsaml": {
+    "technique_id": "T1021.007",
+    "technique_name": "Remote Services: Cloud Services",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries may log into accessible cloud services within a compromised environment using Valid Accounts.",
+    "aws_services": [
+      "STS"
+    ],
+    "api_calls": [
+      "sts:AssumeRole",
+      "sts:AssumeRoleWithSAML"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1021.007 related API calls",
+      "Alert on unusual lateral movement activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track STS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1021.007",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1021.007/"
+    ],
+    "playbook_url": null
+  },
+  "workmail:sendemail": {
+    "technique_id": "T1534",
+    "technique_name": "Internal Spearphishing",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries may use internal spearphishing to gain access to additional information or exploit other users within the same organization.",
+    "aws_services": [
+      "SES",
+      "WorkMail"
+    ],
+    "api_calls": [
+      "ses:SendEmail",
+      "workmail:SendEmail"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1534 related API calls",
+      "Alert on unusual lateral movement activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SES, WorkMail service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1534",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1534/"
+    ],
+    "playbook_url": null
+  },
+  "dynamodb:scan": {
+    "technique_id": "T1005",
+    "technique_name": "Data from Local System",
+    "tactic": "Collection",
+    "description": "Adversaries may search local system sources, such as file systems and configuration files or local databases, to find files of interest.",
+    "aws_services": [
+      "S3",
+      "DynamoDB",
+      "RDS"
+    ],
+    "api_calls": [
+      "s3:GetObject",
+      "dynamodb:Scan",
+      "rds:DescribeDBSnapshots"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1005 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, DynamoDB, RDS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1005",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1005/"
+    ],
+    "playbook_url": null
+  },
+  "rds:describedbsnapshots": {
+    "technique_id": "T1005",
+    "technique_name": "Data from Local System",
+    "tactic": "Collection",
+    "description": "Adversaries may search local system sources, such as file systems and configuration files or local databases, to find files of interest.",
+    "aws_services": [
+      "S3",
+      "DynamoDB",
+      "RDS"
+    ],
+    "api_calls": [
+      "s3:GetObject",
+      "dynamodb:Scan",
+      "rds:DescribeDBSnapshots"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1005 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, DynamoDB, RDS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1005",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1005/"
+    ],
+    "playbook_url": null
+  },
+  "storagegateway:listvolumes": {
+    "technique_id": "T1025",
+    "technique_name": "Data from Removable Media",
+    "tactic": "Collection",
+    "description": "Adversaries may search connected removable media on computers they have compromised to find files of interest.",
+    "aws_services": [
+      "Storage Gateway",
+      "FSx"
+    ],
+    "api_calls": [
+      "storagegateway:ListVolumes",
+      "fsx:DescribeFileSystems"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1025 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Storage Gateway, FSx service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1025",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1025/"
+    ],
+    "playbook_url": null
+  },
+  "fsx:describefilesystems": {
+    "technique_id": "T1025",
+    "technique_name": "Data from Removable Media",
+    "tactic": "Collection",
+    "description": "Adversaries may search connected removable media on computers they have compromised to find files of interest.",
+    "aws_services": [
+      "Storage Gateway",
+      "FSx"
+    ],
+    "api_calls": [
+      "storagegateway:ListVolumes",
+      "fsx:DescribeFileSystems"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1025 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Storage Gateway, FSx service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1025",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1025/"
+    ],
+    "playbook_url": null
+  },
+  "s3:listbucket": {
+    "technique_id": "T1530",
+    "technique_name": "Data from Cloud Storage Object",
+    "tactic": "Collection",
+    "description": "Adversaries may access data objects from improperly secured cloud storage.",
+    "aws_services": [
+      "S3"
+    ],
+    "api_calls": [
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:GetBucketLocation"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1530 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1530",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1530/"
+    ],
+    "playbook_url": null
+  },
+  "s3:getbucketlocation": {
+    "technique_id": "T1530",
+    "technique_name": "Data from Cloud Storage Object",
+    "tactic": "Collection",
+    "description": "Adversaries may access data objects from improperly secured cloud storage.",
+    "aws_services": [
+      "S3"
+    ],
+    "api_calls": [
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:GetBucketLocation"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1530 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1530",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1530/"
+    ],
+    "playbook_url": null
+  },
+  "cloudformation:gettemplate": {
+    "technique_id": "T1602.001",
+    "technique_name": "Data from Configuration Repository: SNMP (MIB Dump)",
+    "tactic": "Collection",
+    "description": "Adversaries may target the Management Information Base (MIB) to collect and/or mine valuable information.",
+    "aws_services": [
+      "EC2",
+      "CloudFormation"
+    ],
+    "api_calls": [
+      "ec2:DescribeInstances",
+      "cloudformation:GetTemplate"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1602.001 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, CloudFormation service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1602.001",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1602.001/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:describeroutetables": {
+    "technique_id": "T1602.002",
+    "technique_name": "Data from Configuration Repository: Network Device Configuration Dump",
+    "tactic": "Collection",
+    "description": "Adversaries may access network configuration files to collect sensitive data about the device and the network.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeRouteTables"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1602.002 related API calls",
+      "Alert on unusual collection activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1602.002",
+    "severity": "LOW",
+    "references": [
+      "https://attack.mitre.org/techniques/T1602.002/"
+    ],
+    "playbook_url": null
+  },
+  "apigateway:createrestapi": {
+    "technique_id": "T1071.001",
+    "technique_name": "Application Layer Protocol: Web Protocols",
+    "tactic": "Command and Control",
+    "description": "Adversaries may communicate using application layer protocols associated with web traffic.",
+    "aws_services": [
+      "API Gateway",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "apigateway:CreateRestApi",
+      "cloudfront:CreateDistribution"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1071.001 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track API Gateway, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1071.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1071.001/"
+    ],
+    "playbook_url": null
+  },
+  "cloudfront:createdistribution": {
+    "technique_id": "T1071.001",
+    "technique_name": "Application Layer Protocol: Web Protocols",
+    "tactic": "Command and Control",
+    "description": "Adversaries may communicate using application layer protocols associated with web traffic.",
+    "aws_services": [
+      "API Gateway",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "apigateway:CreateRestApi",
+      "cloudfront:CreateDistribution"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1071.001 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track API Gateway, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1071.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1071.001/"
+    ],
+    "playbook_url": null
+  },
+  "route53:createhostedzone": {
+    "technique_id": "T1102.001",
+    "technique_name": "Web Service: Dead Drop Resolver",
+    "tactic": "Command and Control",
+    "description": "Adversaries may use an existing, legitimate external Web service to host information that points to additional command and control (C2) infrastructure.",
+    "aws_services": [
+      "Route 53"
+    ],
+    "api_calls": [
+      "route53:CreateHostedZone",
+      "route53:ChangeResourceRecordSets"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1102.001 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Route 53 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1102.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1102.001/"
+    ],
+    "playbook_url": null
+  },
+  "route53:changeresourcerecordsets": {
+    "technique_id": "T1498.002",
+    "technique_name": "Network Denial of Service: Reflection Amplification",
+    "tactic": "Impact",
+    "description": "Adversaries may attempt to cause a denial of service by reflecting a high-volume of network traffic to a target.",
+    "aws_services": [
+      "Route 53",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "route53:ChangeResourceRecordSets",
+      "cloudfront:CreateInvalidation"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1498.002 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Route 53, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1498.002",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1498.002/"
+    ],
+    "playbook_url": null
+  },
+  "sns:publish": {
+    "technique_id": "T1041",
+    "technique_name": "Exfiltration Over C2 Channel",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may steal data by exfiltrating it over an existing command and control channel.",
+    "aws_services": [
+      "SNS",
+      "SQS"
+    ],
+    "api_calls": [
+      "sns:Publish",
+      "sqs:SendMessage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1041 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SNS, SQS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1041",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1041/"
+    ],
+    "playbook_url": null
+  },
+  "sqs:sendmessage": {
+    "technique_id": "T1041",
+    "technique_name": "Exfiltration Over C2 Channel",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may steal data by exfiltrating it over an existing command and control channel.",
+    "aws_services": [
+      "SNS",
+      "SQS"
+    ],
+    "api_calls": [
+      "sns:Publish",
+      "sqs:SendMessage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1041 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track SNS, SQS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1041",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1041/"
+    ],
+    "playbook_url": null
+  },
+  "s3:putobject": {
+    "technique_id": "T1565.001",
+    "technique_name": "Data Manipulation: Stored Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may insert, delete, or manipulate data at rest in order to manipulate external outcomes or hide activity.",
+    "aws_services": [
+      "S3",
+      "DynamoDB",
+      "RDS"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "dynamodb:PutItem",
+      "rds:ModifyDBInstance"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.001 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, DynamoDB, RDS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.001/"
+    ],
+    "playbook_url": null
+  },
+  "workspaces:createworkspaces": {
+    "technique_id": "T1219",
+    "technique_name": "Remote Access Software",
+    "tactic": "Command and Control",
+    "description": "An adversary may use legitimate desktop support and remote access software to establish an interactive command and control channel.",
+    "aws_services": [
+      "WorkSpaces",
+      "AppStream"
+    ],
+    "api_calls": [
+      "workspaces:CreateWorkspaces",
+      "appstream:CreateFleet"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1219 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track WorkSpaces, AppStream service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1219",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1219/"
+    ],
+    "playbook_url": null
+  },
+  "appstream:createfleet": {
+    "technique_id": "T1219",
+    "technique_name": "Remote Access Software",
+    "tactic": "Command and Control",
+    "description": "An adversary may use legitimate desktop support and remote access software to establish an interactive command and control channel.",
+    "aws_services": [
+      "WorkSpaces",
+      "AppStream"
+    ],
+    "api_calls": [
+      "workspaces:CreateWorkspaces",
+      "appstream:CreateFleet"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1219 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track WorkSpaces, AppStream service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1219",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1219/"
+    ],
+    "playbook_url": null
+  },
+  "route53:listresourcerecordsets": {
+    "technique_id": "T1568.003",
+    "technique_name": "Dynamic Resolution: DNS Calculation",
+    "tactic": "Command and Control",
+    "description": "Adversaries may perform calculations on addresses returned in DNS results to determine which port and server to use for command and control.",
+    "aws_services": [
+      "Route 53"
+    ],
+    "api_calls": [
+      "route53:ListResourceRecordSets",
+      "route53resolver:GetResolverRule"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1568.003 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Route 53 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1568.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1568.003/"
+    ],
+    "playbook_url": null
+  },
+  "route53resolver:getresolverrule": {
+    "technique_id": "T1568.003",
+    "technique_name": "Dynamic Resolution: DNS Calculation",
+    "tactic": "Command and Control",
+    "description": "Adversaries may perform calculations on addresses returned in DNS results to determine which port and server to use for command and control.",
+    "aws_services": [
+      "Route 53"
+    ],
+    "api_calls": [
+      "route53:ListResourceRecordSets",
+      "route53resolver:GetResolverRule"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1568.003 related API calls",
+      "Alert on unusual command and control activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Route 53 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1568.003",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1568.003/"
+    ],
+    "playbook_url": null
+  },
+  "kinesis:putrecord": {
+    "technique_id": "T1030",
+    "technique_name": "Data Transfer Size Limits",
+    "tactic": "Exfiltration",
+    "description": "An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds.",
+    "aws_services": [
+      "S3",
+      "Kinesis"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "kinesis:PutRecord"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1030 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, Kinesis service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1030",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1030/"
+    ],
+    "playbook_url": null
+  },
+  "storagegateway:createtapes": {
+    "technique_id": "T1052.001",
+    "technique_name": "Exfiltration Over Physical Medium: Exfiltration over USB",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may attempt to exfiltrate data over a USB connected physical device.",
+    "aws_services": [
+      "Storage Gateway",
+      "Snowball"
+    ],
+    "api_calls": [
+      "storagegateway:CreateTapes",
+      "snowball:CreateJob"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1052.001 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Storage Gateway, Snowball service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1052.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1052.001/"
+    ],
+    "playbook_url": null
+  },
+  "snowball:createjob": {
+    "technique_id": "T1052.001",
+    "technique_name": "Exfiltration Over Physical Medium: Exfiltration over USB",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may attempt to exfiltrate data over a USB connected physical device.",
+    "aws_services": [
+      "Storage Gateway",
+      "Snowball"
+    ],
+    "api_calls": [
+      "storagegateway:CreateTapes",
+      "snowball:CreateJob"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1052.001 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Storage Gateway, Snowball service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1052.001",
+    "severity": "MEDIUM",
+    "references": [
+      "https://attack.mitre.org/techniques/T1052.001/"
+    ],
+    "playbook_url": null
+  },
+  "s3:createbucket": {
+    "technique_id": "T1537",
+    "technique_name": "Transfer Data to Cloud Account",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may exfiltrate data by transferring the data, including backups of cloud environments, to another cloud account they control.",
+    "aws_services": [
+      "S3"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "s3:CreateBucket",
+      "s3:PutBucketPolicy"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1537 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1537",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1537/"
+    ],
+    "playbook_url": null
+  },
+  "s3:putbucketpolicy": {
+    "technique_id": "T1537",
+    "technique_name": "Transfer Data to Cloud Account",
+    "tactic": "Exfiltration",
+    "description": "Adversaries may exfiltrate data by transferring the data, including backups of cloud environments, to another cloud account they control.",
+    "aws_services": [
+      "S3"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "s3:CreateBucket",
+      "s3:PutBucketPolicy"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1537 related API calls",
+      "Alert on unusual exfiltration activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1537",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1537/"
+    ],
+    "playbook_url": null
+  },
+  "s3:deletebucket": {
+    "technique_id": "T1485",
+    "technique_name": "Data Destruction",
+    "tactic": "Impact",
+    "description": "Adversaries may destroy data and files on specific systems or in large numbers on a network to interrupt availability to systems, services, and network resources.",
+    "aws_services": [
+      "S3",
+      "RDS",
+      "DynamoDB"
+    ],
+    "api_calls": [
+      "s3:DeleteBucket",
+      "s3:DeleteObject",
+      "rds:DeleteDBInstance",
+      "dynamodb:DeleteTable"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1485 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, RDS, DynamoDB service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1485",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1485/"
+    ],
+    "playbook_url": null
+  },
+  "s3:deleteobject": {
+    "technique_id": "T1485",
+    "technique_name": "Data Destruction",
+    "tactic": "Impact",
+    "description": "Adversaries may destroy data and files on specific systems or in large numbers on a network to interrupt availability to systems, services, and network resources.",
+    "aws_services": [
+      "S3",
+      "RDS",
+      "DynamoDB"
+    ],
+    "api_calls": [
+      "s3:DeleteBucket",
+      "s3:DeleteObject",
+      "rds:DeleteDBInstance",
+      "dynamodb:DeleteTable"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1485 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, RDS, DynamoDB service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1485",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1485/"
+    ],
+    "playbook_url": null
+  },
+  "rds:deletedbinstance": {
+    "technique_id": "T1485",
+    "technique_name": "Data Destruction",
+    "tactic": "Impact",
+    "description": "Adversaries may destroy data and files on specific systems or in large numbers on a network to interrupt availability to systems, services, and network resources.",
+    "aws_services": [
+      "S3",
+      "RDS",
+      "DynamoDB"
+    ],
+    "api_calls": [
+      "s3:DeleteBucket",
+      "s3:DeleteObject",
+      "rds:DeleteDBInstance",
+      "dynamodb:DeleteTable"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1485 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, RDS, DynamoDB service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1485",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1485/"
+    ],
+    "playbook_url": null
+  },
+  "dynamodb:deletetable": {
+    "technique_id": "T1485",
+    "technique_name": "Data Destruction",
+    "tactic": "Impact",
+    "description": "Adversaries may destroy data and files on specific systems or in large numbers on a network to interrupt availability to systems, services, and network resources.",
+    "aws_services": [
+      "S3",
+      "RDS",
+      "DynamoDB"
+    ],
+    "api_calls": [
+      "s3:DeleteBucket",
+      "s3:DeleteObject",
+      "rds:DeleteDBInstance",
+      "dynamodb:DeleteTable"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1485 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, RDS, DynamoDB service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1485",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1485/"
+    ],
+    "playbook_url": null
+  },
+  "kms:encrypt": {
+    "technique_id": "T1486",
+    "technique_name": "Data Encrypted for Impact",
+    "tactic": "Impact",
+    "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources.",
+    "aws_services": [
+      "KMS"
+    ],
+    "api_calls": [
+      "kms:Encrypt",
+      "kms:CreateKey",
+      "kms:DisableKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1486 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1486",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1486/"
+    ],
+    "playbook_url": null
+  },
+  "kms:createkey": {
+    "technique_id": "T1486",
+    "technique_name": "Data Encrypted for Impact",
+    "tactic": "Impact",
+    "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources.",
+    "aws_services": [
+      "KMS"
+    ],
+    "api_calls": [
+      "kms:Encrypt",
+      "kms:CreateKey",
+      "kms:DisableKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1486 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1486",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1486/"
+    ],
+    "playbook_url": null
+  },
+  "kms:disablekey": {
+    "technique_id": "T1486",
+    "technique_name": "Data Encrypted for Impact",
+    "tactic": "Impact",
+    "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources.",
+    "aws_services": [
+      "KMS"
+    ],
+    "api_calls": [
+      "kms:Encrypt",
+      "kms:CreateKey",
+      "kms:DisableKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1486 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track KMS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1486",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1486/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:deletesnapshot": {
+    "technique_id": "T1490",
+    "technique_name": "Inhibit System Recovery",
+    "tactic": "Impact",
+    "description": "Adversaries may delete or remove built-in operating system data and turn off services designed to aid in the recovery of a corrupted system.",
+    "aws_services": [
+      "EC2",
+      "RDS",
+      "Backup"
+    ],
+    "api_calls": [
+      "ec2:DeleteSnapshot",
+      "rds:DeleteDBSnapshot",
+      "backup:DeleteBackupVault"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1490 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, RDS, Backup service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1490",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1490/"
+    ],
+    "playbook_url": null
+  },
+  "rds:deletedbsnapshot": {
+    "technique_id": "T1490",
+    "technique_name": "Inhibit System Recovery",
+    "tactic": "Impact",
+    "description": "Adversaries may delete or remove built-in operating system data and turn off services designed to aid in the recovery of a corrupted system.",
+    "aws_services": [
+      "EC2",
+      "RDS",
+      "Backup"
+    ],
+    "api_calls": [
+      "ec2:DeleteSnapshot",
+      "rds:DeleteDBSnapshot",
+      "backup:DeleteBackupVault"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1490 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, RDS, Backup service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1490",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1490/"
+    ],
+    "playbook_url": null
+  },
+  "backup:deletebackupvault": {
+    "technique_id": "T1490",
+    "technique_name": "Inhibit System Recovery",
+    "tactic": "Impact",
+    "description": "Adversaries may delete or remove built-in operating system data and turn off services designed to aid in the recovery of a corrupted system.",
+    "aws_services": [
+      "EC2",
+      "RDS",
+      "Backup"
+    ],
+    "api_calls": [
+      "ec2:DeleteSnapshot",
+      "rds:DeleteDBSnapshot",
+      "backup:DeleteBackupVault"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1490 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, RDS, Backup service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1490",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1490/"
+    ],
+    "playbook_url": null
+  },
+  "batch:submitjob": {
+    "technique_id": "T1496",
+    "technique_name": "Resource Hijacking",
+    "tactic": "Impact",
+    "description": "Adversaries may leverage the resources of co-opted systems in order to solve resource intensive problems.",
+    "aws_services": [
+      "EC2",
+      "Lambda",
+      "Batch",
+      "SageMaker"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "lambda:CreateFunction",
+      "batch:SubmitJob",
+      "sagemaker:CreateTrainingJob"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1496 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, Lambda, Batch, SageMaker service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1496",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1496/"
+    ],
+    "playbook_url": null
+  },
+  "sagemaker:createtrainingjob": {
+    "technique_id": "T1496",
+    "technique_name": "Resource Hijacking",
+    "tactic": "Impact",
+    "description": "Adversaries may leverage the resources of co-opted systems in order to solve resource intensive problems.",
+    "aws_services": [
+      "EC2",
+      "Lambda",
+      "Batch",
+      "SageMaker"
+    ],
+    "api_calls": [
+      "ec2:RunInstances",
+      "lambda:CreateFunction",
+      "batch:SubmitJob",
+      "sagemaker:CreateTrainingJob"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1496 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2, Lambda, Batch, SageMaker service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1496",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1496/"
+    ],
+    "playbook_url": null
+  },
+  "cloudfront:createinvalidation": {
+    "technique_id": "T1498.002",
+    "technique_name": "Network Denial of Service: Reflection Amplification",
+    "tactic": "Impact",
+    "description": "Adversaries may attempt to cause a denial of service by reflecting a high-volume of network traffic to a target.",
+    "aws_services": [
+      "Route 53",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "route53:ChangeResourceRecordSets",
+      "cloudfront:CreateInvalidation"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1498.002 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Route 53, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1498.002",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1498.002/"
+    ],
+    "playbook_url": null
+  },
+  "apigateway:createdeployment": {
+    "technique_id": "T1499.004",
+    "technique_name": "Endpoint Denial of Service: Application or System Exploitation",
+    "tactic": "Impact",
+    "description": "Adversaries may exploit software vulnerabilities that can cause an application or system to crash and deny availability to users.",
+    "aws_services": [
+      "Lambda",
+      "API Gateway"
+    ],
+    "api_calls": [
+      "lambda:InvokeFunction",
+      "apigateway:CreateDeployment"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1499.004 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, API Gateway service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1499.004",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1499.004/"
+    ],
+    "playbook_url": null
+  },
+  "iam:deleteuser": {
+    "technique_id": "T1531",
+    "technique_name": "Account Access Removal",
+    "tactic": "Impact",
+    "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:DeleteUser",
+      "iam:DeleteRole",
+      "iam:DetachUserPolicy",
+      "iam:DeleteAccessKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1531 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1531",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1531/"
+    ],
+    "playbook_url": null
+  },
+  "iam:deleterole": {
+    "technique_id": "T1531",
+    "technique_name": "Account Access Removal",
+    "tactic": "Impact",
+    "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:DeleteUser",
+      "iam:DeleteRole",
+      "iam:DetachUserPolicy",
+      "iam:DeleteAccessKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1531 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1531",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1531/"
+    ],
+    "playbook_url": null
+  },
+  "iam:detachuserpolicy": {
+    "technique_id": "T1531",
+    "technique_name": "Account Access Removal",
+    "tactic": "Impact",
+    "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:DeleteUser",
+      "iam:DeleteRole",
+      "iam:DetachUserPolicy",
+      "iam:DeleteAccessKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1531 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1531",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1531/"
+    ],
+    "playbook_url": null
+  },
+  "iam:deleteaccesskey": {
+    "technique_id": "T1531",
+    "technique_name": "Account Access Removal",
+    "tactic": "Impact",
+    "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.",
+    "aws_services": [
+      "IAM"
+    ],
+    "api_calls": [
+      "iam:DeleteUser",
+      "iam:DeleteRole",
+      "iam:DetachUserPolicy",
+      "iam:DeleteAccessKey"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1531 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track IAM service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1531",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1531/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:deletevolume": {
+    "technique_id": "T1561.002",
+    "technique_name": "Disk Wipe: Disk Structure Wipe",
+    "tactic": "Impact",
+    "description": "Adversaries may corrupt or wipe the disk data structures on hard drive necessary to boot systems.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DeleteVolume",
+      "ec2:DetachVolume"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1561.002 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1561.002",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1561.002/"
+    ],
+    "playbook_url": null
+  },
+  "ec2:detachvolume": {
+    "technique_id": "T1561.002",
+    "technique_name": "Disk Wipe: Disk Structure Wipe",
+    "tactic": "Impact",
+    "description": "Adversaries may corrupt or wipe the disk data structures on hard drive necessary to boot systems.",
+    "aws_services": [
+      "EC2"
+    ],
+    "api_calls": [
+      "ec2:DeleteVolume",
+      "ec2:DetachVolume"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1561.002 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track EC2 service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1561.002",
+    "severity": "CRITICAL",
+    "references": [
+      "https://attack.mitre.org/techniques/T1561.002/"
+    ],
+    "playbook_url": null
+  },
+  "dynamodb:putitem": {
+    "technique_id": "T1565.001",
+    "technique_name": "Data Manipulation: Stored Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may insert, delete, or manipulate data at rest in order to manipulate external outcomes or hide activity.",
+    "aws_services": [
+      "S3",
+      "DynamoDB",
+      "RDS"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "dynamodb:PutItem",
+      "rds:ModifyDBInstance"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.001 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, DynamoDB, RDS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.001/"
+    ],
+    "playbook_url": null
+  },
+  "rds:modifydbinstance": {
+    "technique_id": "T1565.001",
+    "technique_name": "Data Manipulation: Stored Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may insert, delete, or manipulate data at rest in order to manipulate external outcomes or hide activity.",
+    "aws_services": [
+      "S3",
+      "DynamoDB",
+      "RDS"
+    ],
+    "api_calls": [
+      "s3:PutObject",
+      "dynamodb:PutItem",
+      "rds:ModifyDBInstance"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.001 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track S3, DynamoDB, RDS service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.001",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.001/"
+    ],
+    "playbook_url": null
+  },
+  "apigateway:updatestage": {
+    "technique_id": "T1565.002",
+    "technique_name": "Data Manipulation: Transmitted Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may alter data en route to storage or other systems in order to manipulate external outcomes or hide activity.",
+    "aws_services": [
+      "Lambda",
+      "API Gateway"
+    ],
+    "api_calls": [
+      "lambda:UpdateFunctionCode",
+      "apigateway:UpdateStage"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.002 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, API Gateway service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.002",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.002/"
+    ],
+    "playbook_url": null
+  },
+  "cloudfront:updatedistribution": {
+    "technique_id": "T1565.003",
+    "technique_name": "Data Manipulation: Runtime Data Manipulation",
+    "tactic": "Impact",
+    "description": "Adversaries may modify systems in order to manipulate the data as it is accessed and displayed to an end user.",
+    "aws_services": [
+      "Lambda",
+      "CloudFront"
+    ],
+    "api_calls": [
+      "lambda:UpdateFunctionCode",
+      "cloudfront:UpdateDistribution"
+    ],
+    "detection_methods": [
+      "Monitor CloudTrail for T1565.003 related API calls",
+      "Alert on unusual impact activities",
+      "Implement behavioral analysis for anomaly detection",
+      "Track Lambda, CloudFront service usage patterns"
+    ],
+    "mitigation": "Implement least privilege access and monitoring for T1565.003",
+    "severity": "HIGH",
+    "references": [
+      "https://attack.mitre.org/techniques/T1565.003/"
+    ],
+    "playbook_url": null
+  }
+}
